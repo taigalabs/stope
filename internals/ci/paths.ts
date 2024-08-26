@@ -16,6 +16,7 @@ export const paths = (() => {
       projectRootPath,
       "source/stope_batch_processor"
     ),
+    stope_web_app: path.join(projectRootPath, "source/stope_web_app"),
   };
 
   console.log("Loaded paths: %j", paths);

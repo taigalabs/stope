@@ -27,5 +27,13 @@ import { paths } from "./paths";
     });
   });
 
+  program.command("dev_stope_web_app").action((str, options) => {
+    spawn("yarn run dev", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_batch_processor,
+    });
+  });
+
   program.parse();
 })();
