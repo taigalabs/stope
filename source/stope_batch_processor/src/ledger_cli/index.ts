@@ -1,1 +1,1 @@
-export async function get_block() { }
+export async function get_block() {}
