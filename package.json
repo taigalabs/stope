@@ -3,10 +3,11 @@
   "name": "sto-privacy-enhanced",
   "version": "0.0.1",
   "workspaces": [
-    "source/stope_web_app",
-    "source/stope_zk_bridge",
     "source/stope_api_server",
-    "source/stope_batch_server",
-    "source/stope_proof_gen"
+    "source/stope_batch_processor",
+    "source/stope_bridge_proof",
+    "source/stope_web_app",
+    "source/stope_user_proof",
+    "internals/ci"
   ]
 }
