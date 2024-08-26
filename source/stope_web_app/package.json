@@ -9,16 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "next": "14.2.6",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.6"
+    "stope_user_proof": "*"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.6"
+    "eslint-config-next": "14.2.6",
+    "sass": "^1.77.8",
+    "typescript": "^5"
   }
 }

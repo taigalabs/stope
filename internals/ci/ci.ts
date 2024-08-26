@@ -31,7 +31,7 @@ import { paths } from "./paths";
     spawn("yarn run dev", {
       stdio: "inherit",
       shell: true,
-      cwd: paths.stope_batch_processor,
+      cwd: paths.stope_web_app,
     });
   });
 
