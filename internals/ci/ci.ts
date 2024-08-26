@@ -11,18 +11,21 @@ import { paths } from "./paths";
   const program = new Command();
   program.name("STO CI");
 
-  program
-    .command("dev_stope_api_server")
-    .option("--first", "display just the first substring")
-    .action((str, options) => {
-      console.log("path: %s", paths.stope_api_server);
-
-      spawn("yarn run dev", {
-        stdio: "inherit",
-        shell: true,
-        cwd: paths.stope_api_server,
-      });
+  program.command("dev_stope_api_server").action((str, options) => {
+    spawn("yarn run dev", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_api_server,
     });
+  });
+
+  program.command("dev_stope_batch_processor").action((str, options) => {
+    spawn("yarn run dev", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_batch_processor,
+    });
+  });
 
   program.parse();
 })();
