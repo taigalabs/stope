@@ -1,0 +1,13 @@
+{
+  "name": "ci",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "ts-node ./ci.ts"
+  },
+  "devDependencies": {
+    "commander": "^12.1.0",
+    "ts-node": "^10.9.2"
+  }
+}
