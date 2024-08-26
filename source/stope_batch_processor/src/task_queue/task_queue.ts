@@ -1,7 +1,24 @@
+import { Task } from "./task";
+
+const QUEUE_CAPACITY = 50;
+
 class TaskQueue {
   q: Task[] = [];
 
-  add(task: Task) {
+  len() {
+    return this.q.length;
+  }
+
+  enqueue(task: Task) {
+    if (this.q.length > QUEUE_CAPACITY) {
+      console.log(
+        "Queue is full, taskKind: %s, len: %s",
+        task.kind,
+        this.q.length
+      );
+      return;
+    }
+
     this.q.push(task);
   }
 
@@ -11,11 +28,3 @@ class TaskQueue {
 }
 
 export const taskQueue = new TaskQueue();
-
-export interface Task {
-  kind: TaskKind;
-}
-
-export enum TaskKind {
-  ExportSTO,
-}
