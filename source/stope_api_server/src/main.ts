@@ -1,7 +1,7 @@
 import { runServer } from "./server/run";
 
 (async function main() {
-  console.log("main");
+  console.log("api server");
 
   const p1 = await runServer();
 

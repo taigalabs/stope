@@ -25,6 +25,6 @@ for pair in "${extern_bins[@]}"; do
 done
 
 cd ./internals/ci;
-PROJECT_ROOT="$curr_dir" ts-node ./ci.ts -- "$@"
+PROJECT_ROOT="$curr_dir" ts-node ./ci.ts "$@"
 
 exit 0;
