@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "run": "ts-node ./src/main.ts"
+    "dev": "ts-node ./src/main.ts"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.2"
   }
 }
