@@ -2,5 +2,8 @@
   "name": "stope_batch_server",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "run": "ts-node ./src/main.ts"
+  }
 }
