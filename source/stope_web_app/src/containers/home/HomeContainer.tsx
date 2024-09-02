@@ -8,7 +8,10 @@ import "./reactCOIServiceWorker";
 import ZkappWorkerClient from "./zkappWorkerClient";
 
 let transactionFee = 0.1;
-const ZKAPP_ADDRESS = "B62qpXPvmKDf4SaFJynPsT6DyvuxMS9H1pT4TGonDT26m599m7dS9gP";
+// const ZKAPP_ADDRESS = "B62qpXPvmKDf4SaFJynPsT6DyvuxMS9H1pT4TGonDT26m599m7dS9gP";
+// const ZKAPP_ADDRESS = "B62qkbCH6jLfVEgR36UGyUzzFTPogr2CQb8fPLLFr6DWajMokYEAJvX";
+// const ZKAPP_ADDRESS = "B62qqLv3vCRyfEquV8Us6MFkbeyD6wHqn63qCPJSyhFQnSxJkV7xtK6";
+const ZKAPP_ADDRESS = "B62qp31xbGLbFVYxH23yFgqwW45sPteNMJvioQwHnE9g1QUGj18H3Yr";
 
 export const HomeContainer = () => {
   const [state, setState] = useState({
@@ -47,7 +50,8 @@ export const HomeContainer = () => {
         setDisplayText("Done loading web worker");
         console.log("Done loading web worker");
 
-        await zkappWorkerClient.setActiveInstanceToDevnet();
+        const ret = await zkappWorkerClient.setActiveInstanceToDevnet();
+        console.log("Set up active instance to devnet", ret);
 
         const mina = (window as any).mina;
 
@@ -70,6 +74,8 @@ export const HomeContainer = () => {
         });
         const accountExists = res.error == null;
 
+        console.log("user account", res);
+
         await zkappWorkerClient.loadContract();
 
         console.log("Compiling zkApp...");
@@ -79,6 +85,7 @@ export const HomeContainer = () => {
         setDisplayText("zkApp compiled...");
 
         const zkappPublicKey = PublicKey.fromBase58(ZKAPP_ADDRESS);
+        console.log("zk app publicKey", zkappPublicKey);
 
         await zkappWorkerClient.initZkappInstance(zkappPublicKey);
 

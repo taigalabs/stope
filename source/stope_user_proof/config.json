@@ -9,6 +9,15 @@
       "feepayerAlias": "ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp",
       "fee": "0.1",
       "smartContract": "Add"
+    },
+    "test-2": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/devnet/v1/graphql",
+      "keyPath": "keys/test-2.json",
+      "feepayerKeyPath": "/home/ubuntu/.cache/zkapp-cli/keys/ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp.json",
+      "feepayerAlias": "ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp",
+      "fee": "0.1",
+      "smartContract": "Add"
     }
   }
 }
