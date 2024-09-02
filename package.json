@@ -2,12 +2,18 @@
   "private": true,
   "name": "stope",
   "version": "0.0.1",
-  "workspaces": [
-    "source/stope_api_server",
-    "source/stope_batch_processor",
-    "source/stope_bridge_proof",
-    "source/stope_web_app",
-    "source/stope_user_proof",
-    "internals/ci"
-  ]
+  "scripts": {
+    "ci": "yarn run --cwd ./internals/ci ci"
+  },
+  "workspaces": {
+    "packages": [
+      "source/stope_api_server",
+      "source/stope_batch_processor",
+      "source/stope_bridge_proof",
+      "source/stope_web_app",
+      "source/stope_user_proof",
+      "srouce/stope_entities",
+      "internals/ci"
+    ]
+  }
 }

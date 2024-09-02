@@ -1,8 +1,15 @@
 {
   "name": "stope_user_proof",
+  "private": true,
   "version": "0.1.0",
   "description": "",
   "author": "",
+  "workspaces": {
+    "nohoist": [
+      "**/o1js",
+      "**/o1js/**"
+    ]
+  },
   "license": "Apache-2.0",
   "keywords": [
     "mina-zkapp",
@@ -35,7 +42,7 @@
     "ts-jest": "^28.0.8",
     "typescript": "^5.1"
   },
-  "peerDependencies": {
+  "dependencies": {
     "o1js": "^1.*"
   },
   "engines": {

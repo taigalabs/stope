@@ -1,4 +1,14 @@
 {
   "version": 1,
-  "deployAliases": {}
+  "deployAliases": {
+    "stope": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/devnet/v1/graphql",
+      "keyPath": "keys/stope.json",
+      "feepayerKeyPath": "/home/ubuntu/.cache/zkapp-cli/keys/ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp.json",
+      "feepayerAlias": "ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp",
+      "fee": "0.1",
+      "smartContract": "Add"
+    }
+  }
 }
