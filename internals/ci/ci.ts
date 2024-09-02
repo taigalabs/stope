@@ -1,5 +1,3 @@
-import { parseArgs } from "node:util";
-import { program } from "commander";
 import { Command } from "commander";
 import { spawn } from "child_process";
 

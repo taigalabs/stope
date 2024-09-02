@@ -3,6 +3,8 @@ import { TaskKind } from "./task";
 import { taskQueue } from "./task_queue";
 
 export async function runTaskQueue() {
+  console.log("Running task queue");
+
   while (true) {
     const task = taskQueue.shift();
 

@@ -6,14 +6,17 @@ import { taskQueue } from "../task_queue/task_queue";
 const DAY_MS = 1000;
 
 export function scheduleBridge() {
+  console.log("Start scheduling bridge");
+
   setInterval(() => {
-    const task = {
-      kind: TaskKind.ExportSTO,
-      args: {},
-    };
+    console.log(11221);
+    // const task = {
+    //   kind: TaskKind.ExportSTO,
+    //   args: {},
+    // };
 
-    taskQueue.enqueue(task);
+    // taskQueue.enqueue(task);
 
-    console.log("Scheduled a daily task!");
-  }, DAY_MS);
+    // console.log("Scheduled a daily task!");
+  }, 500);
 }
