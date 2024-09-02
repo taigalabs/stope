@@ -4,7 +4,7 @@ type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 
 // ---------------------------------------------------------------------------------------
 
-import type { Add } from "stope_user_proof/src/Add";
+import type { Add } from "stope-user-proof/src/Add";
 
 const state = {
   Add: null as null | typeof Add,
@@ -23,7 +23,7 @@ const functions = {
     Mina.setActiveInstance(Network);
   },
   loadContract: async (args: {}) => {
-    const { Add } = await import("stope_user_proof/build/src/Add.js");
+    const { Add } = await import("stope-user-proof/build/src/Add.js");
     state.Add = Add;
   },
   compileContract: async (args: {}) => {
