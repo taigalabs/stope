@@ -2,9 +2,6 @@
   "private": true,
   "name": "stope",
   "version": "0.0.1",
-  "scripts": {
-    "ci": "yarn run --cwd ./internals/ci ci"
-  },
   "workspaces": {
     "packages": [
       "source/stope_api_server",
