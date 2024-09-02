@@ -4,6 +4,7 @@
   "description": "",
   "author": "",
   "license": "Apache-2.0",
+  "module": "./src/index.ts",
   "type": "module",
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
