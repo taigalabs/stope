@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import styles from "./HomeContainer.module.scss";
 import ZkappWorkerClient from "./zkappWorkerClient";
 import { useCreateProof } from "./useCreateProof";
+import { ProofGenView } from "./ProofGenView";
+import { useImportLedgerState } from "./useImportLedgerState";
 
 // const ZKAPP_ADDRESS = "B62qpXPvmKDf4SaFJynPsT6DyvuxMS9H1pT4TGonDT26m599m7dS9gP";
 // const ZKAPP_ADDRESS = "B62qkbCH6jLfVEgR36UGyUzzFTPogr2CQb8fPLLFr6DWajMokYEAJvX";
@@ -145,19 +147,11 @@ export const HomeContainer = () => {
 
   // -------------------------------------------------------
   // Refresh the current state
-
-  const onRefreshCurrentNum = async () => {
-    console.log("Getting zkApp state...");
-    setDisplayText("Getting zkApp state...");
-
-    await state.zkappWorkerClient!.fetchAccount({
-      publicKey: state.zkappPublicKey!,
-    });
-    const currentNum = await state.zkappWorkerClient!.getNum();
-    setState({ ...state, currentNum });
-    console.log(`Current state in zkApp: ${currentNum.toString()}`);
-    setDisplayText("");
-  };
+  const importLedgerState = useImportLedgerState({
+    state,
+    setState,
+    setDisplayText,
+  });
 
   // -------------------------------------------------------
   // Create UI elements
@@ -210,33 +204,18 @@ export const HomeContainer = () => {
     );
   }
 
-  let mainContent;
-  if (state.hasBeenSetup && state.accountExists) {
-    mainContent = (
-      <div style={{ justifyContent: "center", alignItems: "center" }}>
-        <div className={styles.center} style={{ padding: 0 }}>
-          Current state in zkApp: {state.currentNum!.toString()}{" "}
-        </div>
-        <button
-          className={styles.card}
-          onClick={createProof}
-          disabled={state.creatingTransaction}
-        >
-          Create proof
-        </button>
-        <button className={styles.card} onClick={onRefreshCurrentNum}>
-          Get Latest State
-        </button>
-      </div>
-    );
-  }
-
   return (
-    <div className={styles.main} style={{ padding: 0 }}>
-      <div className={styles.center} style={{ padding: 0 }}>
+    <div className={styles.wrapper}>
+      <div className={styles.center}>
         {setup}
         {accountDoesNotExist}
-        {mainContent}
+        {state.hasBeenSetup && state.accountExists && (
+          <ProofGenView
+            state={state}
+            createProof={createProof}
+            importLedgerState={importLedgerState}
+          />
+        )}
       </div>
     </div>
   );
