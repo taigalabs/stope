@@ -1,5 +1,5 @@
 {
-  "name": "stope-user-proof",
+  "name": "@taigalabs/stope-user-proof",
   "private": true,
   "version": "0.1.0",
   "description": "",
@@ -43,7 +43,7 @@
     "typescript": "^5.1"
   },
   "dependencies": {
-    "stope-entities": "workspace:*",
+    "@taigalabs/stope-entities": "*",
     "o1js": "^1.*"
   },
   "engines": {

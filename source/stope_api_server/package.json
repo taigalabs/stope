@@ -2,15 +2,20 @@
   "name": "stope-api-server",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.17.21",
     "ts-node": "^10.9.2"
   },
+  "imports": {
+    "#*": "./src/*"
+  },
   "dependencies": {
+    "@taigalabs/stope-bridge-proof": "*",
     "express": "^4.19.2"
   },
   "scripts": {
-    "dev": "ts-node ./src/main.ts"
+    "dev": "tsc --noEmit && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./src/main.ts"
   }
 }

@@ -1,15 +1,21 @@
 {
   "name": "stope-batch-processor",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node ./src/main.ts"
+    "dev": "tsc --noEmit && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./src/main.ts"
+  },
+  "imports": {
+    "#*": "./src/*"
   },
   "dependencies": {
-    "stope-entities": "workspace:*"
+    "@taigalabs/stope-entities": "*",
+    "o1js": "^1.6.0"
   },
   "devDependencies": {
+    "eslint-plugin-o1js": "^0.4.0",
     "ts-node": "^10.9.2"
   }
 }
