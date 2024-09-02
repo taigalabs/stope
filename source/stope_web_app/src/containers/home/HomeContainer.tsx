@@ -1,17 +1,18 @@
 "use client";
 
+import "./reactCOIServiceWorker";
+
 import { Field, PublicKey } from "o1js";
 import { useEffect, useState } from "react";
-import GradientBG from "@/components/GradientBG";
-import styles from "@/styles/Home.module.scss";
-import "./reactCOIServiceWorker";
-import ZkappWorkerClient from "./zkappWorkerClient";
 
-let transactionFee = 0.1;
-const ZKAPP_ADDRESS = "B62qpXPvmKDf4SaFJynPsT6DyvuxMS9H1pT4TGonDT26m599m7dS9gP";
+import styles from "./HomeContainer.module.scss";
+import ZkappWorkerClient from "./zkappWorkerClient";
+import { useCreateProof } from "./useCreateProof";
+
+// const ZKAPP_ADDRESS = "B62qpXPvmKDf4SaFJynPsT6DyvuxMS9H1pT4TGonDT26m599m7dS9gP";
 // const ZKAPP_ADDRESS = "B62qkbCH6jLfVEgR36UGyUzzFTPogr2CQb8fPLLFr6DWajMokYEAJvX";
 // const ZKAPP_ADDRESS = "B62qqLv3vCRyfEquV8Us6MFkbeyD6wHqn63qCPJSyhFQnSxJkV7xtK6";
-// const ZKAPP_ADDRESS = "B62qp31xbGLbFVYxH23yFgqwW45sPteNMJvioQwHnE9g1QUGj18H3Yr";
+const ZKAPP_ADDRESS = "B62qp31xbGLbFVYxH23yFgqwW45sPteNMJvioQwHnE9g1QUGj18H3Yr";
 
 export const HomeContainer = () => {
   const [state, setState] = useState({
@@ -27,6 +28,13 @@ export const HomeContainer = () => {
 
   const [displayText, setDisplayText] = useState("");
   const [transactionlink, setTransactionLink] = useState("");
+
+  const createProof = useCreateProof({
+    state,
+    setState,
+    setDisplayText,
+    setTransactionLink,
+  });
 
   // -------------------------------------------------------
   // Do Setup
@@ -44,6 +52,8 @@ export const HomeContainer = () => {
       if (!state.hasBeenSetup) {
         setDisplayText("Loading web worker...");
         console.log("Loading web worker...");
+
+        console.log("zk app address", ZKAPP_ADDRESS);
         const zkappWorkerClient = new ZkappWorkerClient();
         await timeout(5);
 
@@ -134,48 +144,6 @@ export const HomeContainer = () => {
   }, [state.hasBeenSetup]);
 
   // -------------------------------------------------------
-  // Send a transaction
-
-  const onSendTransaction = async () => {
-    setState({ ...state, creatingTransaction: true });
-
-    setDisplayText("Creating a transaction...");
-    console.log("Creating a transaction...");
-
-    await state.zkappWorkerClient!.fetchAccount({
-      publicKey: state.publicKey!,
-    });
-
-    await state.zkappWorkerClient!.createUpdateTransaction();
-
-    setDisplayText("Creating proof...");
-    console.log("Creating proof...");
-    await state.zkappWorkerClient!.proveUpdateTransaction();
-
-    console.log("Requesting send transaction...");
-    setDisplayText("Requesting send transaction...");
-    const transactionJSON = await state.zkappWorkerClient!.getTransactionJSON();
-
-    setDisplayText("Getting transaction JSON...");
-    console.log("Getting transaction JSON...");
-    const { hash } = await (window as any).mina.sendTransaction({
-      transaction: transactionJSON,
-      feePayer: {
-        fee: transactionFee,
-        memo: "",
-      },
-    });
-
-    const transactionLink = `https://minascan.io/devnet/tx/${hash}`;
-    console.log(`View transaction at ${transactionLink}`);
-
-    setTransactionLink(transactionLink);
-    setDisplayText(transactionLink);
-
-    setState({ ...state, creatingTransaction: false });
-  };
-
-  // -------------------------------------------------------
   // Refresh the current state
 
   const onRefreshCurrentNum = async () => {
@@ -251,10 +219,10 @@ export const HomeContainer = () => {
         </div>
         <button
           className={styles.card}
-          onClick={onSendTransaction}
+          onClick={createProof}
           disabled={state.creatingTransaction}
         >
-          Send Transaction
+          Create proof
         </button>
         <button className={styles.card} onClick={onRefreshCurrentNum}>
           Get Latest State
@@ -264,14 +232,12 @@ export const HomeContainer = () => {
   }
 
   return (
-    <GradientBG>
-      <div className={styles.main} style={{ padding: 0 }}>
-        <div className={styles.center} style={{ padding: 0 }}>
-          {setup}
-          {accountDoesNotExist}
-          {mainContent}
-        </div>
+    <div className={styles.main} style={{ padding: 0 }}>
+      <div className={styles.center} style={{ padding: 0 }}>
+        {setup}
+        {accountDoesNotExist}
+        {mainContent}
       </div>
-    </GradientBG>
+    </div>
   );
 };
