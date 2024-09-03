@@ -51,7 +51,7 @@ describe('Add', () => {
     expect(num).toEqual(Field(1));
   });
 
-  it('correctly updates the num state on the `Add` smart contract', async () => {
+  it('test123', async () => {
     await localDeploy();
 
     // update transaction

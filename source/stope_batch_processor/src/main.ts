@@ -1,3 +1,4 @@
+import { hang } from "./hang";
 import { scheduleBridge } from "./schedule";
 import { runTaskQueue } from "./task_queue";
 

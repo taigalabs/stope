@@ -1,5 +1,5 @@
 {
-  "name": "stope_api_server",
+  "name": "stope-api-server",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

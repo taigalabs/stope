@@ -4,9 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node ./ci.ts"
+    "ci": "ts-node ./ci.ts"
   },
   "devDependencies": {
+    "@types/node": "^20",
     "commander": "^12.1.0",
     "ts-node": "^10.9.2"
   }

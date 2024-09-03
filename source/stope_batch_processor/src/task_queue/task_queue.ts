@@ -9,6 +9,8 @@ class TaskQueue {
     return this.q.length;
   }
 
+  wake() {}
+
   enqueue(task: Task) {
     if (this.q.length > QUEUE_CAPACITY) {
       console.log(
@@ -22,8 +24,13 @@ class TaskQueue {
     this.q.push(task);
   }
 
-  shift() {
-    return this.q.shift();
+  async shift() {
+    return new Promise<Task | undefined>((resolve) => {
+      setTimeout(() => {
+        let task = this.q.shift();
+        resolve(task);
+      }, 1000);
+    });
   }
 }
 
