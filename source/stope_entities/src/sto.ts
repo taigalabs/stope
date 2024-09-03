@@ -18,3 +18,10 @@ export interface STO {
   usable: string;
   whitelistContractAddress: string;
 }
+
+export interface ProcessedSTO {
+  secret: string;
+  symbol: string;
+  isin: string;
+  amount: number;
+}

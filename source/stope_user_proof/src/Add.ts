@@ -1,14 +1,21 @@
-import { Field, SmartContract, state, State, method } from 'o1js';
+import {
+  Field,
+  SmartContract,
+  state,
+  State,
+  method,
+  CircuitString,
+  Poseidon,
+} from 'o1js';
+// import { ProcessedSTO, STO } from 'stope-entities';
 
-/**
- * Basic Example
- * See https://docs.minaprotocol.com/zkapps for more info.
- *
- * The Add contract initializes the state variable 'num' to be a Field(1) value by default when deployed.
- * When the 'update' method is called, the Add contract adds Field(2) to its 'num' contract state.
- *
- * This file is safe to delete and replace with your own contract.
- */
+const sto = {
+  secret: 'secret',
+  symbol: 'symbol',
+  isin: 'isin',
+  amount: 10,
+};
+
 export class Add extends SmartContract {
   @state(Field) num = State<Field>();
 
@@ -21,7 +28,22 @@ export class Add extends SmartContract {
     const currentState = this.num.getAndRequireEquals();
     const newState = currentState.add(2);
 
-    console.log(111, newState);
+    const secret = CircuitString.fromString(sto.secret);
+    const symbol = CircuitString.fromString(sto.secret);
+    const isin = CircuitString.fromString(sto.secret);
+    const amount = Field.from(sto.amount);
+
+    const greaterThan = Field(1);
+    const lessThan = Field(20);
+
+    let b = amount.greaterThan(greaterThan);
+    b = amount.lessThan(lessThan);
+    b.assertTrue();
+
+    console.log('condition pass', b);
+
+    let leaf = Poseidon.hash([secret.hash(), symbol.hash(), isin.hash()]);
+    console.log('leaf', leaf);
 
     this.num.set(newState);
   }

@@ -146,6 +146,9 @@ importers:
       o1js:
         specifier: ^1.*
         version: 1.6.0
+      stope-entities:
+        specifier: workspace:*
+        version: link:../stope_entities
     devDependencies:
       '@babel/preset-env':
         specifier: ^7.16.4

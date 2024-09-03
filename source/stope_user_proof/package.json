@@ -43,6 +43,7 @@
     "typescript": "^5.1"
   },
   "dependencies": {
+    "stope-entities": "workspace:*",
     "o1js": "^1.*"
   },
   "engines": {
