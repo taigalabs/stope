@@ -9,14 +9,13 @@ export function scheduleBridge() {
   console.log("Start scheduling bridge");
 
   setInterval(() => {
-    console.log(11221);
-    // const task = {
-    //   kind: TaskKind.ExportSTO,
-    //   args: {},
-    // };
+    const task = {
+      kind: TaskKind.ExportSTO,
+      args: {},
+    };
 
-    // taskQueue.enqueue(task);
+    taskQueue.enqueue(task);
 
-    // console.log("Scheduled a daily task!");
-  }, 500);
+    console.log("Scheduled a daily task!");
+  }, 2000);
 }

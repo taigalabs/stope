@@ -6,7 +6,9 @@ export async function runTaskQueue() {
   console.log("Running task queue");
 
   while (true) {
-    const task = taskQueue.shift();
+    console.log("There is no more task!, quitting");
+
+    const task = await taskQueue.shift();
 
     if (task) {
       switch (task.kind) {
