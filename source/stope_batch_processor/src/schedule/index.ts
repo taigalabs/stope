@@ -1,11 +1,13 @@
 import { exportSTO } from "#apis/index.ts";
 
-const INTERVAL = 3000;
+const INTERVAL = 30000;
 
-export function scheduleBridge() {
+export async function scheduleBridge() {
   console.log("Start scheduling bridge");
 
-  setInterval(async () => {
-    await exportSTO();
-  }, INTERVAL);
+  await exportSTO();
+
+  // setInterval(async () => {
+  //   await exportSTO();
+  // }, INTERVAL);
 }

@@ -1,6 +1,6 @@
 import { Field, Mina, PrivateKey, AccountUpdate } from "o1js";
 import { STO } from "@taigalabs/stope-entities";
-import { Export } from "@taigalabs/stope-bridge-proof/src/Export";
+import { Export } from "@taigalabs/stope-bridge-proof/build/src/Export.js";
 
 const dummy: STO[] = [
   {
@@ -73,18 +73,18 @@ export async function exportSTO() {
   });
   await deployTxn.sign([deployerKey, zkAppPrivateKey]).send();
 
-  // // get the initial state of Square after deployment
-  // const num0 = zkAppInstance.num.get();
-  // console.log("state after init:", num0.toString());
+  // get the initial state of Square after deployment
+  const num0 = zkAppInstance.num.get();
+  console.log("state after init:", num0.toString());
 
   // // ----------------------------------------------------
 
-  // const txn1 = await Mina.transaction(senderAccount, async () => {
-  //   await zkAppInstance.update();
-  // });
-  // await txn1.prove();
-  // await txn1.sign([senderKey]).send();
+  const txn1 = await Mina.transaction(senderAccount, async () => {
+    await zkAppInstance.update();
+  });
+  await txn1.prove();
+  await txn1.sign([senderKey]).send();
 
-  // const num1 = zkAppInstance.num.get();
-  // console.log("state after txn1:", num1.toString());
+  const num1 = zkAppInstance.num.get();
+  console.log("state after txn1:", num1.toString());
 }
