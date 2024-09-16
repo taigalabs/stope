@@ -11,9 +11,11 @@
     "#*": "./src/*"
   },
   "dependencies": {
-    "stope-entities": "*"
+    "@taigalabs/stope-entities": "*",
+    "o1js": "^1.6.0"
   },
   "devDependencies": {
+    "eslint-plugin-o1js": "^0.4.0",
     "ts-node": "^10.9.2"
   }
 }

@@ -11,7 +11,9 @@
     "outDir": "dist",
     "lib": ["esnext"],
     "types": ["node"],
-    "rootDir": "."
+    "rootDir": ".",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]

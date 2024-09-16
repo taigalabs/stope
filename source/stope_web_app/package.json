@@ -1,5 +1,5 @@
 {
-  "name": "stope-web-app",
+  "name": "@taigalabs/stope-web-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {

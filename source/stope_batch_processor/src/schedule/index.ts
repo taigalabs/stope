@@ -1,6 +1,6 @@
 import { exportSTO } from "#apis/index.ts";
 
-const INTERVAL = 1000;
+const INTERVAL = 3000;
 
 export function scheduleBridge() {
   console.log("Start scheduling bridge");
