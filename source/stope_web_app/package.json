@@ -14,7 +14,7 @@
     "o1js": "^1.6.0",
     "react": "^18",
     "react-dom": "^18",
-    "stope-user-proof": "*"
+    "@taigalabs/stope-user-proof": "*"
   },
   "devDependencies": {
     "@types/node": "^20",

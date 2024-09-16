@@ -12,6 +12,7 @@
     "#*": "./src/*"
   },
   "dependencies": {
+    "@taigalabs/stope-bridge-proof": "*",
     "express": "^4.19.2"
   },
   "scripts": {
