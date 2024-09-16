@@ -7,6 +7,9 @@
   "scripts": {
     "dev": "tsc --noEmit && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./src/main.ts"
   },
+  "imports": {
+    "#*": "./src/*"
+  },
   "dependencies": {
     "stope-entities": "*"
   },

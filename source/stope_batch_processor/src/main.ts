@@ -1,6 +1,4 @@
-import { hang } from "./hang";
-import { scheduleBridge } from "./schedule";
-// import { runTaskQueue } from "./task_queue";
+import { scheduleBridge } from "./schedule/index.ts";
 
 (async function main() {
   console.log("stope batch processor");

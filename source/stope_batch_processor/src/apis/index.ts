@@ -1,6 +1,6 @@
 import { STO } from "stope-entities";
 
-import { ExportSTOArgs } from "../task_queue/task";
+// import { ExportSTOArgs } from "../task_queue/task";
 
 const dummy: STO[] = [
   {
@@ -45,7 +45,7 @@ const dummy: STO[] = [
   },
 ];
 
-export async function exportSTO(args: ExportSTOArgs) {
+export async function exportSTO() {
   console.log("exporting STO");
 
   console.log("-- STOs", dummy);
