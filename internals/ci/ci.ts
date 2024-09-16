@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import { spawn } from "child_process";
 
-import { paths } from "./paths";
+import { paths } from "./paths.ts";
 
 (async function main() {
   console.log("Starting ci, pwd: %s", process.cwd());

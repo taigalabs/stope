@@ -1,13 +1,14 @@
 {
   "name": "stope-batch-processor",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node ./src/main.ts"
+    "dev": "tsc --noEmit && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./src/main.ts"
   },
   "dependencies": {
-    "stope-entities": "workspace:*"
+    "stope-entities": "*"
   },
   "devDependencies": {
     "ts-node": "^10.9.2"

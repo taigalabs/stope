@@ -1,7 +1,7 @@
 import express from "express";
 
-import { get_stope_user } from "@/apis/stope_user";
-import { get_my_assets } from "@/apis/assets";
+import { get_stope_user } from "#apis/stope_user";
+import { get_my_assets } from "#apis/assets";
 
 export const v0Router = express.Router({ mergeParams: true });
 
