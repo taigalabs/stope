@@ -1,21 +1,13 @@
-import { exportSTO } from "../apis";
-import { TaskKind } from "../task_queue/task";
-import { taskQueue } from "../task_queue/task_queue";
+import { exportSTO } from "#apis/index.ts";
 
-// const DAY_MS = 3600 * 1000 * 24;
-const DAY_MS = 1000;
+const INTERVAL = 30000;
 
-export function scheduleBridge() {
+export async function scheduleBridge() {
   console.log("Start scheduling bridge");
 
-  setInterval(() => {
-    const task = {
-      kind: TaskKind.ExportSTO,
-      args: {},
-    };
+  await exportSTO();
 
-    taskQueue.enqueue(task);
-
-    console.log("Scheduled a daily task!");
-  }, 2000);
+  // setInterval(async () => {
+  //   await exportSTO();
+  // }, INTERVAL);
 }

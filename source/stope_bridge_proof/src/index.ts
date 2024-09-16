@@ -1,3 +1,3 @@
-import { Square } from "./Square.js";
+import { Export } from "./Export.js";
 
-export { Square };
+export { Export };
