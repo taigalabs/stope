@@ -41,9 +41,13 @@ export class Export extends SmartContract {
     let b = amount.greaterThan(greaterThan);
     b = amount.lessThan(lessThan);
     b.assertTrue();
-    console.log("condition pass", b);
+    // console.log("condition pass", b);
 
     let leaf = Poseidon.hash([secret.hash(), symbol.hash(), isin.hash()]);
     // console.log("leaf", leaf);
+  }
+
+  @method async isMember() {
+    const currentState = this.num.getAndRequireEquals();
   }
 }

@@ -37,9 +37,12 @@ export class Export extends SmartContract {
         let b = amount.greaterThan(greaterThan);
         b = amount.lessThan(lessThan);
         b.assertTrue();
-        console.log("condition pass", b);
+        // console.log("condition pass", b);
         let leaf = Poseidon.hash([secret.hash(), symbol.hash(), isin.hash()]);
         // console.log("leaf", leaf);
+    }
+    async isMember() {
+        const currentState = this.num.getAndRequireEquals();
     }
 }
 __decorate([
@@ -52,4 +55,10 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], Export.prototype, "update", null);
+__decorate([
+    method,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], Export.prototype, "isMember", null);
 //# sourceMappingURL=Export.js.map
