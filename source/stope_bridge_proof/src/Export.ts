@@ -44,6 +44,6 @@ export class Export extends SmartContract {
     console.log("condition pass", b);
 
     let leaf = Poseidon.hash([secret.hash(), symbol.hash(), isin.hash()]);
-    console.log("leaf", leaf);
+    // console.log("leaf", leaf);
   }
 }
