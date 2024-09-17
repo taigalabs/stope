@@ -1,4 +1,4 @@
-import { Field, Mina, PrivateKey, AccountUpdate } from "o1js";
+import { Field, Mina, PrivateKey, AccountUpdate, MerkleTree } from "o1js";
 import { STO } from "@taigalabs/stope-entities";
 import { Export } from "@taigalabs/stope-bridge-proof/build/src/Export.js";
 
@@ -45,21 +45,24 @@ const dummy: STO[] = [
   },
 ];
 
-export async function exportSTO() {
-  console.log("exporting STO");
+const Tree = new MerkleTree(8);
 
-  // console.log("-- STOs", dummy);
+// STOs
+Tree.setLeaf(0n, Field(0));
+Tree.setLeaf(0n, Field(1));
+Tree.setLeaf(0n, Field(2));
+Tree.setLeaf(0n, Field(3));
 
+const root = Tree.getRoot();
+const witness = Tree.getWitness(0n);
+
+async function deployContractLocal() {
   const useProof = false;
-
   const Local = await Mina.LocalBlockchain({ proofsEnabled: useProof });
   Mina.setActiveInstance(Local);
 
   const deployerAccount = Local.testAccounts[0];
   const deployerKey = deployerAccount.key;
-  const senderAccount = Local.testAccounts[1];
-  const senderKey = senderAccount.key;
-  // ----------------------------------------------------
 
   // Create a public/private key pair. The public key is your address and where you deploy the zkApp to
   const zkAppPrivateKey = PrivateKey.random();
@@ -73,18 +76,26 @@ export async function exportSTO() {
   });
   await deployTxn.sign([deployerKey, zkAppPrivateKey]).send();
 
-  // get the initial state of Square after deployment
-  const num0 = zkAppInstance.num.get();
+  return { Local, zkApp: zkAppInstance };
+}
+
+export async function exportSTO() {
+  console.log("exporting STO");
+
+  const { Local, zkApp } = await deployContractLocal();
+
+  const num0 = zkApp.num.get();
   console.log("state after init:", num0.toString());
 
-  // // ----------------------------------------------------
+  const senderAccount = Local.testAccounts[1];
+  const senderKey = senderAccount.key;
 
   const txn1 = await Mina.transaction(senderAccount, async () => {
-    await zkAppInstance.update();
+    await zkApp.update();
   });
   await txn1.prove();
   await txn1.sign([senderKey]).send();
 
-  const num1 = zkAppInstance.num.get();
+  const num1 = zkApp.num.get();
   console.log("state after txn1:", num1.toString());
 }

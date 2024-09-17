@@ -17,18 +17,6 @@ const sto = {
   amount: 10,
 };
 
-const Tree = new MerkleTree(8);
-
-// STOs
-Tree.setLeaf(0n, Field(0));
-Tree.setLeaf(0n, Field(1));
-Tree.setLeaf(0n, Field(2));
-Tree.setLeaf(0n, Field(3));
-
-const root = Tree.getRoot();
-const witness = Tree.getWitness(0n);
-
-// Will be renamed 'STO'
 export class Export extends SmartContract {
   @state(Field) num = State<Field>();
 
