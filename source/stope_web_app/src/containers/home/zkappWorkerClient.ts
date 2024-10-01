@@ -39,7 +39,13 @@ export default class ZkappWorkerClient {
     });
   }
 
-  async membership(witness: MerkleWitness20, leaf: Field, root: Field) {
+  async membership(_witness: MerkleWitness20, _leaf: Field, _root: Field) {
+    const witness = _witness.toJSON();
+    const leaf = _leaf.toJSON();
+    const root = _root.toJSON();
+
+    console.log("client", witness, leaf, root);
+
     return this._call("membership", { witness, leaf, root });
   }
 

@@ -39,21 +39,21 @@ const functions = {
 
     state.zkapp = new state.MerklePos!(publicKey);
   },
-  membership: async (args: {
-    witness: MerkleWitness20;
-    leaf: Field;
-    root: Field;
-  }) => {
+  membership: async (args: { witness: string; leaf: string; root: string }) => {
     const { witness, leaf, root } = args;
+
+    const _witness = MerkleWitness20.fromJSON(witness);
     console.log("worker: wit", witness);
 
-    const _root = witness.calculateRoot(leaf);
+    const _root = Field.fromJSON(root);
+    const _leaf = Field.fromJSON(leaf);
+
+    const _root2 = _witness.calculateRoot(_leaf);
+    console.log("worker: _root2", _root2);
     console.log("worker: _root", _root);
 
-    console.log("worker: root", root);
-
     const transaction = await Mina.transaction(async () => {
-      await state.zkapp!.membership(witness, leaf, root);
+      await state.zkapp!.membership(_witness, _leaf, _root);
     });
     state.transaction = transaction;
   },
