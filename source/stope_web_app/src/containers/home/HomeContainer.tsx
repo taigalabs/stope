@@ -7,10 +7,8 @@ import { useEffect, useState } from "react";
 
 import styles from "./HomeContainer.module.scss";
 import ZkappWorkerClient from "./zkappWorkerClient";
-import { useCreateProof } from "./useCreateProof";
-import { ProofGenView } from "./ProofGenView";
-import { useImportLedgerState } from "./useImportLedgerState";
 import { Account } from "./Account";
+import { AssetList } from "./AssetList";
 
 const ZKAPP_ADDRESS = "B62qraPVBf3H1SGdEbcYJjzz1d1gYWzVFkmNkKPeR74bH1wk3TGuNe6";
 
@@ -134,16 +132,7 @@ export const HomeContainer = () => {
   }, [state.hasBeenSetup]);
 
   // -------------------------------------------------------
-  // Refresh the current state
-  const importLedgerState = useImportLedgerState({
-    state,
-    setState,
-    setDisplayText,
-  });
-
-  // -------------------------------------------------------
   // Create UI elements
-
   let hasWallet;
   if (state.hasWallet != null && !state.hasWallet) {
     const auroLink = "https://www.aurowallet.com/";
@@ -155,24 +144,11 @@ export const HomeContainer = () => {
     hasWallet = <div>Could not find a wallet. {auroLinkElem}</div>;
   }
 
-  const stepDisplay = transactionlink ? (
-    <a
-      href={transactionlink}
-      target="_blank"
-      rel="noreferrer"
-      style={{ textDecoration: "underline" }}
-    >
-      View transaction
-    </a>
-  ) : (
-    displayText
-  );
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.zkapp}>
         <div className={styles.start}>
-          {stepDisplay}
+          {displayText}
           {hasWallet}
         </div>
         <Account
@@ -183,11 +159,7 @@ export const HomeContainer = () => {
       </div>
       <div className={styles.main}>
         {state.hasBeenSetup && state.accountExists && (
-          <ProofGenView
-            // state={state}
-            zkappWorkerClient={state.zkappWorkerClient!}
-            // importLedgerState={importLedgerState}
-          />
+          <AssetList zkappWorkerClient={state.zkappWorkerClient!} />
         )}
       </div>
     </div>

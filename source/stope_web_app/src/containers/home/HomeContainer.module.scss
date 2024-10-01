@@ -1,12 +1,8 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  /* justify-content: space-around; */
-  /* align-items: center; */
-  padding: 5rem;
+  padding: 3rem;
   padding: 0;
-
-  border: 1px solid black;
 }
 
 .zkapp {
@@ -15,8 +11,10 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 6rem 0;
+  padding: 1.5rem 0;
+  background-color: #ddd;
 }
 
 .main {
+  /* border: 1px solid black; */
 }
