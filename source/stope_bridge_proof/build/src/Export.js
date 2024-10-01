@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Field, SmartContract, state, State, method, CircuitString, Poseidon, MerkleTree, } from "o1js";
+import { Field, SmartContract, state, State, method, CircuitString, Poseidon, } from "o1js";
 // import { ProcessedSTO, STO } from 'stope-entities';
 const sto = {
     secret: "secret",
@@ -15,15 +15,6 @@ const sto = {
     isin: "isin",
     amount: 10,
 };
-const Tree = new MerkleTree(8);
-// STOs
-Tree.setLeaf(0n, Field(0));
-Tree.setLeaf(0n, Field(1));
-Tree.setLeaf(0n, Field(2));
-Tree.setLeaf(0n, Field(3));
-const root = Tree.getRoot();
-const witness = Tree.getWitness(0n);
-// Will be renamed 'STO'
 export class Export extends SmartContract {
     constructor() {
         super(...arguments);
@@ -46,9 +37,12 @@ export class Export extends SmartContract {
         let b = amount.greaterThan(greaterThan);
         b = amount.lessThan(lessThan);
         b.assertTrue();
-        console.log("condition pass", b);
+        // console.log("condition pass", b);
         let leaf = Poseidon.hash([secret.hash(), symbol.hash(), isin.hash()]);
-        console.log("leaf", leaf);
+        // console.log("leaf", leaf);
+    }
+    async isMember() {
+        const currentState = this.num.getAndRequireEquals();
     }
 }
 __decorate([
@@ -61,4 +55,10 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], Export.prototype, "update", null);
+__decorate([
+    method,
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], Export.prototype, "isMember", null);
 //# sourceMappingURL=Export.js.map

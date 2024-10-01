@@ -7,14 +7,10 @@ import { useEffect, useState } from "react";
 
 import styles from "./HomeContainer.module.scss";
 import ZkappWorkerClient from "./zkappWorkerClient";
-import { useCreateProof } from "./useCreateProof";
-import { ProofGenView } from "./ProofGenView";
-import { useImportLedgerState } from "./useImportLedgerState";
+import { Account } from "./Account";
+import { AssetList } from "./AssetList";
 
-// const ZKAPP_ADDRESS = "B62qpXPvmKDf4SaFJynPsT6DyvuxMS9H1pT4TGonDT26m599m7dS9gP";
-// const ZKAPP_ADDRESS = "B62qkbCH6jLfVEgR36UGyUzzFTPogr2CQb8fPLLFr6DWajMokYEAJvX";
-// const ZKAPP_ADDRESS = "B62qqLv3vCRyfEquV8Us6MFkbeyD6wHqn63qCPJSyhFQnSxJkV7xtK6";
-const ZKAPP_ADDRESS = "B62qp31xbGLbFVYxH23yFgqwW45sPteNMJvioQwHnE9g1QUGj18H3Yr";
+const ZKAPP_ADDRESS = "B62qraPVBf3H1SGdEbcYJjzz1d1gYWzVFkmNkKPeR74bH1wk3TGuNe6";
 
 export const HomeContainer = () => {
   const [state, setState] = useState({
@@ -30,16 +26,6 @@ export const HomeContainer = () => {
 
   const [displayText, setDisplayText] = useState("");
   const [transactionlink, setTransactionLink] = useState("");
-
-  const createProof = useCreateProof({
-    state,
-    setState,
-    setDisplayText,
-    setTransactionLink,
-  });
-
-  // -------------------------------------------------------
-  // Do Setup
 
   useEffect(() => {
     async function timeout(seconds: number): Promise<void> {
@@ -97,16 +83,16 @@ export const HomeContainer = () => {
         setDisplayText("zkApp compiled...");
 
         const zkappPublicKey = PublicKey.fromBase58(ZKAPP_ADDRESS);
-        console.log("zk app publicKey", zkappPublicKey);
-
+        // console.log("zk app publicKey", zkappPublicKey);
+        //
         await zkappWorkerClient.initZkappInstance(zkappPublicKey);
+        setDisplayText("zkApp initialized");
 
-        console.log("Getting zkApp state...");
-        setDisplayText("Getting zkApp state...");
         await zkappWorkerClient.fetchAccount({ publicKey: zkappPublicKey });
-        const currentNum = await zkappWorkerClient.getNum();
-        console.log(`Current state in zkApp: ${currentNum.toString()}`);
-        setDisplayText("");
+
+        // const currentNum = await zkappWorkerClient.getNum();
+        // console.log(`Current state in zkApp: ${currentNum.toString()}`);
+        // setDisplayText("");
 
         setState({
           ...state,
@@ -116,7 +102,7 @@ export const HomeContainer = () => {
           publicKey,
           zkappPublicKey,
           accountExists,
-          currentNum,
+          // currentNum,
         });
       }
     })();
@@ -146,16 +132,7 @@ export const HomeContainer = () => {
   }, [state.hasBeenSetup]);
 
   // -------------------------------------------------------
-  // Refresh the current state
-  const importLedgerState = useImportLedgerState({
-    state,
-    setState,
-    setDisplayText,
-  });
-
-  // -------------------------------------------------------
   // Create UI elements
-
   let hasWallet;
   if (state.hasWallet != null && !state.hasWallet) {
     const auroLink = "https://www.aurowallet.com/";
@@ -167,54 +144,22 @@ export const HomeContainer = () => {
     hasWallet = <div>Could not find a wallet. {auroLinkElem}</div>;
   }
 
-  const stepDisplay = transactionlink ? (
-    <a
-      href={transactionlink}
-      target="_blank"
-      rel="noreferrer"
-      style={{ textDecoration: "underline" }}
-    >
-      View transaction
-    </a>
-  ) : (
-    displayText
-  );
-
-  let setup = (
-    <div
-      className={styles.start}
-      style={{ fontWeight: "bold", fontSize: "1.5rem", paddingBottom: "5rem" }}
-    >
-      {stepDisplay}
-      {hasWallet}
-    </div>
-  );
-
-  let accountDoesNotExist;
-  if (state.hasBeenSetup && !state.accountExists) {
-    const faucetLink =
-      "https://faucet.minaprotocol.com/?address=" + state.publicKey!.toBase58();
-    accountDoesNotExist = (
-      <div>
-        <span style={{ paddingRight: "1rem" }}>Account does not exist.</span>
-        <a href={faucetLink} target="_blank" rel="noreferrer">
-          Visit the faucet to fund this fee payer account
-        </a>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.wrapper}>
-      <div className={styles.center}>
-        {setup}
-        {accountDoesNotExist}
+      <div className={styles.zkapp}>
+        <div className={styles.start}>
+          {displayText}
+          {hasWallet}
+        </div>
+        <Account
+          hasBeenSetup={state.hasBeenSetup}
+          accountExists={state.accountExists}
+          publicKey={state.publicKey}
+        />
+      </div>
+      <div className={styles.main}>
         {state.hasBeenSetup && state.accountExists && (
-          <ProofGenView
-            state={state}
-            createProof={createProof}
-            importLedgerState={importLedgerState}
-          />
+          <AssetList zkappWorkerClient={state.zkappWorkerClient!} />
         )}
       </div>
     </div>

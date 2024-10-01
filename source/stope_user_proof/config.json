@@ -18,6 +18,24 @@
       "feepayerAlias": "ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp",
       "fee": "0.1",
       "smartContract": "Add"
+    },
+    "test-3": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/devnet/v1/graphql",
+      "keyPath": "keys/test-3.json",
+      "feepayerKeyPath": "/home/ubuntu/.cache/zkapp-cli/keys/ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp.json",
+      "feepayerAlias": "ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp",
+      "fee": "0.1",
+      "smartContract": "Add"
+    },
+    "test-4": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/devnet/v1/graphql",
+      "keyPath": "keys/test-4.json",
+      "feepayerKeyPath": "/home/ubuntu/.cache/zkapp-cli/keys/ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp.json",
+      "feepayerAlias": "ekfbzmqobffzqrhdd8tyyph6zjbmdo29kbqchkigzxrdaniphuyp",
+      "fee": "0.1",
+      "smartContract": "MerklePos"
     }
   }
 }

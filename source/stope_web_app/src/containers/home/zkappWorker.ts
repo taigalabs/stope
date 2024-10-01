@@ -1,14 +1,12 @@
-import { Mina, PublicKey, fetchAccount } from "o1js";
+import { Field, Mina, PublicKey, fetchAccount } from "o1js";
+import type { MerklePos } from "@taigalabs/stope-user-proof/src/MerklePos";
+import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/MerkleTree20";
 
 type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 
-// ---------------------------------------------------------------------------------------
-
-import type { Add } from "@taigalabs/stope-user-proof/src/Add";
-
 const state = {
-  Add: null as null | typeof Add,
-  zkapp: null as null | Add,
+  MerklePos: null as null | typeof MerklePos,
+  zkapp: null as null | MerklePos,
   transaction: null as null | Transaction,
 };
 
@@ -23,11 +21,13 @@ const functions = {
     Mina.setActiveInstance(Network);
   },
   loadContract: async (args: {}) => {
-    const { Add } = await import("@taigalabs/stope-user-proof/build/src/Add.js");
-    state.Add = Add;
+    const { MerklePos } = await import(
+      "@taigalabs/stope-user-proof/build/src/MerklePos.js"
+    );
+    state.MerklePos = MerklePos;
   },
   compileContract: async (args: {}) => {
-    await state.Add!.compile();
+    await state.MerklePos!.compile();
   },
   fetchAccount: async (args: { publicKey58: string }) => {
     const publicKey = PublicKey.fromBase58(args.publicKey58);
@@ -35,15 +35,25 @@ const functions = {
   },
   initZkappInstance: async (args: { publicKey58: string }) => {
     const publicKey = PublicKey.fromBase58(args.publicKey58);
-    state.zkapp = new state.Add!(publicKey);
+    console.log("zkApp initiated");
+
+    state.zkapp = new state.MerklePos!(publicKey);
   },
-  getNum: async (args: {}) => {
-    const currentNum = await state.zkapp!.num.get();
-    return JSON.stringify(currentNum.toJSON());
-  },
-  createUpdateTransaction: async (args: {}) => {
+  membership: async (args: { witness: string; leaf: string; root: string }) => {
+    const { witness, leaf, root } = args;
+
+    const _witness = MerkleWitness20.fromJSON(witness);
+    console.log("worker: wit", witness);
+
+    const _root = Field.fromJSON(root);
+    const _leaf = Field.fromJSON(leaf);
+
+    const _root2 = _witness.calculateRoot(_leaf);
+    console.log("worker: _root2", _root2);
+    console.log("worker: _root", _root);
+
     const transaction = await Mina.transaction(async () => {
-      await state.zkapp!.update();
+      await state.zkapp!.membership(_witness, _leaf, _root);
     });
     state.transaction = transaction;
   },

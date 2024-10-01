@@ -1,4 +1,5 @@
 export interface STO {
+  userPublic: string;
   symbol: string;
   isin: string;
   totalSupply: string;
