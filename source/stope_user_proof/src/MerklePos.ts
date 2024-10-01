@@ -7,8 +7,8 @@ import {
   CircuitString,
   Poseidon,
   MerkleTree,
+  MerkleWitness,
 } from 'o1js';
-// import { ProcessedSTO, STO } from 'stope-entities';
 
 const sto = {
   secret: 'secret',
@@ -17,18 +17,10 @@ const sto = {
   amount: 10,
 };
 
-// const Tree = new MerkleTree(8);
+export const HEIGHT = 20;
 
-// // STOs
-// Tree.setLeaf(0n, Field(0));
-// Tree.setLeaf(0n, Field(1));
-// Tree.setLeaf(0n, Field(2));
-// Tree.setLeaf(0n, Field(3));
+export class MerkleWitness20 extends MerkleWitness(HEIGHT) {}
 
-// const root = Tree.getRoot();
-// const witness = Tree.getWitness(0n);
-
-// Will be renamed 'STO'
 export class MerklePos extends SmartContract {
   @state(Field) num = State<Field>();
 
@@ -37,47 +29,15 @@ export class MerklePos extends SmartContract {
     this.num.set(Field(1));
   }
 
-  @method async update() {
-    const currentState = this.num.getAndRequireEquals();
-    const newState = currentState.add(2);
-    this.num.set(newState);
+  @method async membership(
+    leafWitness: MerkleWitness20,
+    leaf: Field,
+    root: Field
+  ) {
+    const _root = leafWitness.calculateRoot(leaf);
+    console.log('root', root);
+    console.log('_root', _root);
 
-    const secret = CircuitString.fromString(sto.secret);
-    const symbol = CircuitString.fromString(sto.secret);
-    const isin = CircuitString.fromString(sto.secret);
-    const amount = Field.from(sto.amount);
-
-    const greaterThan = Field(1);
-    const lessThan = Field(20);
-
-    let b = amount.greaterThan(greaterThan);
-    b = amount.lessThan(lessThan);
-    b.assertTrue();
-    console.log('condition pass', b);
-
-    let leaf = Poseidon.hash([secret.hash(), symbol.hash(), isin.hash()]);
-    console.log('leaf', leaf);
-  }
-
-  @method async membership() {
-    const currentState = this.num.getAndRequireEquals();
-    const newState = currentState.add(2);
-    this.num.set(newState);
-
-    const secret = CircuitString.fromString(sto.secret);
-    const symbol = CircuitString.fromString(sto.secret);
-    const isin = CircuitString.fromString(sto.secret);
-    const amount = Field.from(sto.amount);
-
-    const greaterThan = Field(1);
-    const lessThan = Field(20);
-
-    let b = amount.greaterThan(greaterThan);
-    b = amount.lessThan(lessThan);
-    b.assertTrue();
-    console.log('condition pass', b);
-
-    let leaf = Poseidon.hash([secret.hash(), symbol.hash(), isin.hash()]);
-    console.log('leaf', leaf);
+    root.assertEquals(_root);
   }
 }

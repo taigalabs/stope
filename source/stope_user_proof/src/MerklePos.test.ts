@@ -1,6 +1,14 @@
-import { AccountUpdate, Field, Mina, PrivateKey, PublicKey } from 'o1js';
+import {
+  AccountUpdate,
+  Field,
+  MerkleTree,
+  Mina,
+  Poseidon,
+  PrivateKey,
+  PublicKey,
+} from 'o1js';
 
-import { MerklePos } from './MerklePos';
+import { HEIGHT, MerklePos, MerkleWitness20 } from './MerklePos';
 
 let proofsEnabled = false;
 
@@ -39,17 +47,21 @@ describe('MerklePos', () => {
     await txn.sign([deployerKey, zkAppPrivateKey]).send();
   }
 
-  it('test222', async () => {
+  it('test22', async () => {
     await localDeploy();
+
+    const tree = new MerkleTree(HEIGHT);
+    const leaf = Poseidon.hash([Field.from(0)]);
+    tree.setLeaf(0n, leaf);
+
+    const root = tree.getRoot();
+    const witness = new MerkleWitness20(tree.getWitness(0n));
 
     // update transaction
     const txn = await Mina.transaction(senderAccount, async () => {
-      await zkApp.update();
+      await zkApp.membership(witness, leaf, root);
     });
     await txn.prove();
     await txn.sign([senderKey]).send();
-
-    const updatedNum = zkApp.num.get();
-    expect(updatedNum).toEqual(Field(3));
   });
 });
