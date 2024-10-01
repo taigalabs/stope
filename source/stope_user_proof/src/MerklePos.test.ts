@@ -8,7 +8,8 @@ import {
   PublicKey,
 } from 'o1js';
 
-import { HEIGHT, MerklePos, MerkleWitness20 } from './MerklePos';
+import { MerklePos } from './MerklePos';
+import { HEIGHT, MerkleWitness20 } from './MerkleTree20';
 
 let proofsEnabled = false;
 

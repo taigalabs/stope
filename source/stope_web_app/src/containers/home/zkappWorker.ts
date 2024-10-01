@@ -1,9 +1,6 @@
 import { Field, Mina, PublicKey, fetchAccount } from "o1js";
-
-import type {
-  MerklePos,
-  MerkleWitness20,
-} from "@taigalabs/stope-user-proof/src/MerklePos";
+import type { MerklePos } from "@taigalabs/stope-user-proof/src/MerklePos";
+import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/MerkleTree20";
 
 type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 
@@ -38,6 +35,8 @@ const functions = {
   },
   initZkappInstance: async (args: { publicKey58: string }) => {
     const publicKey = PublicKey.fromBase58(args.publicKey58);
+    console.log("zkApp initiated");
+
     state.zkapp = new state.MerklePos!(publicKey);
   },
   membership: async (args: {
@@ -46,17 +45,18 @@ const functions = {
     root: Field;
   }) => {
     const { witness, leaf, root } = args;
-    const _ = await state.zkapp!.membership(witness, leaf, root);
+    console.log("worker: wit", witness);
 
-    const currentNum = await state.zkapp!.num.get();
-    return JSON.stringify(currentNum.toJSON());
+    const _root = witness.calculateRoot(leaf);
+    console.log("worker: _root", _root);
+
+    console.log("worker: root", root);
+
+    const transaction = await Mina.transaction(async () => {
+      await state.zkapp!.membership(witness, leaf, root);
+    });
+    state.transaction = transaction;
   },
-  // createUpdateTransaction: async (args: {}) => {
-  //   const transaction = await Mina.transaction(async () => {
-  //     await state.zkapp!.update();
-  //   });
-  //   state.transaction = transaction;
-  // },
   proveUpdateTransaction: async (args: {}) => {
     await state.transaction!.prove();
   },

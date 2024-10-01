@@ -29,16 +29,6 @@ export const HomeContainer = () => {
   const [displayText, setDisplayText] = useState("");
   const [transactionlink, setTransactionLink] = useState("");
 
-  const createProof = useCreateProof({
-    state,
-    setState,
-    setDisplayText,
-    setTransactionLink,
-  });
-
-  // -------------------------------------------------------
-  // Do Setup
-
   useEffect(() => {
     async function timeout(seconds: number): Promise<void> {
       return new Promise<void>((resolve) => {
@@ -95,13 +85,13 @@ export const HomeContainer = () => {
         setDisplayText("zkApp compiled...");
 
         const zkappPublicKey = PublicKey.fromBase58(ZKAPP_ADDRESS);
-        console.log("zk app publicKey", zkappPublicKey);
-
+        // console.log("zk app publicKey", zkappPublicKey);
+        //
         await zkappWorkerClient.initZkappInstance(zkappPublicKey);
+        setDisplayText("zkApp initialized");
 
-        console.log("Getting zkApp state...");
-        setDisplayText("Getting zkApp state...");
         await zkappWorkerClient.fetchAccount({ publicKey: zkappPublicKey });
+
         // const currentNum = await zkappWorkerClient.getNum();
         // console.log(`Current state in zkApp: ${currentNum.toString()}`);
         // setDisplayText("");
@@ -194,9 +184,9 @@ export const HomeContainer = () => {
       <div className={styles.main}>
         {state.hasBeenSetup && state.accountExists && (
           <ProofGenView
-            state={state}
-            createProof={createProof}
-            importLedgerState={importLedgerState}
+            // state={state}
+            zkappWorkerClient={state.zkappWorkerClient!}
+            // importLedgerState={importLedgerState}
           />
         )}
       </div>

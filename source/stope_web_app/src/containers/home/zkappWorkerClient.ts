@@ -1,11 +1,11 @@
-import { Field, PublicKey, fetchAccount } from "o1js";
+import { Field, PublicKey, fetchAccount, Mina } from "o1js";
 
 import type {
   WorkerFunctions,
   ZkappWorkerReponse,
   ZkappWorkerRequest,
 } from "./zkappWorker";
-import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/MerklePos";
+import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/MerkleTree20";
 
 export default class ZkappWorkerClient {
   // ---------------------------------------------------------------------------------------
@@ -39,18 +39,9 @@ export default class ZkappWorkerClient {
     });
   }
 
-  async membership(
-    witness: MerkleWitness20,
-    leaf: Field,
-    root: Field
-  ): Promise<Field> {
-    const result = await this._call("membership", { witness, leaf, root });
-    return Field.fromJSON(JSON.parse(result as string));
+  async membership(witness: MerkleWitness20, leaf: Field, root: Field) {
+    return this._call("membership", { witness, leaf, root });
   }
-
-  // createUpdateTransaction() {
-  //   return this._call("createUpdateTransaction", {});
-  // }
 
   proveUpdateTransaction() {
     return this._call("proveUpdateTransaction", {});

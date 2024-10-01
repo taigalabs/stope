@@ -9,6 +9,7 @@ import {
   MerkleTree,
   MerkleWitness,
 } from 'o1js';
+import { MerkleWitness20 } from './MerkleTree20';
 
 const sto = {
   secret: 'secret',
@@ -16,10 +17,6 @@ const sto = {
   isin: 'isin',
   amount: 10,
 };
-
-export const HEIGHT = 20;
-
-export class MerkleWitness20 extends MerkleWitness(HEIGHT) {}
 
 export class MerklePos extends SmartContract {
   @state(Field) num = State<Field>();
@@ -29,12 +26,14 @@ export class MerklePos extends SmartContract {
     this.num.set(Field(1));
   }
 
-  @method async membership(
-    leafWitness: MerkleWitness20,
-    leaf: Field,
-    root: Field
-  ) {
-    const _root = leafWitness.calculateRoot(leaf);
+  @method async membership(witness: MerkleWitness20, leaf: Field, root: Field) {
+    console.log('wit1', witness);
+    console.log('root1', root);
+
+    // const wit = MerkleWitness20.fromJSON(witness);
+    // console.log('wit2', wit);
+
+    const _root = witness.calculateRoot(leaf);
     console.log('root', root);
     console.log('_root', _root);
 
