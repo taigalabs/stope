@@ -12,8 +12,7 @@ import { ProofGenView } from "./ProofGenView";
 import { useImportLedgerState } from "./useImportLedgerState";
 import { Account } from "./Account";
 
-// const ZKAPP_ADDRESS = "B62qp31xbGLbFVYxH23yFgqwW45sPteNMJvioQwHnE9g1QUGj18H3Yr";
-const ZKAPP_ADDRESS = "B62qnLXxoMd6SW3Vv8En2hBVYbD4DH19ZWUD3oLD591dGEHBSn44jZZ";
+const ZKAPP_ADDRESS = "B62qraPVBf3H1SGdEbcYJjzz1d1gYWzVFkmNkKPeR74bH1wk3TGuNe6";
 
 export const HomeContainer = () => {
   const [state, setState] = useState({
@@ -181,15 +180,8 @@ export const HomeContainer = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.center}>
-        <div
-          className={styles.start}
-          style={{
-            fontWeight: "bold",
-            fontSize: "1.5rem",
-            paddingBottom: "5rem",
-          }}
-        >
+      <div className={styles.zkapp}>
+        <div className={styles.start}>
           {stepDisplay}
           {hasWallet}
         </div>
@@ -198,6 +190,8 @@ export const HomeContainer = () => {
           accountExists={state.accountExists}
           publicKey={state.publicKey}
         />
+      </div>
+      <div className={styles.main}>
         {state.hasBeenSetup && state.accountExists && (
           <ProofGenView
             state={state}
