@@ -30,9 +30,6 @@ export class MerklePos extends SmartContract {
     console.log('wit1', witness);
     console.log('root1', root);
 
-    // const wit = MerkleWitness20.fromJSON(witness);
-    // console.log('wit2', wit);
-
     const _root = witness.calculateRoot(leaf);
     console.log('root', root);
     console.log('_root', _root);
