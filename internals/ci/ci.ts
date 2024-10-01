@@ -33,5 +33,13 @@ import { paths } from "./paths.ts";
     });
   });
 
+  program.command("build_contracts").action((str, options) => {
+    spawn("yarn run build", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_user_proof,
+    });
+  });
+
   program.parse();
 })();

@@ -23,7 +23,9 @@ const functions = {
     Mina.setActiveInstance(Network);
   },
   loadContract: async (args: {}) => {
-    const { Add } = await import("@taigalabs/stope-user-proof/build/src/Add.js");
+    const { Add } = await import(
+      "@taigalabs/stope-user-proof/build/src/Add.js"
+    );
     state.Add = Add;
   },
   compileContract: async (args: {}) => {

@@ -2,7 +2,7 @@ import express from "express";
 
 import { v0Router } from "../router/index.js";
 
-const PORT = 3000;
+const PORT = 4000;
 const API_V0 = "api/v0";
 
 export async function runServer() {

@@ -29,7 +29,7 @@ const sto = {
 // const witness = Tree.getWitness(0n);
 
 // Will be renamed 'STO'
-export class Add extends SmartContract {
+export class MerklePos extends SmartContract {
   @state(Field) num = State<Field>();
 
   init() {
@@ -38,6 +38,28 @@ export class Add extends SmartContract {
   }
 
   @method async update() {
+    const currentState = this.num.getAndRequireEquals();
+    const newState = currentState.add(2);
+    this.num.set(newState);
+
+    const secret = CircuitString.fromString(sto.secret);
+    const symbol = CircuitString.fromString(sto.secret);
+    const isin = CircuitString.fromString(sto.secret);
+    const amount = Field.from(sto.amount);
+
+    const greaterThan = Field(1);
+    const lessThan = Field(20);
+
+    let b = amount.greaterThan(greaterThan);
+    b = amount.lessThan(lessThan);
+    b.assertTrue();
+    console.log('condition pass', b);
+
+    let leaf = Poseidon.hash([secret.hash(), symbol.hash(), isin.hash()]);
+    console.log('leaf', leaf);
+  }
+
+  @method async membership() {
     const currentState = this.num.getAndRequireEquals();
     const newState = currentState.add(2);
     this.num.set(newState);
