@@ -13,10 +13,12 @@ const transactionFee = 0.1;
 
 const ASSETS = [
   {
+    assetId: 0,
     isin: "STOCK 500",
     amount: 500,
   },
   {
+    assetId: 1,
     isin: "STOCK 500 - 2",
     amount: 100,
   },
@@ -25,7 +27,7 @@ const ASSETS = [
 const Assets = () => {
   const list = ASSETS.map((asset) => {
     return (
-      <li>
+      <li key={asset.assetId}>
         <div>
           <p>ISIN</p>
           <p>{asset.isin}</p>
