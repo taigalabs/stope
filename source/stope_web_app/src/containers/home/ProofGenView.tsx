@@ -7,19 +7,19 @@ export const ProofGenView: React.FC<ProofGenViewProps> = ({
 }) => {
   return (
     <div style={{ justifyContent: "center", alignItems: "center" }}>
-      <div className={styles.center} style={{ padding: 0 }}>
-        Current state in zkApp: {state.currentNum!.toString()}{" "}
-      </div>
-      <button
-        className={styles.card}
-        onClick={createProof}
-        disabled={state.creatingTransaction}
-      >
-        Create proof
-      </button>
-      <button className={styles.card} onClick={importLedgerState}>
-        Get Latest State
-      </button>
+      {/* <div className={styles.center} style={{ padding: 0 }}> */}
+      {/*   Current state in zkApp: {state.currentNum!.toString()}{" "} */}
+      {/* </div> */}
+      {/* <button */}
+      {/*   className={styles.card} */}
+      {/*   onClick={createProof} */}
+      {/*   disabled={state.creatingTransaction} */}
+      {/* > */}
+      {/*   Create proof */}
+      {/* </button> */}
+      {/* <button className={styles.card} onClick={importLedgerState}> */}
+      {/*   Get Latest State */}
+      {/* </button> */}
     </div>
   );
 };

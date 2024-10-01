@@ -5,6 +5,7 @@ import type {
   ZkappWorkerReponse,
   ZkappWorkerRequest,
 } from "./zkappWorker";
+import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/MerklePos";
 
 export default class ZkappWorkerClient {
   // ---------------------------------------------------------------------------------------
@@ -38,14 +39,18 @@ export default class ZkappWorkerClient {
     });
   }
 
-  async getNum(): Promise<Field> {
-    const result = await this._call("getNum", {});
+  async membership(
+    witness: MerkleWitness20,
+    leaf: Field,
+    root: Field
+  ): Promise<Field> {
+    const result = await this._call("membership", { witness, leaf, root });
     return Field.fromJSON(JSON.parse(result as string));
   }
 
-  createUpdateTransaction() {
-    return this._call("createUpdateTransaction", {});
-  }
+  // createUpdateTransaction() {
+  //   return this._call("createUpdateTransaction", {});
+  // }
 
   proveUpdateTransaction() {
     return this._call("proveUpdateTransaction", {});

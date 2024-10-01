@@ -10,10 +10,8 @@ import ZkappWorkerClient from "./zkappWorkerClient";
 import { useCreateProof } from "./useCreateProof";
 import { ProofGenView } from "./ProofGenView";
 import { useImportLedgerState } from "./useImportLedgerState";
+import { Account } from "./Account";
 
-// const ZKAPP_ADDRESS = "B62qpXPvmKDf4SaFJynPsT6DyvuxMS9H1pT4TGonDT26m599m7dS9gP";
-// const ZKAPP_ADDRESS = "B62qkbCH6jLfVEgR36UGyUzzFTPogr2CQb8fPLLFr6DWajMokYEAJvX";
-// const ZKAPP_ADDRESS = "B62qqLv3vCRyfEquV8Us6MFkbeyD6wHqn63qCPJSyhFQnSxJkV7xtK6";
 // const ZKAPP_ADDRESS = "B62qp31xbGLbFVYxH23yFgqwW45sPteNMJvioQwHnE9g1QUGj18H3Yr";
 const ZKAPP_ADDRESS = "B62qnLXxoMd6SW3Vv8En2hBVYbD4DH19ZWUD3oLD591dGEHBSn44jZZ";
 
@@ -105,9 +103,9 @@ export const HomeContainer = () => {
         console.log("Getting zkApp state...");
         setDisplayText("Getting zkApp state...");
         await zkappWorkerClient.fetchAccount({ publicKey: zkappPublicKey });
-        const currentNum = await zkappWorkerClient.getNum();
-        console.log(`Current state in zkApp: ${currentNum.toString()}`);
-        setDisplayText("");
+        // const currentNum = await zkappWorkerClient.getNum();
+        // console.log(`Current state in zkApp: ${currentNum.toString()}`);
+        // setDisplayText("");
 
         setState({
           ...state,
@@ -117,7 +115,7 @@ export const HomeContainer = () => {
           publicKey,
           zkappPublicKey,
           accountExists,
-          currentNum,
+          // currentNum,
         });
       }
     })();
@@ -181,35 +179,25 @@ export const HomeContainer = () => {
     displayText
   );
 
-  let setup = (
-    <div
-      className={styles.start}
-      style={{ fontWeight: "bold", fontSize: "1.5rem", paddingBottom: "5rem" }}
-    >
-      {stepDisplay}
-      {hasWallet}
-    </div>
-  );
-
-  let accountDoesNotExist;
-  if (state.hasBeenSetup && !state.accountExists) {
-    const faucetLink =
-      "https://faucet.minaprotocol.com/?address=" + state.publicKey!.toBase58();
-    accountDoesNotExist = (
-      <div>
-        <span style={{ paddingRight: "1rem" }}>Account does not exist.</span>
-        <a href={faucetLink} target="_blank" rel="noreferrer">
-          Visit the faucet to fund this fee payer account
-        </a>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.center}>
-        {setup}
-        {accountDoesNotExist}
+        <div
+          className={styles.start}
+          style={{
+            fontWeight: "bold",
+            fontSize: "1.5rem",
+            paddingBottom: "5rem",
+          }}
+        >
+          {stepDisplay}
+          {hasWallet}
+        </div>
+        <Account
+          hasBeenSetup={state.hasBeenSetup}
+          accountExists={state.accountExists}
+          publicKey={state.publicKey}
+        />
         {state.hasBeenSetup && state.accountExists && (
           <ProofGenView
             state={state}

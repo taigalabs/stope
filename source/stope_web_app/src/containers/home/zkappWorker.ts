@@ -1,14 +1,15 @@
-import { Mina, PublicKey, fetchAccount } from "o1js";
+import { Field, Mina, PublicKey, fetchAccount } from "o1js";
+
+import type {
+  MerklePos,
+  MerkleWitness20,
+} from "@taigalabs/stope-user-proof/src/MerklePos";
 
 type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 
-// ---------------------------------------------------------------------------------------
-
-import type { Add } from "@taigalabs/stope-user-proof/src/Add";
-
 const state = {
-  Add: null as null | typeof Add,
-  zkapp: null as null | Add,
+  MerklePos: null as null | typeof MerklePos,
+  zkapp: null as null | MerklePos,
   transaction: null as null | Transaction,
 };
 
@@ -23,13 +24,13 @@ const functions = {
     Mina.setActiveInstance(Network);
   },
   loadContract: async (args: {}) => {
-    const { Add } = await import(
-      "@taigalabs/stope-user-proof/build/src/Add.js"
+    const { MerklePos } = await import(
+      "@taigalabs/stope-user-proof/build/src/MerklePos.js"
     );
-    state.Add = Add;
+    state.MerklePos = MerklePos;
   },
   compileContract: async (args: {}) => {
-    await state.Add!.compile();
+    await state.MerklePos!.compile();
   },
   fetchAccount: async (args: { publicKey58: string }) => {
     const publicKey = PublicKey.fromBase58(args.publicKey58);
@@ -37,18 +38,25 @@ const functions = {
   },
   initZkappInstance: async (args: { publicKey58: string }) => {
     const publicKey = PublicKey.fromBase58(args.publicKey58);
-    state.zkapp = new state.Add!(publicKey);
+    state.zkapp = new state.MerklePos!(publicKey);
   },
-  getNum: async (args: {}) => {
+  membership: async (args: {
+    witness: MerkleWitness20;
+    leaf: Field;
+    root: Field;
+  }) => {
+    const { witness, leaf, root } = args;
+    const _ = await state.zkapp!.membership(witness, leaf, root);
+
     const currentNum = await state.zkapp!.num.get();
     return JSON.stringify(currentNum.toJSON());
   },
-  createUpdateTransaction: async (args: {}) => {
-    const transaction = await Mina.transaction(async () => {
-      await state.zkapp!.update();
-    });
-    state.transaction = transaction;
-  },
+  // createUpdateTransaction: async (args: {}) => {
+  //   const transaction = await Mina.transaction(async () => {
+  //     await state.zkapp!.update();
+  //   });
+  //   state.transaction = transaction;
+  // },
   proveUpdateTransaction: async (args: {}) => {
     await state.transaction!.prove();
   },

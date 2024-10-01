@@ -18,7 +18,7 @@ export function useCreateProof({
       publicKey: state.publicKey!,
     });
 
-    await state.zkappWorkerClient!.createUpdateTransaction();
+    // await state.zkappWorkerClient!.createUpdateTransaction();
 
     setDisplayText("Creating proof...");
     console.log("Creating proof...");
