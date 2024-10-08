@@ -26,15 +26,11 @@ export class Export extends SmartContract {
   }
 
   @method async aggregate() {
-    const currentState = this.num.getAndRequireEquals();
-    const newState = currentState.add(2);
-    this.num.set(newState);
-
     const secret = CircuitString.fromString(sto.secret);
     const isin = CircuitString.fromString(sto.isin);
     const amount = Field.from(sto.amount);
 
-    let leaf = Poseidon.hash([isin.hash(), amount, secret.hash()]);
+    const leaf = Poseidon.hash([isin.hash(), amount, secret.hash()]);
     // console.log("leaf", leaf);
   }
 }

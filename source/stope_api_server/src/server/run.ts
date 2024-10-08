@@ -1,6 +1,6 @@
 import express from "express";
 
-import { v0Router } from "../router/index.js";
+import { v0Router } from "@/router";
 
 const PORT = 4000;
 const API_V0 = "api/v0";

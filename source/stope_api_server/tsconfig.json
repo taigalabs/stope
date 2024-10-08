@@ -11,7 +11,10 @@
     "outDir": "dist",
     "lib": ["esnext"],
     "types": ["node"],
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]
