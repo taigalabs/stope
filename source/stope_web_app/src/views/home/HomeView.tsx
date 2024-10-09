@@ -5,14 +5,14 @@ import "./reactCOIServiceWorker";
 import { Field, PublicKey } from "o1js";
 import { useEffect, useState } from "react";
 
-import styles from "./HomeContainer.module.scss";
+import styles from "./HomeView.module.scss";
 import ZkappWorkerClient from "./zkappWorkerClient";
 import { Account } from "./Account";
 import { AssetList } from "./AssetList";
 
 const ZKAPP_ADDRESS = "B62qraPVBf3H1SGdEbcYJjzz1d1gYWzVFkmNkKPeR74bH1wk3TGuNe6";
 
-export const HomeContainer = () => {
+export const HomeView = () => {
   const [state, setState] = useState({
     zkappWorkerClient: null as null | ZkappWorkerClient,
     hasWallet: null as null | boolean,

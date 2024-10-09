@@ -1,11 +1,9 @@
 {
   "name": "ci",
   "version": "1.0.0",
-  "type": "module",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "ci": "tsc --noEmit && node --no-warnings=ExperimentalWarning --loader ts-node/esm ./ci.ts"
+    "ci": "ts-node -r tsconfig-paths/register ./ci.ts"
   },
   "devDependencies": {
     "@types/node": "^20",

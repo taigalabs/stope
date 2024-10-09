@@ -1,8 +1,6 @@
-import Image from "next/image";
+// import { HomeView } from "@/views/home/HomeView";
+import { SignInView } from "@/views/sign_in/sign_in_view";
 
-import styles from "./page.module.scss";
-import { HomeContainer } from "@/containers/home/HomeContainer";
-
-export default function Home() {
-  return <HomeContainer />;
+export default function Page() {
+  return <SignInView />;
 }
