@@ -1,12 +1,12 @@
 export const mockAssets = [
   {
     assetId: 0,
-    isin: "STOCK 500",
-    amount: 500,
+    isin: "Strawberry electronics",
+    amount: 140,
   },
   {
     assetId: 1,
-    isin: "STOCK 500 - 2",
+    isin: "Macrosoft",
     amount: 100,
   },
 ];

@@ -4,38 +4,31 @@ import {
   MerkleWitness20,
 } from "@taigalabs/stope-user-proof/src/MerkleTree20";
 import { Field, MerkleTree, Poseidon } from "o1js";
-import { mockAssets } from '@taigalabs/stope-mock-data'
+import { mockAssets } from "@taigalabs/stope-mock-data";
+import { useRouter } from "next/navigation";
 
 import styles from "./AssetList.module.scss";
-import { useCreateProof } from "./useCreateProof";
 import ZkappWorkerClient from "./zkappWorkerClient";
 
 const transactionFee = 0.1;
 
-const ASSETS = [
-  {
-    assetId: 0,
-    isin: "STOCK 500",
-    amount: 500,
-  },
-  {
-    assetId: 1,
-    isin: "STOCK 500 - 2",
-    amount: 100,
-  },
-];
-
 const Assets = () => {
-  const list = ASSETS.map((asset) => {
+  const router = useRouter();
+
+  const list = mockAssets.map((asset, idx) => {
     return (
-      <li key={asset.assetId}>
+      <li
+        key={asset.assetId}
+        className={styles.item}
+        onClick={() => {
+          router.push(`/asset_list/${idx}`);
+        }}
+      >
         <div>
-          <p>ISIN</p>
-          <p>{asset.isin}</p>
+          <p>ISIN: {asset.isin}</p>
         </div>
         <div>
-          <p>Amount</p>
-          <p>{asset.amount}</p>
+          <p>Qty: {asset.amount}</p>
         </div>
       </li>
     );
@@ -82,11 +75,11 @@ export const AssetList: React.FC<ProofGenViewProps> = ({
   return (
     <div className={styles.wrapper}>
       <Assets />
-      <div className={styles.btnArea}>
-        <button type="button" onClick={handleClickCreateProof}>
-          Create proof
-        </button>
-      </div>
+      {/* <div className={styles.btnArea}> */}
+      {/*   <button type="button" onClick={handleClickCreateProof}> */}
+      {/*     Create proof */}
+      {/*   </button> */}
+      {/* </div> */}
     </div>
   );
 };
