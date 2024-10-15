@@ -32,9 +32,9 @@ export class MerklePos extends SmartContract {
     witness: MerkleWitness20,
     leaf: Field,
     root: Field,
-    isin: Field,
-    amount: Field,
-    secret: Field
+    // isin: Field,
+    // amount: Field,
+    // secret: Field
   ) {
     console.log('witness', witness);
 
@@ -42,8 +42,8 @@ export class MerklePos extends SmartContract {
     console.log('root', root);
     console.log('_root', _root);
 
-    const _leaf = Poseidon.hash([isin, amount, secret]);
-    leaf.assertEquals(_leaf);
+    // const _leaf = Poseidon.hash([isin, amount, secret]);
+    // leaf.assertEquals(_leaf);
 
     root.assertEquals(_root);
   }

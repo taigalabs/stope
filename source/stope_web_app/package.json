@@ -9,9 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@taigalabs/stope-user-proof": "*",
     "@taigalabs/stope-mock-data": "*",
+    "@taigalabs/stope-user-proof": "*",
     "coi-serviceworker": "^0.1.7",
+    "comlink": "^4.4.1",
     "next": "14.2.6",
     "o1js": "^1.6.0",
     "react": "^18",

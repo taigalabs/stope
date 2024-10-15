@@ -15,7 +15,10 @@ const nextConfig = {
       //   ...config.resolve.alias,
       //   o1js: path.resolve(__dirname, "node_modules/o1js/dist/web/index.js"),
       // };
+    } else {
+      config.externals.push('o1js');
     }
+
     config.experiments = { ...config.experiments, topLevelAwait: true };
     config.optimization.minimizer = [];
     return config;
