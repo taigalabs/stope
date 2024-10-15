@@ -44,6 +44,7 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
-    "o1js": "^1.6.0"
+    "o1js": "^1.6.0",
+    "@taigalabs/stope-mock-data": "*"
   }
 }

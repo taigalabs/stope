@@ -10,7 +10,7 @@
       "source/stope_web_app",
       "source/stope_user_proof",
       "source/stope_entities",
-      "mock_data",
+      "source/stope_mock_data",
       "internals/ci"
     ]
   }

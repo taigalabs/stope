@@ -4,6 +4,7 @@ import {
   MerkleWitness20,
 } from "@taigalabs/stope-user-proof/src/MerkleTree20";
 import { Field, MerkleTree, Poseidon } from "o1js";
+import { mockAssets } from '@taigalabs/stope-mock-data'
 
 import styles from "./AssetList.module.scss";
 import { useCreateProof } from "./useCreateProof";
@@ -40,7 +41,7 @@ const Assets = () => {
     );
   });
 
-  return <ul>{list}</ul>;
+  return <ul className={styles.list}>{list}</ul>;
 };
 
 export const AssetList: React.FC<ProofGenViewProps> = ({
@@ -91,5 +92,5 @@ export const AssetList: React.FC<ProofGenViewProps> = ({
 };
 
 export interface ProofGenViewProps {
-  zkappWorkerClient: ZkappWorkerClient;
+  zkappWorkerClient?: ZkappWorkerClient;
 }

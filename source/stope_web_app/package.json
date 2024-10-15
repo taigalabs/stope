@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@taigalabs/stope-user-proof": "*",
+    "@taigalabs/stope-mock-data": "*",
     "coi-serviceworker": "^0.1.7",
     "next": "14.2.6",
     "o1js": "^1.6.0",
