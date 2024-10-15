@@ -74,17 +74,20 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     {/*     <AssetList zkappWorkerClient={state.zkappWorkerClient!} /> */}
     {/*   )} */}
     {/* </div> */}
-    <div>
-      <p>
-        {asset.isin}
-      </p>
-      <p>leaf: {asset._leaf}</p>
-      <p className={styles.witness}>witness: {JSON.stringify(asset._witness)}</p>
-    </div>
-    <div className={styles.btnArea}>
-      <button type="button" onClick={handleClickCreateProof}>
-        Create proof
-      </button>
+    <div className={styles.main}>
+      <div className={styles.content}>
+        <p>
+          {asset.isin}
+        </p>
+        <p className={styles.leaf}>leaf: {asset._leaf}</p>
+        <p className={styles.witness}>witness: {JSON.stringify(asset._witness)}</p>
+      </div>
+      <div className={styles.btnArea}>
+        <button type="button" onClick={handleClickCreateProof}>
+          Create proof
+        </button>
+      </div>
+
     </div>
   </div>;
 };
