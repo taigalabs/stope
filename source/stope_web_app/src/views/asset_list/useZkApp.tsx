@@ -1,19 +1,17 @@
-"use client";
-
-import "./reactCOIServiceWorker";
-
+import React from "react";
 import { Field, PublicKey } from "o1js";
 import { useEffect, useState } from "react";
 
-import styles from "./HomeContainer.module.scss";
+import styles from "./AssetListView.module.scss";
 import ZkappWorkerClient from "./zkappWorkerClient";
-import { Account } from "./Account";
+import { ZkAppAccount } from "./ZkAppAccount";
 import { AssetList } from "./AssetList";
+import { User } from "./User";
 
 const ZKAPP_ADDRESS = "B62qraPVBf3H1SGdEbcYJjzz1d1gYWzVFkmNkKPeR74bH1wk3TGuNe6";
 
-export const HomeContainer = () => {
-  const [state, setState] = useState({
+export function useZkApp() {
+  const [state, setState] = React.useState({
     zkappWorkerClient: null as null | ZkappWorkerClient,
     hasWallet: null as null | boolean,
     hasBeenSetup: false,
@@ -23,11 +21,9 @@ export const HomeContainer = () => {
     zkappPublicKey: null as null | PublicKey,
     creatingTransaction: false,
   });
+  const [displayText, setDisplayText] = React.useState("");
 
-  const [displayText, setDisplayText] = useState("");
-  const [transactionlink, setTransactionLink] = useState("");
-
-  useEffect(() => {
+  React.useEffect(() => {
     async function timeout(seconds: number): Promise<void> {
       return new Promise<void>((resolve) => {
         setTimeout(() => {
@@ -106,12 +102,12 @@ export const HomeContainer = () => {
         });
       }
     })();
+
+    // -------------------------------------------------------
+    // Wait for account to exist, if it didn't
   }, []);
 
-  // -------------------------------------------------------
-  // Wait for account to exist, if it didn't
-
-  useEffect(() => {
+  React.useEffect(() => {
     (async () => {
       if (state.hasBeenSetup && !state.accountExists) {
         for (;;) {
@@ -144,24 +140,5 @@ export const HomeContainer = () => {
     hasWallet = <div>Could not find a wallet. {auroLinkElem}</div>;
   }
 
-  return (
-    <div className={styles.wrapper}>
-      <div className={styles.zkapp}>
-        <div className={styles.start}>
-          {displayText}
-          {hasWallet}
-        </div>
-        <Account
-          hasBeenSetup={state.hasBeenSetup}
-          accountExists={state.accountExists}
-          publicKey={state.publicKey}
-        />
-      </div>
-      <div className={styles.main}>
-        {state.hasBeenSetup && state.accountExists && (
-          <AssetList zkappWorkerClient={state.zkappWorkerClient!} />
-        )}
-      </div>
-    </div>
-  );
-};
+  return { state, displayText, hasWallet };
+}

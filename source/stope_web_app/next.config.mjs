@@ -15,7 +15,10 @@ const nextConfig = {
       //   ...config.resolve.alias,
       //   o1js: path.resolve(__dirname, "node_modules/o1js/dist/web/index.js"),
       // };
+    } else {
+      config.externals.push('o1js');
     }
+
     config.experiments = { ...config.experiments, topLevelAwait: true };
     config.optimization.minimizer = [];
     return config;
@@ -42,7 +45,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  output: "export",
+  // output: "export",
   /* Used to serve the Next.js app from a subdirectory (the GitHub repo name) and
    * assetPrefix is used to serve assets (JS, CSS, images, etc.) from that subdirectory
    * when deployed to GitHub Pages. The assetPrefix needs to be added manually to any assets

@@ -3,7 +3,7 @@ import { spawn } from "child_process";
 
 import { paths } from "./paths.ts";
 
-(async function main() {
+function main() {
   console.log("Starting ci, pwd: %s", process.cwd());
 
   const program = new Command();
@@ -42,4 +42,6 @@ import { paths } from "./paths.ts";
   });
 
   program.parse();
-})();
+}
+
+main();

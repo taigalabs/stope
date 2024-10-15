@@ -1,7 +1,7 @@
 import { PublicKey } from "o1js";
 import React from "react";
 
-export const Account: React.FC<AccountProps> = ({
+export const ZkAppAccount: React.FC<AccountProps> = ({
   hasBeenSetup,
   accountExists,
   publicKey,
@@ -20,7 +20,7 @@ export const Account: React.FC<AccountProps> = ({
     );
   }
 
-  return accountDoesNotExist;
+  return <div>{accountDoesNotExist}</div>;
 };
 
 export interface AccountProps {
