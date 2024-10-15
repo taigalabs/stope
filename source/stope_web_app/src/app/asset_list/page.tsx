@@ -1,6 +1,5 @@
-import { HomeView } from "@/views/home/HomeView";
-// import { SignInView } from "@/views/sign_in/sign_in_view";
+import { AssetListView } from "@/views/asset_list/AssetListView";
 
 export default function Page() {
-  return <HomeView />;
+  return <AssetListView />;
 }
