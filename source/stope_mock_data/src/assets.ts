@@ -1,6 +1,7 @@
 export const mockAssets = [
   {
     assetId: 0,
+    owner: "Mirae",
     isin: "Strawberry electronics",
     amount: 140,
     _leaf:
@@ -53,6 +54,7 @@ export const mockAssets = [
   {
     assetId: 1,
     isin: "Macrosoft",
+    owner: "Mirae",
     amount: 100,
     _leaf:
       "16227726722605667477457185444142184168283005557564449269562470726676917844304",

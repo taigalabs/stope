@@ -23,6 +23,9 @@ const Assets = () => {
         <div>
           <p>Qty: {asset.amount}</p>
         </div>
+        <div>
+          <p>Qty: {asset.owner}</p>
+        </div>
       </li>
     );
   });

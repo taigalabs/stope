@@ -24,6 +24,7 @@
     "ts-node": "^10.9.2"
   },
   "dependencies": {
+    "@taigalabs/stope-entities": "*",
     "o1js": "^1.6.0"
   }
 }
