@@ -16,6 +16,7 @@ const transactionFee = 0.1;
 
 export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
   const { state, displayText, hasWallet } = useZkApp();
+  const [createProofMsg, setCreateProofMsg] = React.useState("");
 
   //
   const handleClickCreateProof = React.useCallback(async () => {
@@ -48,9 +49,11 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
       },
     });
 
-    const transactionLink = `https://minascan.io/devnet/tx/${hash}`;
-    console.log(`View transaction at ${transactionLink}`);
-  }, [state]);
+    const txLink = `https://minascan.io/devnet/tx/${hash}`;
+    console.log(`View transaction at ${txLink}`);
+
+    setCreateProofMsg(`Proof has been created, hash: ${hash}, link: ${txLink}`);
+  }, [state, setCreateProofMsg]);
 
   const asset = mockAssets[Number(idx)];
 
@@ -81,6 +84,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
             <button type="button" onClick={handleClickCreateProof}>
               Create proof
             </button>
+            <div>{createProofMsg}</div>
           </div>
         </div>
       </div>
