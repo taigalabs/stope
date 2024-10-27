@@ -1,22 +1,6 @@
-import {
-  Field,
-  SmartContract,
-  state,
-  State,
-  method,
-  CircuitString,
-  Poseidon,
-  MerkleTree,
-  MerkleWitness,
-} from 'o1js';
-import { MerkleWitness20 } from './MerkleTree20';
+import { Field, SmartContract, state, State, method } from 'o1js';
 
-const sto = {
-  secret: 'secret',
-  symbol: 'symbol',
-  isin: 'isin',
-  amount: 10,
-};
+import { MerkleWitness20 } from './MerkleTree20';
 
 export class MerklePos extends SmartContract {
   @state(Field) isin = State<Field>();
@@ -31,7 +15,7 @@ export class MerklePos extends SmartContract {
   @method async membership(
     witness: MerkleWitness20,
     leaf: Field,
-    root: Field,
+    root: Field
     // isin: Field,
     // amount: Field,
     // secret: Field

@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 
 import styles from "./AssetListView.module.scss";
 import ZkappWorkerClient from "./zkappWorkerClient";
-import { ZkAppAccount } from "./ZkAppAccount";
+// import { ZkAppAccount } from "./ZkAppAccount";
 import { AssetList } from "./AssetList";
-import { User } from "./User";
+// import { User } from "./User";
 
 const ZKAPP_ADDRESS = "B62qraPVBf3H1SGdEbcYJjzz1d1gYWzVFkmNkKPeR74bH1wk3TGuNe6";
 

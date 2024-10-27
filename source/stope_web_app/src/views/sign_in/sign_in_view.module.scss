@@ -1,8 +1,37 @@
 .wrapper {
-  display: grid;
+  display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   padding: 80px 0;
+  height: 100vh;
 
   border: 1px solid black;
+}
+
+.inputElem {
+  padding-top: 20px;
+
+  > p {
+    padding-bottom: 8px;
+  }
+
+  > input {
+    height: 40px;
+    padding: 4px;
+  }
+}
+
+.btnArea {
+  padding-top: 40px;
+
+  button {
+    width: 120px;
+  }
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 1.8em;
+  padding-bottom: 24px;
 }

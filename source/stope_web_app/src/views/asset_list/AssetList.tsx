@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import styles from "./AssetList.module.scss";
 import ZkappWorkerClient from "./zkappWorkerClient";
 
-
 const Assets = () => {
   const router = useRouter();
 

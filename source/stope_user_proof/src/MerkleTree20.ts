@@ -1,14 +1,4 @@
-import {
-  Field,
-  SmartContract,
-  state,
-  State,
-  method,
-  CircuitString,
-  Poseidon,
-  MerkleTree,
-  MerkleWitness,
-} from 'o1js';
+import { MerkleWitness } from 'o1js';
 
 export const HEIGHT = 20;
 

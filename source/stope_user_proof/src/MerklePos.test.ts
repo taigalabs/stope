@@ -70,7 +70,7 @@ describe('MerklePos', () => {
     }
 
     const root = tree.getRoot();
-    console.log('root', root.toString())
+    console.log('root', root.toString());
 
     const witness = new MerkleWitness20(tree.getWitness(1n));
     console.log('witness', witness.toJSON());
