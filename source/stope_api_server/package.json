@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@taigalabs/stope-bridge-proof": "*",
+    "@types/cors": "^2.8.17",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
     "express": "^4.19.2"
   },
   "scripts": {

@@ -17,11 +17,8 @@ export const SignInView = () => {
 
   const { mutateAsync } = useMutation({
     mutationFn: async ({ username, password }: any) => {
-      const res = await fetch(`${API_ENDPOINT}/sign_in`);
+      const res = await fetch(`${API_ENDPOINT}/sign_in`, { method: "POST" });
       console.log(res);
-    },
-    onSuccess: () => {
-      // Invalidate and refetch
     },
   });
 

@@ -14,23 +14,6 @@ export const AssetListView = () => {
 
   return (
     <div className={styles.wrapper}>
-      {/* <div className={styles.zkapp}> */}
-      {/*   <div className={styles.start}> */}
-      {/*     {displayText} */}
-      {/*     {hasWallet} */}
-      {/*   </div> */}
-      {/*   <ZkAppAccount */}
-      {/*     hasBeenSetup={state.hasBeenSetup} */}
-      {/*     accountExists={state.accountExists} */}
-      {/*     publicKey={state.publicKey} */}
-      {/*   /> */}
-      {/* </div> */}
-      {/* <div className={styles.main}> */}
-      {/*   <User /> */}
-      {/*   {state.hasBeenSetup && state.accountExists && ( */}
-      {/*     <AssetList zkappWorkerClient={state.zkappWorkerClient!} /> */}
-      {/*   )} */}
-      {/* </div> */}
       <AssetList />
     </div>
   );

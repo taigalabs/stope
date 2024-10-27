@@ -1,20 +1,7 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  padding: 3rem;
-  padding: 0;
-}
-
-.zkapp {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
-  padding: 1.5rem 0;
-  background-color: #ddd;
-}
-
-.main {
-  /* border: 1px solid black; */
+  height: 100vh;
 }
