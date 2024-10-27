@@ -1,9 +1,4 @@
 import React from "react";
-import {
-  HEIGHT,
-  MerkleWitness20,
-} from "@taigalabs/stope-user-proof/src/MerkleTree20";
-import { Field, MerkleTree, Poseidon } from "o1js";
 import { mockAssets } from "@taigalabs/stope-mock-data";
 import { useRouter } from "next/navigation";
 
