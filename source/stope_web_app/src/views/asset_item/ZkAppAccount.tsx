@@ -27,4 +27,5 @@ export interface AccountProps {
   hasBeenSetup: boolean;
   accountExists: boolean;
   publicKey: PublicKey | null;
+  zkAppAddress: string | null;
 }

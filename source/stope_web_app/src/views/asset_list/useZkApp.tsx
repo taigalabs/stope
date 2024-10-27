@@ -7,6 +7,7 @@ const ZKAPP_ADDRESS = "B62qraPVBf3H1SGdEbcYJjzz1d1gYWzVFkmNkKPeR74bH1wk3TGuNe6";
 
 export function useZkApp() {
   const [state, setState] = React.useState({
+    zkAppAddress: ZKAPP_ADDRESS,
     zkappWorkerClient: null as null | ZkappWorkerClient,
     hasWallet: null as null | boolean,
     hasBeenSetup: false,
@@ -97,9 +98,6 @@ export function useZkApp() {
         });
       }
     })();
-
-    // -------------------------------------------------------
-    // Wait for account to exist, if it didn't
   }, []);
 
   React.useEffect(() => {

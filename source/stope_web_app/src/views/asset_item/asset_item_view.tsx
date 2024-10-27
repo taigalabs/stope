@@ -66,6 +66,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
             hasBeenSetup={state.hasBeenSetup}
             accountExists={state.accountExists}
             publicKey={state.publicKey}
+            zkAppAddress={state.zkAppAddress}
           />
         </div>
         <div className={styles.main}>
