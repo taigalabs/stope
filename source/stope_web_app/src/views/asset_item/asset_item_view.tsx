@@ -75,6 +75,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
         <div className={styles.main}>
           <div className={styles.content}>
             <p>{asset.isin}</p>
+            <p>{`Asset amount: 0 < ${asset.amount} < 200`}</p>
             <p className={styles.leaf}>leaf: {asset._leaf}</p>
             <p className={styles.witness}>
               witness: {JSON.stringify(asset._witness)}
