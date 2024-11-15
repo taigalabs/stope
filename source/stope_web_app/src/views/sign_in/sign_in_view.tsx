@@ -6,8 +6,8 @@ import { useRouter } from "next/navigation";
 
 import styles from "./sign_in_view.module.scss";
 import { useStore } from "@/store";
-import { useMutation } from "@tanstack/react-query";
-import { API_ENDPOINT } from "@/requests";
+// import { useMutation } from "@tanstack/react-query";
+// import { API_ENDPOINT } from "@/requests";
 
 export const SignInView = () => {
   const router = useRouter();

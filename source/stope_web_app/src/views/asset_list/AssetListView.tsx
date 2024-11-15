@@ -1,12 +1,12 @@
 "use client";
 
-import "./reactCOIServiceWorker";
+import "@/components/zkapp/reactCOIServiceWorker";
 
 import styles from "./AssetListView.module.scss";
-// import { ZkAppAccount } from "./ZkAppAccount";
 import { AssetList } from "./AssetList";
+// import { ZkAppAccount } from "./ZkAppAccount";
 // import { User } from "./User";
-import { useZkApp } from "./useZkApp";
+// import { useZkApp } from "@/components/zkapp//useZkApp";
 
 export const AssetListView = () => {
   // const [transactionlink, setTransactionLink] = useState("");

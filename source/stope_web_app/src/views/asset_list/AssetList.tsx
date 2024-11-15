@@ -3,7 +3,7 @@ import { mockAssets } from "@taigalabs/stope-mock-data";
 import { useRouter } from "next/navigation";
 
 import styles from "./AssetList.module.scss";
-import ZkappWorkerClient from "./zkappWorkerClient";
+import ZkappWorkerClient from "@/components/zkapp/zkappWorkerClient";
 
 const Assets = () => {
   const router = useRouter();
