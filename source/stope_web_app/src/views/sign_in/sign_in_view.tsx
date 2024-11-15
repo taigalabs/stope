@@ -15,18 +15,17 @@ export const SignInView = () => {
 
   const { signIn } = useStore();
 
-  const { mutateAsync } = useMutation({
-    mutationFn: async ({ username, password }: any) => {
-      const res = await fetch(`${API_ENDPOINT}/sign_in`, { method: "POST" });
-      console.log(res);
-    },
-  });
+  // const { mutateAsync } = useMutation({
+  //   mutationFn: async ({ username, password }: any) => {
+  //     const res = await fetch(`${API_ENDPOINT}/sign_in`, { method: "POST" });
+  //     console.log(res);
+  //   },
+  // });
 
   const handleClickSignIn = React.useCallback(async () => {
-    await mutateAsync({ username: state.username, password: state.password });
     signIn(state.username, state.password);
     router.push("/asset_list");
-  }, [router, state, mutateAsync]);
+  }, [router, state]);
 
   return (
     <div className={styles.wrapper}>
