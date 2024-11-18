@@ -64,7 +64,6 @@ describe('MerklePos', () => {
       const asset = mockAssets[idx];
       const { secret } = mockUser;
       const { isin, balance } = asset;
-
       const { leaf, userPublic } = makeLeaf(secret, isin, balance);
 
       tree.setLeaf(BigInt(idx), leaf);
@@ -73,17 +72,17 @@ describe('MerklePos', () => {
       console.log('Added to tree, idx: %s, leaf: %s', leaf.toString());
     }
 
-    const root = tree.getRoot();
-    console.log('root', root.toString());
-
-    const witness = new MerkleWitness20(tree.getWitness(0n));
-    console.log('witness', witness.toJSON());
-
     // Assume the first asset is of interest (testing) and we know the credentials
     const asset = mockAssets[0];
     const { secret } = mockUser;
     const { isin, balance } = asset;
     const { leaf, userPublic } = makeLeaf(secret, isin, balance);
+
+    const root = tree.getRoot();
+    console.log('root', root.toString());
+
+    const witness = new MerkleWitness20(tree.getWitness(0n));
+    console.log('witness', witness.toJSON());
 
     const txn = await Mina.transaction(senderAccount, async () => {
       await zkApp.membership(witness, leaf, root);
@@ -99,37 +98,52 @@ describe('MerklePos', () => {
     }
   });
 
-  it('test22', async () => {
+  it('fail_if_wrong_user', async () => {
     await localDeploy();
 
     const tree = new MerkleTree(HEIGHT);
+
     for (let idx = 0; idx < mockAssets.length; idx += 1) {
       const asset = mockAssets[idx];
       const { secret } = mockUser;
-      // const { isin, amount } = asset;
+      const { isin, balance } = asset;
+      const { leaf, userPublic } = makeLeaf(secret, isin, balance);
 
-      // const _isin = CircuitString.fromString(isin).hash();
-      // const _secret = CircuitString.fromString(secret).hash();
-      // const leaf = Poseidon.hash([_isin, Field.from(BigInt(amount)), _secret]);
+      tree.setLeaf(BigInt(idx), leaf);
 
-      // console.log('leaf', leaf.toString());
-
-      // // tree
-      // tree.setLeaf(BigInt(idx), leaf);
-      //
+      console.log('userPublic', userPublic.toString());
+      console.log('Added to tree, idx: %s, leaf: %s', leaf.toString());
     }
+
+    const asset = mockAssets[0];
+    const { secret } = mockWrongUser;
+    const { isin, balance } = asset;
+    const { leaf, userPublic } = makeLeaf(secret, isin, balance);
 
     const root = tree.getRoot();
     console.log('root', root.toString());
 
-    const witness = new MerkleWitness20(tree.getWitness(1n));
+    const witness = new MerkleWitness20(tree.getWitness(0n));
     console.log('witness', witness.toJSON());
 
-    // // update transaction
-    // const txn = await Mina.transaction(senderAccount, async () => {
-    //   await zkApp.membership(witness, leaf, root);
-    // });
-    // await txn.prove();
-    // await txn.sign([senderKey]).send();
+    const txn = await Mina.transaction(senderAccount, async () => {
+      try {
+        await zkApp.membership(witness, leaf, root);
+      } catch (err) {
+        console.error(`failed to execute zk app, ${err}`);
+      }
+    });
+
+    let isProven = null;
+    try {
+      isProven = await txn.prove();
+      expect(isProven.toJSON()).toBeTruthy();
+
+      await txn.sign([senderKey]).send();
+    } catch (err) {
+      console.error(`failed to prove, ${err}`);
+    }
+
+    expect(isProven).toBeNull;
   });
 });
