@@ -12,6 +12,7 @@ import { mockAssets, mockUser } from '@taigalabs/stope-mock-data';
 
 import { MerklePos } from './MerklePos';
 import { HEIGHT, MerkleWitness20 } from './MerkleTree20';
+import { makeLeaf } from './make_leaf';
 
 let proofsEnabled = false;
 
@@ -50,6 +51,49 @@ describe('MerklePos', () => {
     await txn.sign([deployerKey, zkAppPrivateKey]).send();
   }
 
+  it('generate_1', async () => {
+    await localDeploy();
+
+    const tree = new MerkleTree(HEIGHT);
+
+    for (let idx = 0; idx < mockAssets.length; idx += 1) {
+      const asset = mockAssets[idx];
+      const { secret } = mockUser;
+      const { isin, balance } = asset;
+
+      const { leaf, userPublic } = makeLeaf(secret, isin, balance);
+
+      tree.setLeaf(BigInt(idx), leaf);
+
+      console.log('userPublic', userPublic.toString());
+      console.log('Added to tree, idx: %s, leaf: %s', leaf.toString());
+    }
+
+    const root = tree.getRoot();
+    console.log('root', root.toString());
+
+    const witness = new MerkleWitness20(tree.getWitness(0n));
+    console.log('witness', witness.toJSON());
+
+    const asset = mockAssets[0];
+    const { secret } = mockUser;
+    const { isin, balance } = asset;
+
+    const userPublic = CircuitString.fromString(secret).hash();
+    const _isin = CircuitString.fromString(isin).hash();
+    const leaf = Poseidon.hash([
+      _isin,
+      Field.from(BigInt(balance)),
+      userPublic,
+    ]);
+
+    const txn = await Mina.transaction(senderAccount, async () => {
+      await zkApp.membership(witness, leaf, root);
+    });
+    await txn.prove();
+    // await txn.sign([senderKey]).send();
+  });
+
   it('test22', async () => {
     await localDeploy();
 
@@ -67,6 +111,7 @@ describe('MerklePos', () => {
 
       // // tree
       // tree.setLeaf(BigInt(idx), leaf);
+      //
     }
 
     const root = tree.getRoot();
