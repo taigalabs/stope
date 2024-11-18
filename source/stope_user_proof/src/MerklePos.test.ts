@@ -8,7 +8,11 @@ import {
   PrivateKey,
   PublicKey,
 } from 'o1js';
-import { mockAssets, mockUser } from '@taigalabs/stope-mock-data';
+import {
+  mockAssets,
+  mockUser,
+  mockWrongUser,
+} from '@taigalabs/stope-mock-data';
 
 import { MerklePos } from './MerklePos';
 import { HEIGHT, MerkleWitness20 } from './MerkleTree20';
@@ -84,8 +88,15 @@ describe('MerklePos', () => {
     const txn = await Mina.transaction(senderAccount, async () => {
       await zkApp.membership(witness, leaf, root);
     });
-    await txn.prove();
-    await txn.sign([senderKey]).send();
+
+    try {
+      const isProven = await txn.prove();
+      expect(isProven.toJSON()).toBeTruthy();
+
+      await txn.sign([senderKey]).send();
+    } catch (err) {
+      throw new Error(`failed to prove, ${err}`);
+    }
   });
 
   it('test22', async () => {
