@@ -4,6 +4,7 @@ export const mockAssets: ProcessedSTO[] = (function () {
   const ret: ProcessedSTO[] = [];
   for (let idx = 0; idx <= 10; idx += 1) {
     ret.push({
+      assetId: `assetId_${idx}`,
       userPublic: `userPublic_${idx}`,
       symbol: `symbol_${idx}`,
       isin: `isin_${idx}`,

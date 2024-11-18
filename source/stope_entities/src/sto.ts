@@ -21,6 +21,7 @@ export interface STOContract {
 }
 
 export type ProcessedSTO = {
+  assetId: string;
   userPublic: string;
   symbol: string;
   isin: string;

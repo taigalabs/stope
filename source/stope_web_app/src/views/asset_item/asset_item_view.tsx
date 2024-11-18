@@ -74,12 +74,50 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
         </div>
         <div className={styles.main}>
           <div className={styles.content}>
-            <p>{asset.isin}</p>
-            {/* <p>{`Asset amount: 0 < ${asset.amount} < 200`}</p> */}
-            {/* <p className={styles.leaf}>leaf: {asset._leaf}</p> */}
-            {/* <p className={styles.witness}> */}
-            {/*   witness: {JSON.stringify(asset._witness)} */}
-            {/* </p> */}
+            <div className={styles.item}>
+              <span>asset id: </span>
+              <span>{asset.assetId}</span>
+            </div>
+            <div className={styles.item}>
+              <span>user public: </span>
+              <span>{asset.userPublic}</span>
+            </div>
+            <div className={styles.item}>
+              <span>symbol: </span>
+              <span>{asset.symbol}</span>
+            </div>
+            <div className={styles.item}>
+              <span>ISIN: </span>
+              <span>{asset.isin}</span>
+            </div>
+            <div className={styles.item}>
+              <span>total supply: </span>
+              <span>{asset.totalSupply}</span>
+            </div>
+            <div className={styles.item}>
+              <span>issuer name: </span>
+              <span>{asset.issuerName}</span>
+            </div>
+            <div className={styles.item}>
+              <span>name: </span>
+              <span>{asset.name}</span>
+            </div>
+            <div className={styles.item}>
+              <span>is trust: </span>
+              <span>{asset.isTrust === true ? "true" : "false"}</span>
+            </div>
+            <div className={styles.item}>
+              <span>trust name: </span>
+              <span>{asset.trustName}</span>
+            </div>
+            <div className={styles.item}>
+              <span>decimals: </span>
+              <span>{asset.decimals}</span>
+            </div>
+            <div className={styles.item}>
+              <span>balance: </span>
+              <span>{asset.balance}</span>
+            </div>
           </div>
           <div className={styles.btnArea}>
             <button type="button" onClick={handleClickCreateProof}>
