@@ -11,7 +11,7 @@ const Assets = () => {
   const list = mockAssets.map((asset, idx) => {
     return (
       <li
-        key={asset.assetId}
+        // key={asset.assetId}
         className={styles.item}
         onClick={() => {
           router.push(`/asset_list/${idx}`);
@@ -20,12 +20,12 @@ const Assets = () => {
         <div>
           <p>ISIN: {asset.isin}</p>
         </div>
-        <div>
-          <p>Qty: {asset.amount}</p>
-        </div>
-        <div>
-          <p>Qty: {asset.owner}</p>
-        </div>
+        {/* <div> */}
+        {/*   <p>Qty: {asset.amount}</p> */}
+        {/* </div> */}
+        {/* <div> */}
+        {/*   <p>Qty: {asset.owner}</p> */}
+        {/* </div> */}
       </li>
     );
   });

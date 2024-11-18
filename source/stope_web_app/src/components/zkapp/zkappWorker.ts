@@ -22,7 +22,7 @@ const functions = {
   },
   loadContract: async (args: {}) => {
     const { MerklePos } = await import(
-      "@taigalabs/stope-user-proof/build/src/MerklePos.js"
+      "@taigalabs/stope-user-proof/build/MerklePos.js"
     );
     state.MerklePos = MerklePos;
   },
