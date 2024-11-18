@@ -75,23 +75,17 @@ describe('MerklePos', () => {
     const witness = new MerkleWitness20(tree.getWitness(0n));
     console.log('witness', witness.toJSON());
 
+    // Assume the first asset is of interest (testing) and we know the credentials
     const asset = mockAssets[0];
     const { secret } = mockUser;
     const { isin, balance } = asset;
-
-    const userPublic = CircuitString.fromString(secret).hash();
-    const _isin = CircuitString.fromString(isin).hash();
-    const leaf = Poseidon.hash([
-      _isin,
-      Field.from(BigInt(balance)),
-      userPublic,
-    ]);
+    const { leaf, userPublic } = makeLeaf(secret, isin, balance);
 
     const txn = await Mina.transaction(senderAccount, async () => {
       await zkApp.membership(witness, leaf, root);
     });
     await txn.prove();
-    // await txn.sign([senderKey]).send();
+    await txn.sign([senderKey]).send();
   });
 
   it('test22', async () => {
