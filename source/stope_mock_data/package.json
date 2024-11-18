@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "",
   "author": "",
+  "main": "./src/index.ts",
   "license": "Apache-2.0",
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",

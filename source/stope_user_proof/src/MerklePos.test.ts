@@ -57,16 +57,16 @@ describe('MerklePos', () => {
     for (let idx = 0; idx < mockAssets.length; idx += 1) {
       const asset = mockAssets[idx];
       const { secret } = mockUser;
-      const { isin, amount } = asset;
+      // const { isin, amount } = asset;
 
-      const _isin = CircuitString.fromString(isin).hash();
-      const _secret = CircuitString.fromString(secret).hash();
-      const leaf = Poseidon.hash([_isin, Field.from(BigInt(amount)), _secret]);
+      // const _isin = CircuitString.fromString(isin).hash();
+      // const _secret = CircuitString.fromString(secret).hash();
+      // const leaf = Poseidon.hash([_isin, Field.from(BigInt(amount)), _secret]);
 
-      console.log('leaf', leaf.toString());
+      // console.log('leaf', leaf.toString());
 
-      // tree
-      tree.setLeaf(BigInt(idx), leaf);
+      // // tree
+      // tree.setLeaf(BigInt(idx), leaf);
     }
 
     const root = tree.getRoot();

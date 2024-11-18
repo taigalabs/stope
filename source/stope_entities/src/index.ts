@@ -1,1 +1,1 @@
-export * from "./sto.ts";
+export * from "./sto";
