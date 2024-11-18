@@ -2,7 +2,7 @@ import React from "react";
 import { mockAssets } from "@taigalabs/stope-mock-data";
 import { useRouter } from "next/navigation";
 
-import styles from "./AssetList.module.scss";
+import styles from "./asset_list.module.scss";
 import ZkappWorkerClient from "@/components/zkapp/zkappWorkerClient";
 
 const Assets = () => {

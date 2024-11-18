@@ -10,7 +10,7 @@ import { Field, MerkleTree, Poseidon } from "o1js";
 
 import styles from "./asset_item_view.module.scss";
 import { useZkApp } from "@/components/zkapp/useZkApp";
-import { ZkAppAccount } from "./ZkAppAccount";
+import { ZkAppAccount } from "./zk_app_account";
 
 const transactionFee = 0.1;
 
