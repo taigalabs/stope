@@ -1,4 +1,4 @@
-export interface STO {
+export interface STOContract {
   userPublic: string;
   symbol: string;
   isin: string;
@@ -20,9 +20,20 @@ export interface STO {
   whitelistContractAddress: string;
 }
 
-export interface ProcessedSTO {
-  secret: string;
+export type ProcessedSTO = {
+  userPublic: string;
   symbol: string;
   isin: string;
-  amount: number;
-}
+  totalSupply: number;
+  issuerName: string;
+  name: string;
+  isTrust: boolean;
+  trustName: string;
+  decimals: string;
+  balance: number;
+  issuable: boolean;
+  paused: boolean;
+  issuer: string;
+  usable: boolean;
+  whitelistContractAddress: string;
+};
