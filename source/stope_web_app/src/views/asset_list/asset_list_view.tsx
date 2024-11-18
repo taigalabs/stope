@@ -4,7 +4,7 @@ import "@/components/zkapp/reactCOIServiceWorker";
 
 import React from "react";
 
-import styles from "./AssetListView.module.scss";
+import styles from "./asset_list_view.module.scss";
 import { AssetList } from "./asset_list";
 
 export const AssetListView: React.FC = () => {
