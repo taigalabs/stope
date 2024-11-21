@@ -1,5 +1,7 @@
 import { Command } from "commander";
+import fs from 'fs'
 import { spawn } from "child_process";
+import path from 'path'
 
 import { paths } from "./paths.ts";
 
@@ -40,6 +42,26 @@ function main() {
       cwd: paths.stope_user_proof,
     });
   });
+
+  program
+    .command("docker")
+    .arguments("<file>") //
+    .action(() => {
+      const filename = `run.sh`;
+      const fpath = path.resolve(paths.docker, filename);
+
+      if (fs.existsSync(fpath)) {
+        console.info("Found docker script, running, path: %s", fpath);
+
+        spawn(`sh ${fpath}`, {
+          stdio: "inherit",
+          shell: true,
+          cwd: paths.docker,
+        });
+      } else {
+        console.error("Docker script does not exist, path: %s", fpath);
+      }
+    });
 
   program.parse();
 }
