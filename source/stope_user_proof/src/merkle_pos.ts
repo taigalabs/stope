@@ -1,13 +1,4 @@
-import {
-  Field,
-  SmartContract,
-  state,
-  State,
-  method,
-  Poseidon,
-  CircuitString,
-  Provable,
-} from 'o1js';
+import { Field, SmartContract, state, State, method, Poseidon } from 'o1js';
 
 import { MerkleWitness20 } from './merkle_tree_20';
 

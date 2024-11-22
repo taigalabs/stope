@@ -144,7 +144,6 @@ describe('MerklePos', () => {
 
     const txn = await Mina.transaction(senderAccount, async () => {
       try {
-        // await zkApp.membership(witness, leaf, root);
         await zkApp.membership(witness, leaf, root, _isin, _balance, _secret);
       } catch (err) {
         console.error(`failed to execute zk app, ${err}`);
