@@ -5,7 +5,7 @@ import { mockAssets } from "@taigalabs/stope-mock-data";
 import {
   HEIGHT,
   MerkleWitness20,
-} from "@taigalabs/stope-user-proof/src/MerkleTree20";
+} from "@taigalabs/stope-user-proof/src/merkle_tree_20";
 import { Field, MerkleTree, Poseidon } from "o1js";
 
 import styles from "./asset_item_view.module.scss";
@@ -17,12 +17,15 @@ const transactionFee = 0.1;
 export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
   const { state, displayText, hasWallet } = useZkApp();
   const [createProofMsg, setCreateProofMsg] = React.useState("");
+  const asset = mockAssets[Number(idx)];
 
   //
   const handleClickCreateProof = React.useCallback(async () => {
     const zkappWorkerClient = state.zkappWorkerClient!;
 
     console.log("Creating a transaction...");
+
+    const { isin, balance, userPublic } = asset;
 
     const tree = new MerkleTree(HEIGHT);
     const leaf = Poseidon.hash([Field.from(0)]);
@@ -32,7 +35,14 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     const witness = new MerkleWitness20(tree.getWitness(BigInt(0)));
 
     console.log("proof gen view, root", root);
-    await zkappWorkerClient!.membership(witness, leaf, root);
+    await zkappWorkerClient!.membership(
+      witness,
+      leaf,
+      root,
+      Field.from(0),
+      Field.from(0),
+      Field.from(0)
+    );
 
     console.log("Creating proof...");
     await zkappWorkerClient!.proveUpdateTransaction();
@@ -53,9 +63,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     console.log(`View transaction at ${txLink}`);
 
     setCreateProofMsg(`Proof has been created, hash: ${hash}, link: ${txLink}`);
-  }, [state, setCreateProofMsg]);
-
-  const asset = mockAssets[Number(idx)];
+  }, [state, setCreateProofMsg, asset]);
 
   return (
     asset && (

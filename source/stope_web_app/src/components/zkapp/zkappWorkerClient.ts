@@ -5,7 +5,7 @@ import type {
   ZkappWorkerReponse,
   ZkappWorkerRequest,
 } from "./zkappWorker";
-import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/MerkleTree20";
+import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
 
 export default class ZkappWorkerClient {
   // ---------------------------------------------------------------------------------------
@@ -39,12 +39,23 @@ export default class ZkappWorkerClient {
     });
   }
 
-  async membership(_witness: MerkleWitness20, _leaf: Field, _root: Field) {
+  async membership(
+    _witness: MerkleWitness20,
+    _leaf: Field,
+    _root: Field,
+    _isin: Field,
+    _balance: Field,
+    _secret: Field
+  ) {
     const witness = _witness.toJSON();
     const leaf = _leaf.toJSON();
     const root = _root.toJSON();
 
-    console.log("client", witness, leaf, root);
+    const isin = _witness.toJSON();
+    const balance = _leaf.toJSON();
+    const secret = _root.toJSON();
+
+    console.log("client", witness, leaf, root, isin, balance, secret);
 
     return this._call("membership", { witness, leaf, root });
   }

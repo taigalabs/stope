@@ -1,6 +1,13 @@
-import { Field, Mina, PublicKey, fetchAccount } from "o1js";
-import type { MerklePos } from "@taigalabs/stope-user-proof/src/MerklePos";
-import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/MerkleTree20";
+import {
+  CircuitString,
+  Field,
+  Mina,
+  Poseidon,
+  PublicKey,
+  fetchAccount,
+} from "o1js";
+import type { MerklePos } from "@taigalabs/stope-user-proof/src/merkle_pos";
+import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
 
 type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 
@@ -22,7 +29,7 @@ const functions = {
   },
   loadContract: async (args: {}) => {
     const { MerklePos } = await import(
-      "@taigalabs/stope-user-proof/build/MerklePos.js"
+      "@taigalabs/stope-user-proof/build/merkle_pos.js"
     );
     state.MerklePos = MerklePos;
   },
@@ -39,8 +46,15 @@ const functions = {
 
     state.zkapp = new state.MerklePos!(publicKey);
   },
-  membership: async (args: { witness: string; leaf: string; root: string }) => {
-    const { witness, leaf, root } = args;
+  membership: async (args: {
+    witness: string;
+    leaf: string;
+    root: string;
+    isin: string;
+    balance: string;
+    secret: string;
+  }) => {
+    const { witness, leaf, root, isin, balance, secret } = args;
 
     const _witness = MerkleWitness20.fromJSON(witness);
     console.log("worker: wit", witness);
@@ -52,8 +66,21 @@ const functions = {
     console.log("worker: _root2", _root2);
     console.log("worker: _root", _root);
 
+    const _secret = CircuitString.fromString(secret).hash();
+    // const userPublic = Poseidon.hash([_secret]);
+
+    const _isin = CircuitString.fromString(isin).hash();
+    const _balance = Field.from(BigInt(balance));
+
     const transaction = await Mina.transaction(async () => {
-      await state.zkapp!.membership(_witness, _leaf, _root);
+      await state.zkapp!.membership(
+        _witness,
+        _leaf,
+        _root,
+        _isin,
+        _balance,
+        _secret
+      );
     });
     state.transaction = transaction;
   },
