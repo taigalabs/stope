@@ -1,4 +1,4 @@
-import { runServer } from "./server/run.ts";
+import { runServer } from "../server/run.ts";
 
 (async function main() {
   console.log("Starting api server...");
