@@ -13,7 +13,7 @@ export const SignInView = () => {
   const router = useRouter();
   const [state, setState] = useState({ username: "", password: "" });
 
-  console.log('state', state)
+  console.log("state", state);
 
   const { signIn } = useStore();
 
@@ -23,7 +23,8 @@ export const SignInView = () => {
         const resp = await fetch(`${API_ENDPOINT}/sign_in`, {
           method: "POST",
           body: JSON.stringify({
-            username, password,
+            username,
+            password,
           }),
           headers: { "Content-Type": "application/json" },
         });
@@ -34,13 +35,12 @@ export const SignInView = () => {
   });
 
   const handleClickSignIn = React.useCallback(async () => {
-    const ret = await mutateAsync({ username: state.username, password: state.password });
-
+    // const ret = await mutateAsync({ username: state.username, password: state.password });
     // if (ret.ok) {
     //   signIn(state.username, state.password);
     //   router.push("/asset_list");
     // }
-    //
+
     signIn(state.username, state.password);
     router.push("/asset_list");
   }, [router, state, mutateAsync]);
