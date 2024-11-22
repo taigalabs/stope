@@ -27,16 +27,19 @@ export const SignInView = () => {
           }),
           headers: { "Content-Type": "application/json" },
         });
-        const ret = await resp.json();
-        console.log(3, ret);
+
+        return resp.json();
       }
     },
   });
 
   const handleClickSignIn = React.useCallback(async () => {
-    await mutateAsync({ username: state.username, password: state.password });
-    // signIn(state.username, state.password);
-    // router.push("/asset_list");
+    const ret = await mutateAsync({ username: state.username, password: state.password });
+
+    if (ret.ok) {
+      signIn(state.username, state.password);
+      router.push("/asset_list");
+    }
   }, [router, state, mutateAsync]);
 
   return (

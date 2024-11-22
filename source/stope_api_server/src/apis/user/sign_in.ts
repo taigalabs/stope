@@ -1,4 +1,4 @@
-import knex from "knex";
+import knex, { Knex } from "knex";
 import { Request, Response } from "express";
 
 export async function sign_in(req: Request, res: Response) {
@@ -12,16 +12,21 @@ export async function sign_in(req: Request, res: Response) {
     });
   }
 
-  const { db } = res.app.locals;
+  const db = res.app.locals.db as Knex;
 
-  const row = await db('users').select('*').where({
+  const rows = await db('users').select('*').where({
     username,
     password,
   });
 
-  console.log(22, row)
+  if (rows.length) {
+    return res.send({
+      ok: true,
+    });
+  } else {
+    return res.send({
+      err: 'no row with username'
+    })
+  }
 
-  res.send({
-    ok: true,
-  });
 }
