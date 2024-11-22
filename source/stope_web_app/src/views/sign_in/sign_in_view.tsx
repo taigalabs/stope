@@ -3,29 +3,41 @@
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
 
 import styles from "./sign_in_view.module.scss";
 import { useStore } from "@/store";
-// import { useMutation } from "@tanstack/react-query";
-// import { API_ENDPOINT } from "@/requests";
+import { API_ENDPOINT } from "@/requests";
 
 export const SignInView = () => {
   const router = useRouter();
   const [state, setState] = useState({ username: "", password: "" });
 
+  console.log('state', state)
+
   const { signIn } = useStore();
 
-  // const { mutateAsync } = useMutation({
-  //   mutationFn: async ({ username, password }: any) => {
-  //     const res = await fetch(`${API_ENDPOINT}/sign_in`, { method: "POST" });
-  //     console.log(res);
-  //   },
-  // });
+  const { mutateAsync } = useMutation({
+    mutationFn: async ({ username, password }: any) => {
+      if (state.username && state.password) {
+        const resp = await fetch(`${API_ENDPOINT}/sign_in`, {
+          method: "POST",
+          body: JSON.stringify({
+            username, password,
+          }),
+          headers: { "Content-Type": "application/json" },
+        });
+        const ret = await resp.json();
+        console.log(3, ret);
+      }
+    },
+  });
 
   const handleClickSignIn = React.useCallback(async () => {
-    signIn(state.username, state.password);
-    router.push("/asset_list");
-  }, [router, state]);
+    await mutateAsync({ username: state.username, password: state.password });
+    // signIn(state.username, state.password);
+    // router.push("/asset_list");
+  }, [router, state, mutateAsync]);
 
   return (
     <div className={styles.wrapper}>
@@ -35,14 +47,14 @@ export const SignInView = () => {
           <p>User ID</p>
           <input
             type="text"
-            onChange={(ev) => ({ ...state, username: ev.target.value })}
+            onChange={(ev) => setState({ ...state, username: ev.target.value })}
           />
         </div>
         <div className={styles.inputElem}>
           <p>Password</p>
           <input
             type="password"
-            onChange={(ev) => ({ ...state, password: ev.target.value })}
+            onChange={(ev) => setState({ ...state, password: ev.target.value })}
           />
         </div>
       </div>
