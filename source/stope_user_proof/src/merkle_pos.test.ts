@@ -14,8 +14,8 @@ import {
   mockWrongUser,
 } from '@taigalabs/stope-mock-data';
 
-import { MerklePos } from './MerklePos';
-import { HEIGHT, MerkleWitness20 } from './MerkleTree20';
+import { MerklePos } from './merkle_pos';
+import { HEIGHT, MerkleWitness20 } from './merkle_tree_20';
 import { makeLeaf } from './make_leaf';
 
 let proofsEnabled = false;
@@ -64,11 +64,17 @@ describe('MerklePos', () => {
       const asset = mockAssets[idx];
       const { secret } = mockUser;
       const { isin, balance } = asset;
-      const { leaf, userPublic } = makeLeaf(secret, isin, balance);
+      const { leaf, userPublic, _secret } = makeLeaf(secret, isin, balance);
 
       tree.setLeaf(BigInt(idx), leaf);
 
-      console.log('userPublic', userPublic.toString());
+      console.log(
+        'made leaf, idx: %s, userPublic: %s, secret: %s, _secret: %s',
+        idx,
+        userPublic.toString(),
+        secret,
+        _secret.toString()
+      );
       console.log('Added to tree, idx: %s, leaf: %s', leaf.toString());
     }
 
@@ -76,16 +82,22 @@ describe('MerklePos', () => {
     const asset = mockAssets[0];
     const { secret } = mockUser;
     const { isin, balance } = asset;
-    const { leaf, userPublic } = makeLeaf(secret, isin, balance);
+    const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(
+      secret,
+      isin,
+      balance
+    );
 
     const root = tree.getRoot();
-    console.log('root', root.toString());
+    // console.log('root', root.toString());
 
     const witness = new MerkleWitness20(tree.getWitness(0n));
-    console.log('witness', witness.toJSON());
+    // console.log('witness', witness.toJSON());
+
+    console.log('made leaf, userPublic: %s, secret: %s', userPublic, _secret);
 
     const txn = await Mina.transaction(senderAccount, async () => {
-      await zkApp.membership(witness, leaf, root);
+      await zkApp.membership(witness, leaf, root, _isin, _balance, _secret);
     });
 
     try {
@@ -118,7 +130,11 @@ describe('MerklePos', () => {
     const asset = mockAssets[0];
     const { secret } = mockWrongUser;
     const { isin, balance } = asset;
-    const { leaf, userPublic } = makeLeaf(secret, isin, balance);
+    const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(
+      secret,
+      isin,
+      balance
+    );
 
     const root = tree.getRoot();
     console.log('root', root.toString());
@@ -128,7 +144,8 @@ describe('MerklePos', () => {
 
     const txn = await Mina.transaction(senderAccount, async () => {
       try {
-        await zkApp.membership(witness, leaf, root);
+        // await zkApp.membership(witness, leaf, root);
+        await zkApp.membership(witness, leaf, root, _isin, _balance, _secret);
       } catch (err) {
         console.error(`failed to execute zk app, ${err}`);
       }

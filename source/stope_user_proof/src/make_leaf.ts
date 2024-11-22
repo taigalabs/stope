@@ -8,12 +8,15 @@ import {
   PrivateKey,
   PublicKey,
 } from 'o1js';
-import { mockAssets, mockUser } from '@taigalabs/stope-mock-data';
 
 export function makeLeaf(secret: string, isin: string, balance: number) {
-  const userPublic = CircuitString.fromString(secret).hash();
-  const _isin = CircuitString.fromString(isin).hash();
-  const leaf = Poseidon.hash([_isin, Field.from(BigInt(balance)), userPublic]);
+  const _secret = CircuitString.fromString(secret).hash();
+  const userPublic = Poseidon.hash([_secret]);
 
-  return { leaf, userPublic };
+  const _isin = CircuitString.fromString(isin).hash();
+  const _balance = Field.from(BigInt(balance));
+
+  const leaf = Poseidon.hash([userPublic, _isin, _balance]);
+
+  return { leaf, userPublic, _isin, _balance, _secret };
 }
