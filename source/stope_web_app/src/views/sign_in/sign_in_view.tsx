@@ -36,10 +36,13 @@ export const SignInView = () => {
   const handleClickSignIn = React.useCallback(async () => {
     const ret = await mutateAsync({ username: state.username, password: state.password });
 
-    if (ret.ok) {
-      signIn(state.username, state.password);
-      router.push("/asset_list");
-    }
+    // if (ret.ok) {
+    //   signIn(state.username, state.password);
+    //   router.push("/asset_list");
+    // }
+    //
+    signIn(state.username, state.password);
+    router.push("/asset_list");
   }, [router, state, mutateAsync]);
 
   return (
