@@ -7,16 +7,19 @@ import {
   MerkleWitness20,
 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
 import { Field, MerkleTree, Poseidon } from "o1js";
+import { makeLeaf } from '@taigalabs/stope-user-proof/src/make_leaf';
 
 import styles from "./asset_item_view.module.scss";
 import { useZkApp } from "@/components/zkapp/useZkApp";
 import { ZkAppAccount } from "./zk_app_account";
+import { useUserStore } from "@/store";
 
 const transactionFee = 0.1;
 
 export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
   const { state, displayText, hasWallet } = useZkApp();
   const [createProofMsg, setCreateProofMsg] = React.useState("");
+  const { username, password } = useUserStore();
   const asset = mockAssets[Number(idx)];
 
   //
@@ -25,11 +28,30 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
 
     console.log("Creating a transaction...");
 
-    const { isin, balance, userPublic } = asset;
+    const { isin, balance } = asset;
+
+    const { leaf } = makeLeaf(password, isin, balance)
 
     const tree = new MerkleTree(HEIGHT);
-    const leaf = Poseidon.hash([Field.from(0)]);
-    tree.setLeaf(BigInt(0), leaf);
+
+    for (let idx = 0; idx < mockAssets.length; idx += 1) {
+      const asset = mockAssets[idx];
+      // const { secret } = mockUser;
+      const secret = password;
+      const { isin, balance } = asset;
+      const { leaf, userPublic, _secret } = makeLeaf(secret, isin, balance);
+
+      tree.setLeaf(BigInt(idx), leaf);
+
+      console.log(
+        'made leaf, idx: %s, userPublic: %s, secret: %s, _secret: %s',
+        idx,
+        userPublic.toString(),
+        secret,
+        _secret.toString()
+      );
+      console.log('Added to tree, idx: %s, leaf: %s', leaf.toString());
+    }
 
     const root = tree.getRoot();
     const witness = new MerkleWitness20(tree.getWitness(BigInt(0)));
@@ -39,9 +61,9 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
       witness,
       leaf,
       root,
-      Field.from(0),
-      Field.from(0),
-      Field.from(0)
+      Field.from(isin),
+      Field.from(balance),
+      Field.from(password)
     );
 
     console.log("Creating proof...");
@@ -63,7 +85,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     console.log(`View transaction at ${txLink}`);
 
     setCreateProofMsg(`Proof has been created, hash: ${hash}, link: ${txLink}`);
-  }, [state, setCreateProofMsg, asset]);
+  }, [state, setCreateProofMsg, asset, password]);
 
   return (
     asset && (

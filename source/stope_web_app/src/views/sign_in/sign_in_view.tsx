@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 
 import styles from "./sign_in_view.module.scss";
-import { useStore } from "@/store";
+import { useUserStore } from "@/store";
 import { API_ENDPOINT } from "@/requests";
 
 export const SignInView = () => {
@@ -15,7 +15,7 @@ export const SignInView = () => {
 
   console.log("state", state);
 
-  const { signIn } = useStore();
+  const { signIn } = useUserStore();
 
   const { mutateAsync } = useMutation({
     mutationFn: async ({ username, password }: any) => {

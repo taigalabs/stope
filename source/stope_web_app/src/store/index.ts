@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export const useStore = create<AppState>((set) => ({
+export const useUserStore = create<AppState>((set) => ({
   username: "",
   password: "",
   signIn: (username: string, password: string) =>

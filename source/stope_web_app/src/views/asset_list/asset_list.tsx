@@ -4,12 +4,12 @@ import { useRouter } from "next/navigation";
 
 import styles from "./asset_list.module.scss";
 import ZkappWorkerClient from "@/components/zkapp/zkappWorkerClient";
-import { useStore } from "@/store";
+import { useUserStore } from "@/store";
 
 const Assets = () => {
   const router = useRouter();
 
-  const { username } = useStore();
+  const { username } = useUserStore();
 
   const list = mockAssets.filter((_, idx) => {
     if (username === 'mirae') {
