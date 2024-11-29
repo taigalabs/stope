@@ -5,10 +5,8 @@ import {
   State,
   method,
   CircuitString,
-  Poseidon,
-  MerkleTree,
 } from "o1js";
-import { ProcessedSTO } from "../../stope_entities";
+import { ProcessedSTO } from "@taigalabs/stope-entities";
 
 const sto = {
   secret: "secret",
