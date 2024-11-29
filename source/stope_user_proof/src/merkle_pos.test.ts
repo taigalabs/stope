@@ -14,8 +14,8 @@ import {
   mockWrongUser,
 } from '@taigalabs/stope-mock-data';
 
-import { MerklePos } from './merkle_pos';
-import { HEIGHT, MerkleWitness20 } from './merkle_tree_20';
+import { HEIGHT, MerklePos, MerkleWitness20 } from './merkle_pos';
+// import { HEIGHT, MerkleWitness20 } from './merkle_tree_20';
 import { makeLeaf } from './make_leaf';
 
 let proofsEnabled = false;

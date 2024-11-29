@@ -5,7 +5,8 @@ import type {
   ZkappWorkerReponse,
   ZkappWorkerRequest,
 } from "./zkappWorker";
-import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
+import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_pos";
+// import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
 
 export default class ZkappWorkerClient {
   // ---------------------------------------------------------------------------------------

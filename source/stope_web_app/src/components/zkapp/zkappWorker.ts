@@ -6,8 +6,8 @@ import {
   PublicKey,
   fetchAccount,
 } from "o1js";
-import type { MerklePos } from "@taigalabs/stope-user-proof/src/merkle_pos";
-import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
+import { MerkleWitness20, type MerklePos } from "@taigalabs/stope-user-proof/src/merkle_pos";
+// import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
 
 type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 

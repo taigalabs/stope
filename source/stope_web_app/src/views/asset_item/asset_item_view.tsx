@@ -2,10 +2,10 @@
 
 import React from "react";
 import { mockAssets } from "@taigalabs/stope-mock-data";
-import {
-  HEIGHT,
-  MerkleWitness20,
-} from "@taigalabs/stope-user-proof/src/merkle_tree_20";
+// import {
+//   HEIGHT,
+//   MerkleWitness20,
+// } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
 import { CircuitString, Field, MerkleTree, Poseidon } from "o1js";
 import { makeLeaf } from '@taigalabs/stope-user-proof/src/make_leaf';
 
@@ -13,6 +13,7 @@ import styles from "./asset_item_view.module.scss";
 import { useZkApp } from "@/components/zkapp/useZkApp";
 import { ZkAppAccount } from "./zk_app_account";
 import { useUserStore } from "@/store";
+import { HEIGHT, MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_pos";
 
 const transactionFee = 0.1;
 

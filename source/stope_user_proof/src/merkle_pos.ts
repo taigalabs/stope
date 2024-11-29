@@ -1,6 +1,9 @@
 import { Field, SmartContract, state, State, method, Poseidon } from 'o1js';
+import { MerkleWitness } from 'o1js';
 
-import { MerkleWitness20 } from './merkle_tree_20';
+export const HEIGHT = 20;
+
+export class MerkleWitness20 extends MerkleWitness(HEIGHT) { }
 
 export class MerklePos extends SmartContract {
   @state(Field) root = State<Field>();
@@ -34,3 +37,5 @@ export class MerklePos extends SmartContract {
     this.root.set(_root);
   }
 }
+
+
