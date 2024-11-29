@@ -66,9 +66,11 @@ const functions = {
     console.log("worker: _root2", _root2);
     console.log("worker: _root", _root);
 
-    const _secret = CircuitString.fromString(secret).hash();
-    const _isin = CircuitString.fromString(isin).hash();
-    const _balance = Field.from(BigInt(balance));
+    // const _secret = CircuitString.fromString(secret).hash();
+    // const _isin = CircuitString.fromString(isin).hash();
+    const _secret = Field.fromJSON(secret);
+    const _isin = Field.fromJSON(isin);
+    const _balance = Field.fromJSON(balance);
 
     console.log('_witness', _witness);
     console.log('_leaf', _leaf);
