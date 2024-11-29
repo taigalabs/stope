@@ -8,6 +8,7 @@ import {
   Poseidon,
   MerkleTree,
 } from "o1js";
+import { ProcessedSTO } from "../../stope_entities/src";
 // import { ProcessedSTO, STO } from 'stope-entities';
 
 const sto = {
@@ -25,12 +26,13 @@ export class Bridge extends SmartContract {
     this.num.set(Field(1));
   }
 
-  @method async aggregate() {
-    const secret = CircuitString.fromString(sto.secret);
-    const isin = CircuitString.fromString(sto.isin);
-    const amount = Field.from(sto.amount);
+  @method async aggregate(assets: ProcessedSTO[]) {
+    for (let idx = 0; idx < assets.length; idx += 1) {
+      const secret = CircuitString.fromString(sto.secret);
+      const isin = CircuitString.fromString(sto.isin);
+      const amount = Field.from(sto.amount);
 
-    const leaf = Poseidon.hash([isin.hash(), amount, secret.hash()]);
-    // console.log("leaf", leaf);
+      const leaf = Poseidon.hash([isin.hash(), amount, secret.hash()]);
+    }
   }
 }

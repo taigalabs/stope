@@ -39,6 +39,12 @@ function main() {
       shell: true,
       cwd: paths.stope_user_proof,
     });
+
+    spawn("yarn run build", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_bridge_proof,
+    });
   });
 
   program.parse();

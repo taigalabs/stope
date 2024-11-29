@@ -18,6 +18,7 @@ export const paths = (() => {
     ),
     stope_web_app: path.join(projectRootPath, "source/stope_web_app"),
     stope_user_proof: path.join(projectRootPath, "source/stope_user_proof"),
+    stope_bridge_proof: path.join(projectRootPath, "source/stope_bridge_proof"),
   };
 
   console.log("Loaded paths: %j", paths);
