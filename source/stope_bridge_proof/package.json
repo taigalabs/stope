@@ -2,8 +2,14 @@
   "name": "@taigalabs/stope-bridge-proof",
   "version": "0.1.5",
   "description": "",
+  "private": true,
   "author": "",
   "license": "Apache-2.0",
+  "workspaces": {
+    "nohoist": [
+      "*"
+    ]
+  },
   "keywords": [
     "mina-zkapp",
     "mina-zk-app",

@@ -8,7 +8,7 @@ import {
   Poseidon,
   MerkleTree,
 } from "o1js";
-import { ProcessedSTO } from "@taigalabs/stope-entities";
+import { ProcessedSTO } from "../../stope_entities";
 
 const sto = {
   secret: "secret",

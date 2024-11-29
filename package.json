@@ -2,6 +2,10 @@
   "private": true,
   "name": "stope",
   "version": "0.0.1",
+  "nohoist": [
+    "**/o1js",
+    "**/o1js/**"
+  ],
   "workspaces": {
     "packages": [
       "source/stope_api_server",
