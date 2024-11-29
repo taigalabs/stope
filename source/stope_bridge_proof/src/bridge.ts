@@ -8,8 +8,7 @@ import {
   Poseidon,
   MerkleTree,
 } from "o1js";
-import { ProcessedSTO } from "../../stope_entities/src";
-// import { ProcessedSTO, STO } from 'stope-entities';
+import { ProcessedSTO } from "@taigalabs/stope-entities";
 
 const sto = {
   secret: "secret",
@@ -32,7 +31,7 @@ export class Bridge extends SmartContract {
       const isin = CircuitString.fromString(sto.isin);
       const amount = Field.from(sto.amount);
 
-      const leaf = Poseidon.hash([isin.hash(), amount, secret.hash()]);
+      // makeLeaf
     }
   }
 }

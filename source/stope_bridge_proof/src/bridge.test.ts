@@ -1,5 +1,6 @@
 import { AccountUpdate, Field, Mina, PrivateKey, PublicKey } from "o1js";
 import { Bridge } from "./bridge";
+import { mockAssets } from "@taigalabs/stope-mock-data";
 
 /*
  * This file specifies how to test the `Add` example smart contract. It is safe to delete this file and replace
@@ -56,7 +57,7 @@ describe("Add", () => {
 
     // update transaction
     const txn = await Mina.transaction(senderAccount, async () => {
-      await zkApp.aggregate();
+      await zkApp.aggregate(mockAssets);
     });
     await txn.prove();
     await txn.sign([senderKey]).send();
