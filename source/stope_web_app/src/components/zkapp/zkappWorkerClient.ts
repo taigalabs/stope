@@ -52,7 +52,7 @@ export default class ZkappWorkerClient {
     const leaf = _leaf.toJSON();
     const root = _root.toJSON();
 
-    const isin = _witness.toJSON();
+    const isin = _isin.toJSON();
     const balance = _leaf.toJSON();
     const secret = _root.toJSON();
 

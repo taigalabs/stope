@@ -55,29 +55,33 @@ const functions = {
     secret: string;
   }) => {
     const { witness, leaf, root, isin, balance, secret } = args;
+    console.log("witness", witness);
+    console.log('leaf', leaf)
+    console.log('root', root)
+    console.log('secret', secret)
+    console.log('isin', isin)
+    console.log('balance', balance)
 
     const _witness = MerkleWitness20.fromJSON(witness);
-    console.log("worker: wit", witness);
+    console.log('_witness', _witness);
 
     const _root = Field.fromJSON(root);
+    console.log("_root", _root);
+
     const _leaf = Field.fromJSON(leaf);
+    console.log("_leaf", _leaf);
 
     const _root2 = _witness.calculateRoot(_leaf);
-    console.log("worker: _root2", _root2);
-    console.log("worker: _root", _root);
+    console.log("_root2", _root2);
 
-    // const _secret = CircuitString.fromString(secret).hash();
-    // const _isin = CircuitString.fromString(isin).hash();
     const _secret = Field.fromJSON(secret);
-    const _isin = Field.fromJSON(isin);
-    const _balance = Field.fromJSON(balance);
-
-    console.log('_witness', _witness);
-    console.log('_leaf', _leaf);
-    console.log('_root', _root);
-    console.log('_isin', _isin);
-    console.log('_balance', _balance);
     console.log('_secret', _secret);
+
+    const _isin = Field.fromJSON(isin);
+    console.log('_isin', _isin);
+
+    const _balance = Field.fromJSON(balance);
+    console.log('_balance', _balance);
 
     const transaction = await Mina.transaction(async () => {
       await state.zkapp!.membership(
