@@ -67,10 +67,15 @@ const functions = {
     console.log("worker: _root", _root);
 
     const _secret = CircuitString.fromString(secret).hash();
-    // const userPublic = Poseidon.hash([_secret]);
-
     const _isin = CircuitString.fromString(isin).hash();
     const _balance = Field.from(BigInt(balance));
+
+    console.log('_witness', _witness);
+    console.log('_leaf', _leaf);
+    console.log('_root', _root);
+    console.log('_isin', _isin);
+    console.log('_balance', _balance);
+    console.log('_secret', _secret);
 
     const transaction = await Mina.transaction(async () => {
       await state.zkapp!.membership(

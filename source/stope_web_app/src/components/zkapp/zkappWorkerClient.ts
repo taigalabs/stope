@@ -58,7 +58,7 @@ export default class ZkappWorkerClient {
 
     console.log("client", witness, leaf, root, isin, balance, secret);
 
-    return this._call("membership", { witness, leaf, root });
+    return this._call("membership", { witness, leaf, root, isin, balance, secret });
   }
 
   proveUpdateTransaction() {
