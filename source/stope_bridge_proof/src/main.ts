@@ -1,6 +1,6 @@
 import { Field, Mina, PrivateKey, AccountUpdate } from "o1js";
 
-import { Export } from "./Export.js";
+import { Bridge } from "./bridge.js";
 
 const useProof = false;
 
@@ -18,7 +18,7 @@ const zkAppPrivateKey = PrivateKey.random();
 const zkAppAddress = zkAppPrivateKey.toPublicKey();
 
 // create an instance of Square - and deploy it to zkAppAddress
-const zkAppInstance = new Export(zkAppAddress);
+const zkAppInstance = new Bridge(zkAppAddress);
 const deployTxn = await Mina.transaction(deployerAccount, async () => {
   AccountUpdate.fundNewAccount(deployerAccount);
   await zkAppInstance.deploy();

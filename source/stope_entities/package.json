@@ -3,10 +3,8 @@
   "version": "0.0.1",
   "description": "",
   "author": "",
-  "license": "Apache-2.0",
   "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "type": "module",
+  "license": "Apache-2.0",
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-typescript": "^7.16.0",

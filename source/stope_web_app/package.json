@@ -11,6 +11,7 @@
   "dependencies": {
     "@taigalabs/stope-mock-data": "*",
     "@taigalabs/stope-user-proof": "*",
+    "@tanstack/react-query": "^5.59.16",
     "coi-serviceworker": "^0.1.7",
     "comlink": "^4.4.1",
     "next": "14.2.6",
