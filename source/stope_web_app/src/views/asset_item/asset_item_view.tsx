@@ -6,7 +6,7 @@ import {
   HEIGHT,
   MerkleWitness20,
 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
-import { Field, MerkleTree, Poseidon } from "o1js";
+import { CircuitString, Field, MerkleTree, Poseidon } from "o1js";
 import { makeLeaf } from '@taigalabs/stope-user-proof/src/make_leaf';
 
 import styles from "./asset_item_view.module.scss";
@@ -30,40 +30,21 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
 
     const { isin, balance } = asset;
 
-    const { leaf } = makeLeaf(password, isin, balance)
+    const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(password, isin, balance)
 
     const tree = new MerkleTree(HEIGHT);
-
-    for (let idx = 0; idx < mockAssets.length; idx += 1) {
-      const asset = mockAssets[idx];
-      // const { secret } = mockUser;
-      const secret = password;
-      const { isin, balance } = asset;
-      const { leaf, userPublic, _secret } = makeLeaf(secret, isin, balance);
-
-      tree.setLeaf(BigInt(idx), leaf);
-
-      console.log(
-        'made leaf, idx: %s, userPublic: %s, secret: %s, _secret: %s',
-        idx,
-        userPublic.toString(),
-        secret,
-        _secret.toString()
-      );
-      console.log('Added to tree, idx: %s, leaf: %s', leaf.toString());
-    }
-
     const root = tree.getRoot();
     const witness = new MerkleWitness20(tree.getWitness(BigInt(0)));
+
 
     console.log("proof gen view, root", root);
     await zkappWorkerClient!.membership(
       witness,
       leaf,
       root,
-      Field.from(isin),
-      Field.from(balance),
-      Field.from(password)
+      _isin,
+      _balance,
+      _secret,
     );
 
     console.log("Creating proof...");

@@ -18,6 +18,7 @@ export class MerklePos extends SmartContract {
     balance: Field,
     secret: Field
   ) {
+    console.log('membership()');
     //
     const userPublic = Poseidon.hash([secret]);
 

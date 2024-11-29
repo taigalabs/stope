@@ -1,7 +1,20 @@
 import { ProcessedSTO } from "@taigalabs/stope-entities";
+import {
+  AccountUpdate,
+  CircuitString,
+  Field,
+  MerkleTree,
+  Mina,
+  Poseidon,
+  PrivateKey,
+  PublicKey,
+} from 'o1js';
+import { mockUser } from "./users";
 
 export const mockAssets: ProcessedSTO[] = (function() {
   const ret: ProcessedSTO[] = [];
+
+  const { secret } = mockUser;
 
   for (let idx = 0; idx < 10; idx += 1) {
     ret.push({
