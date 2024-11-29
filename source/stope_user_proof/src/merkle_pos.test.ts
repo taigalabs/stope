@@ -13,10 +13,10 @@ import {
   mockUser,
   mockWrongUser,
 } from '@taigalabs/stope-mock-data';
+import { makeLeaf } from '@taigalabs/stope-data-fns';
 
 import { HEIGHT, MerklePos, MerkleWitness20 } from './merkle_pos';
 // import { HEIGHT, MerkleWitness20 } from './merkle_tree_20';
-import { makeLeaf } from './make_leaf';
 
 let proofsEnabled = false;
 

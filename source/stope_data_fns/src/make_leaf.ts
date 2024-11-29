@@ -7,7 +7,7 @@ import {
   Poseidon,
   PrivateKey,
   PublicKey,
-} from 'o1js';
+} from "o1js";
 
 export function makeLeaf(secret: string, isin: string, balance: number) {
   const _secret = CircuitString.fromString(secret).hash();

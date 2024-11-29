@@ -8,10 +8,10 @@ import {
   Poseidon,
   PrivateKey,
   PublicKey,
-} from 'o1js';
+} from "o1js";
 import { mockUser } from "./users";
 
-export const mockAssets: ProcessedSTO[] = (function() {
+export const mockAssets: ProcessedSTO[] = (function () {
   const ret: ProcessedSTO[] = [];
 
   const { secret } = mockUser;
