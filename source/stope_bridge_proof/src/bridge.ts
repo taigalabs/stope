@@ -17,7 +17,7 @@ const sto = {
   amount: 10,
 };
 
-export class Export extends SmartContract {
+export class Bridge extends SmartContract {
   @state(Field) num = State<Field>();
 
   init() {

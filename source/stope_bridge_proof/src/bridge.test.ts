@@ -1,5 +1,5 @@
 import { AccountUpdate, Field, Mina, PrivateKey, PublicKey } from "o1js";
-import { Export } from "./Export";
+import { Bridge } from "./bridge";
 
 /*
  * This file specifies how to test the `Add` example smart contract. It is safe to delete this file and replace
@@ -17,10 +17,10 @@ describe("Add", () => {
     senderKey: PrivateKey,
     zkAppAddress: PublicKey,
     zkAppPrivateKey: PrivateKey,
-    zkApp: Export;
+    zkApp: Bridge;
 
   beforeAll(async () => {
-    if (proofsEnabled) await Export.compile();
+    if (proofsEnabled) await Bridge.compile();
   });
 
   beforeEach(async () => {
@@ -32,7 +32,7 @@ describe("Add", () => {
 
     zkAppPrivateKey = PrivateKey.random();
     zkAppAddress = zkAppPrivateKey.toPublicKey();
-    zkApp = new Export(zkAppAddress);
+    zkApp = new Bridge(zkAppAddress);
   });
 
   async function localDeploy() {
@@ -51,7 +51,7 @@ describe("Add", () => {
     expect(num).toEqual(Field(1));
   });
 
-  it("test123", async () => {
+  it("bridge_1", async () => {
     await localDeploy();
 
     // update transaction

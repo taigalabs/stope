@@ -1,3 +1,3 @@
-import { Export } from "./Export.js";
+import { Bridge } from "./bridge.js";
 
-export { Export };
+export { Bridge };
