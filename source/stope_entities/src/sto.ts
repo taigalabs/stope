@@ -1,3 +1,5 @@
+import { Field, Struct } from "o1js";
+
 export interface STOContract {
   userPublic: string;
   symbol: string;
@@ -38,3 +40,24 @@ export type ProcessedSTO = {
   usable: boolean;
   whitelistContractAddress: string;
 };
+
+let STOInCircuit = {
+  userPublic: Field,
+  isin: Field,
+  balance: Field,
+};
+
+export class Assets extends Struct({
+  assets: [
+    STOInCircuit,
+    STOInCircuit,
+    STOInCircuit,
+    STOInCircuit,
+    STOInCircuit,
+    STOInCircuit,
+    STOInCircuit,
+    STOInCircuit,
+    STOInCircuit,
+    STOInCircuit,
+  ]
+}) { }
