@@ -140,18 +140,12 @@ describe("Add", () => {
     console.log(22, assets, root, totalBalance, firstLeaf, firstLeafWitness);
 
     const txn = await Mina.transaction(senderAccount, async () => {
-      await zkApp.aggregate(
-        assets,
-        root,
-        totalBalance,
-        firstLeaf,
-        firstLeafWitness
-      );
+      await zkApp.aggregate(assets, root, totalBalance, firstLeafWitness);
     });
     await txn.prove();
     await txn.sign([senderKey]).send();
 
-    // const updatedNum = zkApp.num.get();
-    // expect(updatedNum).toEqual(Field(3));
+    const updatedRoot = zkApp.root.get();
+    expect(updatedRoot).toEqual(root);
   });
 });

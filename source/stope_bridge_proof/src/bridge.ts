@@ -14,18 +14,17 @@ import { Assets } from "../externals/sto";
 import { MerkleWitness20 } from "../externals/tree";
 
 export class Bridge extends SmartContract {
-  @state(Field) num = State<Field>();
+  @state(Field) root = State<Field>();
 
   init() {
     super.init();
-    this.num.set(Field(1));
+    this.root.set(Field(0));
   }
 
   @method async aggregate(
     assets: Assets,
     root: Field,
     totalBalance: Field,
-    firstLeaf: Field,
     firstLeafWitness: MerkleWitness20
   ) {
     const { stos } = assets;
@@ -43,5 +42,7 @@ export class Bridge extends SmartContract {
     _root.assertEquals(root);
 
     bal.assertEquals(totalBalance);
+
+    this.root.set(root);
   }
 }
