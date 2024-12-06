@@ -5,19 +5,42 @@ import { useRouter } from "next/navigation";
 import styles from "./asset_list.module.scss";
 import ZkappWorkerClient from "@/components/zkapp/zkappWorkerClient";
 import { useUserStore } from "@/store";
+import { useQuery } from "@tanstack/react-query";
+import { API_ENDPOINT } from "@/requests";
 
 const Assets = () => {
   const router = useRouter();
 
+  const { data, isFetching } = useQuery({
+    queryKey: ["get_sto_list"],
+    queryFn: async () => {
+      try {
+        const resp = await fetch(`${API_ENDPOINT}/get_sto_list`, {
+          method: "post",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await resp.json();
+        return data;
+      } catch (err) {
+        console.log(err);
+        return null;
+      }
+    },
+  });
+
+  console.log(22, data);
+
   const { username } = useUserStore();
 
-  const list = mockAssets.filter((_, idx) => {
-    if (username === 'mirae') {
-      return idx % 2 === 1
-    } else {
-      return idx % 2 === 0
-    }
-  })
+  const list = mockAssets
+    .filter((_, idx) => {
+      if (username === "mirae") {
+        return idx % 2 === 1;
+      } else {
+        return idx % 2 === 0;
+      }
+    })
     .map((asset, idx) => {
       return (
         <li

@@ -83,6 +83,7 @@ describe("Add", () => {
       );
 
       const d = {
+        ...asset,
         leaf: leaf.toJSON(),
         userPublic: userPublic.toJSON(),
         _isin: _isin.toJSON(),
