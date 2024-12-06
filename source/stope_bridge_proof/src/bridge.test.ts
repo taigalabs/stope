@@ -1,9 +1,13 @@
 import { AccountUpdate, Field, Mina, PrivateKey, PublicKey } from "o1js";
+import { Assets } from "@taigalabs/stope-entities";
+import path from "path";
+import fs from "fs";
 // import { mockAssets, mockUser } from "@taigalabs/stope-mock-data";
 // import { makeLeaf } from '@taigalabs/stope-data-fns';
 
 import { Bridge } from "./bridge";
-import { Assets } from "@taigalabs/stope-entities";
+import { mockAssets, mockUser } from "@taigalabs/stope-mock-data";
+import { makeLeaf } from "@taigalabs/stope-data-fns";
 
 /*
  * This file specifies how to test the `Add` example smart contract. It is safe to delete this file and replace
@@ -13,6 +17,9 @@ import { Assets } from "@taigalabs/stope-entities";
  */
 
 let proofsEnabled = false;
+
+const DATA_PATH = path.resolve("../../source/stope_mock_data/data");
+console.log("data_path", DATA_PATH);
 
 describe("Add", () => {
   let deployerAccount: Mina.TestPublicKey,
@@ -49,15 +56,35 @@ describe("Add", () => {
     await txn.sign([deployerKey, zkAppPrivateKey]).send();
   }
 
+  it("create_data", async () => {
+    let json = [];
+    for (let asset of mockAssets) {
+      const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(
+        mockUser.secret,
+        asset.isin,
+        asset.balance
+      );
+
+      const d = {
+        leaf: leaf.toJSON(),
+        userPublic: userPublic.toJSON(),
+        _isin: _isin.toJSON(),
+        _balance: _balance.toJSON(),
+        _secret: _secret.toJSON(),
+      };
+
+      json.push(d);
+    }
+
+    const fpath = path.resolve(DATA_PATH, "assets.json");
+
+    fs.writeFileSync(fpath, JSON.stringify(json));
+  });
+
   it("bridge_1", async () => {
     await localDeploy();
 
-    const assets = new Assets({ assets: [] })
-
-    // for (let asset of mockAssets) {
-    //   const { leaf } = makeLeaf(mockUser.secret, asset.isin, asset.balance);
-    //   console.log(11, leaf);
-    // }
+    const assets = new Assets({ assets: [] });
 
     // update transaction
     const txn = await Mina.transaction(senderAccount, async () => {
