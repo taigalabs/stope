@@ -160,7 +160,7 @@ describe("Add", () => {
     await txn.prove();
     await txn.sign([senderKey]).send();
 
-    // const updatedRoot = zkApp.root.get();
-    // expect(updatedRoot).toEqual(root);
+    const updatedRoot = zkApp.root.get();
+    expect(updatedRoot).toEqual(root);
   });
 });
