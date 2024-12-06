@@ -8,13 +8,13 @@ export async function sign_in(req: Request, res: Response) {
 
   if (!username || !password) {
     return res.send({
-      err: 'username, password not present'
+      err: "username, password not present",
     });
   }
 
   const db = res.app.locals.db as Knex;
 
-  const rows = await db('users').select('*').where({
+  const rows = await db("users").select("*").where({
     username,
     password,
   });
@@ -25,8 +25,7 @@ export async function sign_in(req: Request, res: Response) {
     });
   } else {
     return res.send({
-      err: 'no row with username'
-    })
+      err: "no row with username",
+    });
   }
-
 }

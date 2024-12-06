@@ -3,8 +3,8 @@ import cors from "cors";
 import bodyParser from "body-parser";
 
 import { connectDB } from "@/db";
-import { sign_in } from "@/apis/user/sign_in";
-import { get_my_assets } from "@/apis/asset";
+import { sign_in } from "@/apis/user";
+import { get_sto, get_sto_list } from "@/apis/asset";
 
 const PORT = 4000;
 const API_V0 = "/api/v0";
@@ -26,7 +26,8 @@ export async function runServer() {
   });
 
   app.post("/sign_in", sign_in);
-  app.post("/get_my_assets", get_my_assets);
+  app.post("/get_sto_list", get_sto_list);
+  app.post("/get_sto", get_sto);
   app.post("/get_merkle_path", (req, res) => {});
 
   // const state = await makeState();
