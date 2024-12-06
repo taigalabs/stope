@@ -48,7 +48,7 @@ let STOInCircuit = {
 };
 
 export class Assets extends Struct({
-  assets: [
+  stos: [
     STOInCircuit,
     STOInCircuit,
     STOInCircuit,
@@ -59,5 +59,6 @@ export class Assets extends Struct({
     STOInCircuit,
     STOInCircuit,
     STOInCircuit,
-  ]
-}) { }
+  ],
+  root: Field,
+}) {}

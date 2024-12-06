@@ -10,7 +10,6 @@ import {
 } from "o1js";
 import { Assets } from "@taigalabs/stope-entities";
 
-
 export class Bridge extends SmartContract {
   @state(Field) num = State<Field>();
 
@@ -20,12 +19,14 @@ export class Bridge extends SmartContract {
   }
 
   @method async aggregate(assets: Assets) {
-    // for (let idx = 0; idx < assets.length; idx += 1) {
-    //   // const secret = CircuitString.fromString(sto.secret);
-    //   // const isin = CircuitString.fromString(sto.isin);
-    //   // const amount = Field.from(sto.amount);
+    const { stos } = assets;
+    for (let idx = 0; idx < stos.length; idx += 1) {
+      console.log(4, stos[idx]);
+      // const secret = CircuitString.fromString(sto.secret);
+      // const isin = CircuitString.fromString(sto.isin);
+      // const amount = Field.from(sto.amount);
 
-    //   // makeLeaf
-    // }
+      // makeLeaf
+    }
   }
 }

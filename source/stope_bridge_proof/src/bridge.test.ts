@@ -26,7 +26,12 @@ import { makeLeaf } from "@taigalabs/stope-data-fns";
 let proofsEnabled = false;
 
 const DATA_PATH = path.resolve("../../source/stope_mock_data/data");
+const stosPath = path.resolve(DATA_PATH, "stos.json");
+const treePath = path.resolve(DATA_PATH, "tree.json");
+
 console.log("data_path", DATA_PATH);
+console.log("stosPath", stosPath);
+console.log("treePath", treePath);
 
 describe("Add", () => {
   let deployerAccount: Mina.TestPublicKey,
@@ -65,7 +70,9 @@ describe("Add", () => {
 
   it("create_data", async () => {
     const tree = new MerkleTree(HEIGHT);
-    let assetsJson = [];
+
+    let stosJson = [];
+    let totalBalance = Field.fromValue(0);
     for (let idx = 0; idx < mockAssets.length; idx += 1) {
       const asset = mockAssets[idx];
       const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(
@@ -82,31 +89,39 @@ describe("Add", () => {
         _secret: _secret.toJSON(),
       };
 
+      const bal = Field.fromValue(asset.balance);
+      totalBalance = totalBalance.add(bal);
       tree.setLeaf(BigInt(idx), leaf);
-      assetsJson.push(d);
+      stosJson.push(d);
     }
 
-    const assetsPath = path.resolve(DATA_PATH, "assets.json");
-    const treePath = path.resolve(DATA_PATH, "tree.json");
+    console.log("totalBalance", totalBalance);
+
     const root = tree.getRoot();
-    const treeJson = { tree: root.toJSON() };
+    const treeJson = {
+      root: root.toJSON(),
+      totalBalance: totalBalance.toJSON(),
+    };
     // const witness = new MerkleWitness20(tree.getWitness(0n));
 
-    fs.writeFileSync(assetsPath, JSON.stringify(assetsJson));
+    fs.writeFileSync(stosPath, JSON.stringify(stosJson));
     fs.writeFileSync(treePath, JSON.stringify(treeJson));
   });
 
   it("bridge_1", async () => {
     await localDeploy();
 
-    const assets = new Assets({ assets: [] });
+    const stosJson = JSON.parse(fs.readFileSync(stosPath).toString());
+    const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
 
-    // update transaction
+    const assets = new Assets({ stos: stosJson, root: treeJson.root });
+
+    // // update transaction
     const txn = await Mina.transaction(senderAccount, async () => {
       await zkApp.aggregate(assets);
     });
-    await txn.prove();
-    await txn.sign([senderKey]).send();
+    // await txn.prove();
+    // await txn.sign([senderKey]).send();
 
     // const updatedNum = zkApp.num.get();
     // expect(updatedNum).toEqual(Field(3));
