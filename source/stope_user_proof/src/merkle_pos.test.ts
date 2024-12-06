@@ -116,6 +116,7 @@ describe('MerklePos', () => {
 
     for (let idx = 0; idx < mockAssets.length; idx += 1) {
       const asset = mockAssets[idx];
+
       const { secret } = mockUser;
       const { isin, balance } = asset;
       const { leaf, userPublic } = makeLeaf(secret, isin, balance);

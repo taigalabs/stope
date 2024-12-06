@@ -1,3 +1,5 @@
+import { Field, Struct } from "o1js";
+
 export interface STOContract {
   userPublic: string;
   symbol: string;

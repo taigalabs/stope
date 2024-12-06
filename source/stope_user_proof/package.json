@@ -7,7 +7,10 @@
   "workspaces": {
     "nohoist": [
       "**/o1js",
-      "**/o1js/**"
+      "**/o1js/**",
+      "**/@taigalabs/stope-data-fns/**",
+      "**/@taigalabs/stope-mock-data/**",
+      "**/@taigalabs/stope-entities/**"
     ]
   },
   "license": "Apache-2.0",
@@ -43,9 +46,6 @@
     "typescript": "^5.1"
   },
   "dependencies": {
-    "@taigalabs/stope-entities": "*",
-    "@taigalabs/stope-mock-data": "*",
-    "@taigalabs/stope-data-fns": "*",
     "o1js": "^1.*"
   },
   "engines": {
