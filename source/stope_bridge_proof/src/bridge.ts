@@ -7,8 +7,11 @@ import {
   CircuitString,
   Bool,
   Struct,
+  Poseidon,
 } from "o1js";
-import { Assets } from "@taigalabs/stope-entities";
+
+import { Assets } from "../externals/sto";
+import { MerkleWitness20 } from "../externals/tree";
 
 export class Bridge extends SmartContract {
   @state(Field) num = State<Field>();
@@ -18,15 +21,24 @@ export class Bridge extends SmartContract {
     this.num.set(Field(1));
   }
 
-  @method async aggregate(assets: Assets, root: Field) {
-    // const { stos } = assets;
-    //
-    // for (let idx = 0; idx < stos.length; idx += 1) {
-    //   // console.log(4, stos[idx]);
-    //   // const secret = CircuitString.fromString(sto.secret);
-    //   // const isin = CircuitString.fromString(sto.isin);
-    //   // const amount = Field.from(sto.amount);
-    //   // makeLeaf
-    // }
+  @method async aggregate(
+    assets: Assets,
+    root: Field,
+    totalBalance: Field,
+    firstLeaf: Field,
+    firstLeafWitness: MerkleWitness20
+  ) {
+    const { stos } = assets;
+
+    let bal = Field(0);
+    for (let idx = 0; idx < stos.length; idx += 1) {
+      const sto = stos[idx];
+      bal = bal.add(sto.balance);
+
+      const leaf = Poseidon.hash([sto.userPublic, sto.isin, sto.balance]);
+      leaf.assertEquals(sto.leaf);
+    }
+
+    bal.assertEquals(totalBalance);
   }
 }

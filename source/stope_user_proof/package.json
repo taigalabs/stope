@@ -46,9 +46,6 @@
     "typescript": "^5.1"
   },
   "dependencies": {
-    "@taigalabs/stope-entities": "*",
-    "@taigalabs/stope-mock-data": "*",
-    "@taigalabs/stope-data-fns": "*",
     "o1js": "^1.*"
   },
   "engines": {

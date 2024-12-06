@@ -6,20 +6,15 @@ import {
   PrivateKey,
   PublicKey,
 } from "o1js";
-import {
-  Assets,
-  HEIGHT,
-  MerkleWitness20,
-  STOInCircuitType,
-} from "@taigalabs/stope-entities";
 import path from "path";
 import fs from "fs";
-// import { mockAssets, mockUser } from "@taigalabs/stope-mock-data";
-// import { makeLeaf } from '@taigalabs/stope-data-fns';
 
 import { Bridge } from "./bridge";
-import { mockAssets, mockUser } from "@taigalabs/stope-mock-data";
-import { makeLeaf } from "@taigalabs/stope-data-fns";
+import { mockAssets, mockUser } from "../externals/mock_data";
+import { makeLeaf } from "../externals/make_leaf";
+import { HEIGHT } from "../externals/tree";
+import { Assets } from "../externals/sto";
+import { MerkleWitness20 } from "../externals/tree";
 
 /*
  * This file specifies how to test the `Add` example smart contract. It is safe to delete this file and replace
@@ -119,25 +114,42 @@ describe("Add", () => {
     const stosJson = JSON.parse(fs.readFileSync(stosPath).toString());
     const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
 
-    const stos = stosJson.map((_sto: any) => {
-      return {
+    const tree = new MerkleTree(HEIGHT);
+
+    const stos = stosJson.map((_sto: any, idx: number) => {
+      const sto = {
+        leaf: Field.fromJSON(_sto.leaf),
         userPublic: Field.fromJSON(_sto.userPublic),
         isin: Field.fromJSON(_sto._isin),
         balance: Field.fromJSON(_sto._balance),
       };
+
+      tree.setLeaf(BigInt(idx), sto.leaf);
+
+      return sto;
     });
 
     const assets = new Assets({ stos });
 
     const root = Field.fromJSON(treeJson.root);
+    const totalBalance = Field.fromJSON(treeJson.totalBalance);
 
-    console.log(22, assets, root);
+    const firstLeaf = stos[0].leaf;
+    const firstLeafWitness = new MerkleWitness20(tree.getWitness(0n));
+
+    console.log(22, assets, root, totalBalance, firstLeaf, firstLeafWitness);
 
     const txn = await Mina.transaction(senderAccount, async () => {
-      await zkApp.aggregate(assets, root);
+      await zkApp.aggregate(
+        assets,
+        root,
+        totalBalance,
+        firstLeaf,
+        firstLeafWitness
+      );
     });
-    // await txn.prove();
-    // await txn.sign([senderKey]).send();
+    await txn.prove();
+    await txn.sign([senderKey]).send();
 
     // const updatedNum = zkApp.num.get();
     // expect(updatedNum).toEqual(Field(3));
