@@ -6,7 +6,12 @@ import {
   PrivateKey,
   PublicKey,
 } from "o1js";
-import { Assets, HEIGHT, MerkleWitness20 } from "@taigalabs/stope-entities";
+import {
+  Assets,
+  HEIGHT,
+  MerkleWitness20,
+  STOInCircuitType,
+} from "@taigalabs/stope-entities";
 import path from "path";
 import fs from "fs";
 // import { mockAssets, mockUser } from "@taigalabs/stope-mock-data";
@@ -114,11 +119,22 @@ describe("Add", () => {
     const stosJson = JSON.parse(fs.readFileSync(stosPath).toString());
     const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
 
-    const assets = new Assets({ stos: stosJson, root: treeJson.root });
+    const stos = stosJson.map((_sto: any) => {
+      return {
+        userPublic: Field.fromJSON(_sto.userPublic),
+        isin: Field.fromJSON(_sto._isin),
+        balance: Field.fromJSON(_sto._balance),
+      };
+    });
 
-    // // update transaction
+    const assets = new Assets({ stos });
+
+    const root = Field.fromJSON(treeJson.root);
+
+    console.log(22, assets, root);
+
     const txn = await Mina.transaction(senderAccount, async () => {
-      await zkApp.aggregate(assets);
+      await zkApp.aggregate(assets, root);
     });
     // await txn.prove();
     // await txn.sign([senderKey]).send();

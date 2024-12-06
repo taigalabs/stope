@@ -41,6 +41,12 @@ export type ProcessedSTO = {
   whitelistContractAddress: string;
 };
 
+export type STOInCircuitType = {
+  userPublic: Field;
+  isin: Field;
+  balance: Field;
+};
+
 let STOInCircuit = {
   userPublic: Field,
   isin: Field,
@@ -60,5 +66,4 @@ export class Assets extends Struct({
     STOInCircuit,
     STOInCircuit,
   ],
-  root: Field,
 }) {}
