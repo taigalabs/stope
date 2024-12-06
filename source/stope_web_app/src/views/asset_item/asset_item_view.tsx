@@ -2,17 +2,17 @@
 
 import React from "react";
 import { CircuitString, Field, MerkleTree, Poseidon } from "o1js";
+import {
+  HEIGHT,
+  MerkleWitness20,
+} from "@taigalabs/stope-user-proof/src/merkle_pos";
+import { mockAssets } from "@taigalabs/stope-mock-data";
 
 import styles from "./asset_item_view.module.scss";
 import { useZkApp } from "@/components/zkapp/useZkApp";
 import { ZkAppAccount } from "./zk_app_account";
 import { useUserStore } from "@/store";
-import {
-  HEIGHT,
-  MerkleWitness20,
-} from "@taigalabs/stope-user-proof/src/merkle_pos";
 
-import { mockAssets } from "@taigalabs/stope-mock-data";
 import { makeLeaf } from "../../../externals/make_leaf";
 
 const transactionFee = 0.1;
@@ -23,7 +23,6 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
   const { username, password } = useUserStore();
   const asset = mockAssets[Number(idx)];
 
-  //
   const handleClickCreateProof = React.useCallback(async () => {
     const zkappWorkerClient = state.zkappWorkerClient!;
 
