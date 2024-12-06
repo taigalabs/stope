@@ -22,18 +22,15 @@ export class MerklePos extends SmartContract {
     secret: Field
   ) {
     console.log('membership()');
-    //
+
     const userPublic = Poseidon.hash([secret]);
 
-    //
     const _leaf = Poseidon.hash([userPublic, isin, balance]);
     leaf.assertEquals(_leaf);
 
-    //
     const _root = witness.calculateRoot(leaf);
     root.assertEquals(_root);
 
-    // Setting a public input
     this.root.set(_root);
   }
 }

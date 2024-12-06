@@ -102,7 +102,6 @@ describe("Add", () => {
       root: root.toJSON(),
       totalBalance: totalBalance.toJSON(),
     };
-    // const witness = new MerkleWitness20(tree.getWitness(0n));
 
     fs.writeFileSync(stosPath, JSON.stringify(stosJson));
     fs.writeFileSync(treePath, JSON.stringify(treeJson));
