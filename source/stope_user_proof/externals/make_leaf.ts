@@ -1,4 +1,4 @@
-import { CircuitString, Field, Poseidon } from "o1js";
+import { CircuitString, Field, Poseidon } from 'o1js';
 
 export function makeLeaf(secret: string, isin: string, balance: number) {
   const { _secret, userPublic } = makeUserPublic(secret);
