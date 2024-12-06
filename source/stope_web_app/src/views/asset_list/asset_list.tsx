@@ -33,38 +33,36 @@ const Assets = () => {
 
   const { username } = useUserStore();
 
-  const list = mockAssets
-    .filter((_, idx) => {
-      if (username === "mirae") {
-        return idx % 2 === 1;
-      } else {
-        return idx % 2 === 0;
-      }
-    })
-    .map((asset, idx) => {
-      return (
-        <li
-          key={asset.assetId}
-          className={styles.item}
-          onClick={() => {
-            router.push(`/asset_list/${idx}`);
-          }}
-        >
-          <div>
-            <p>ISIN: {asset.isin}</p>
-          </div>
-          <div>
-            <p>balance: {asset.balance}</p>
-          </div>
-          <div>
-            <p>user public: {asset.userPublic}</p>
-          </div>
-          <div>
-            <p>issuer: {asset.issuerName}</p>
-          </div>
-        </li>
-      );
-    });
+  const list = React.useMemo(() => {
+    if (data && data.stos) {
+      const elems = data.stos.map((asset: any, idx: any) => {
+        return (
+          <li
+            key={asset.assetId}
+            className={styles.item}
+            onClick={() => {
+              router.push(`/asset_list/${idx}`);
+            }}
+          >
+            <div>
+              <p>ISIN: {asset.isin}</p>
+            </div>
+            <div>
+              <p>balance: {asset.balance}</p>
+            </div>
+            <div>
+              <p>user public: {asset.userPublic}</p>
+            </div>
+            <div>
+              <p>issuer: {asset.issuerName}</p>
+            </div>
+          </li>
+        );
+      });
+
+      return elems;
+    }
+  }, [data]);
 
   return <ul className={styles.list}>{list}</ul>;
 };
