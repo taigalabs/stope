@@ -39,6 +39,9 @@ export class Bridge extends SmartContract {
       leaf.assertEquals(sto.leaf);
     }
 
+    const _root = firstLeafWitness.calculateRoot(stos[0].leaf);
+    _root.assertEquals(root);
+
     bal.assertEquals(totalBalance);
   }
 }
