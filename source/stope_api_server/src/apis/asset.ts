@@ -22,3 +22,11 @@ export async function get_sto_list(_req: Request, res: Response) {
     stos: data.stosJson,
   });
 }
+
+export async function get_sto(req: Request, res: Response) {
+  const { sto_id } = req.body;
+
+  res.send({
+    sto: data.stosJson[sto_id],
+  });
+}
