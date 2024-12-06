@@ -57,7 +57,7 @@ describe('MerklePos', () => {
     await txn.sign([deployerKey, zkAppPrivateKey]).send();
   }
 
-  it('generate_1', async () => {
+  it('user_proof_1', async () => {
     await localDeploy();
 
     const stosJson = JSON.parse(fs.readFileSync(stosPath).toString());
