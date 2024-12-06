@@ -1,5 +1,12 @@
-import { AccountUpdate, Field, Mina, PrivateKey, PublicKey } from "o1js";
-import { Assets } from "@taigalabs/stope-entities";
+import {
+  AccountUpdate,
+  Field,
+  MerkleTree,
+  Mina,
+  PrivateKey,
+  PublicKey,
+} from "o1js";
+import { Assets, HEIGHT, MerkleWitness20 } from "@taigalabs/stope-entities";
 import path from "path";
 import fs from "fs";
 // import { mockAssets, mockUser } from "@taigalabs/stope-mock-data";
@@ -57,8 +64,10 @@ describe("Add", () => {
   }
 
   it("create_data", async () => {
-    let json = [];
-    for (let asset of mockAssets) {
+    const tree = new MerkleTree(HEIGHT);
+    let assetsJson = [];
+    for (let idx = 0; idx < mockAssets.length; idx += 1) {
+      const asset = mockAssets[idx];
       const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(
         mockUser.secret,
         asset.isin,
@@ -73,12 +82,18 @@ describe("Add", () => {
         _secret: _secret.toJSON(),
       };
 
-      json.push(d);
+      tree.setLeaf(BigInt(idx), leaf);
+      assetsJson.push(d);
     }
 
-    const fpath = path.resolve(DATA_PATH, "assets.json");
+    const assetsPath = path.resolve(DATA_PATH, "assets.json");
+    const treePath = path.resolve(DATA_PATH, "tree.json");
+    const root = tree.getRoot();
+    const treeJson = { tree: root.toJSON() };
+    // const witness = new MerkleWitness20(tree.getWitness(0n));
 
-    fs.writeFileSync(fpath, JSON.stringify(json));
+    fs.writeFileSync(assetsPath, JSON.stringify(assetsJson));
+    fs.writeFileSync(treePath, JSON.stringify(treeJson));
   });
 
   it("bridge_1", async () => {

@@ -3,7 +3,7 @@ import { MerkleWitness } from 'o1js';
 
 export const HEIGHT = 20;
 
-export class MerkleWitness20 extends MerkleWitness(HEIGHT) { }
+export class MerkleWitness20 extends MerkleWitness(HEIGHT) {}
 
 export class MerklePos extends SmartContract {
   @state(Field) root = State<Field>();
@@ -37,5 +37,3 @@ export class MerklePos extends SmartContract {
     this.root.set(_root);
   }
 }
-
-

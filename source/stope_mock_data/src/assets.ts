@@ -11,7 +11,7 @@ import {
 } from "o1js";
 import { mockUser } from "./users";
 
-export const mockAssets: ProcessedSTO[] = (function() {
+export const mockAssets: ProcessedSTO[] = (function () {
   const ret: ProcessedSTO[] = [];
 
   const { secret } = mockUser;
@@ -28,7 +28,7 @@ export const mockAssets: ProcessedSTO[] = (function() {
       isTrust: true,
       trustName: `trustName_${idx}`,
       decimals: `decimal_${idx}`,
-      balance: idx,
+      balance: 10,
       issuable: true,
       paused: true,
       issuer: `issuer_${idx}`,
