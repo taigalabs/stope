@@ -2,8 +2,9 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 
-import { v0Router } from "@/router";
 import { connectDB } from "@/db";
+import { sign_in } from "@/apis/user/sign_in";
+import { get_my_assets } from "@/apis/asset";
 
 const PORT = 4000;
 const API_V0 = "/api/v0";
@@ -24,23 +25,22 @@ export async function runServer() {
     res.send({ status: "running" });
   });
 
-  app.use(API_V0, v0Router);
+  app.post("/sign_in", sign_in);
+  app.post("/get_my_assets", get_my_assets);
+  app.post("/get_merkle_path", (req, res) => {});
 
-  const state = await makeState();
-  app.locals = state;
+  // const state = await makeState();
+  // app.locals = state;
 
   app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
   });
-
 }
 
-async function makeState() {
-  const db = await connectDB();
+// async function makeState() {
+//   const db = await connectDB();
 
-  return {
-    db,
-  };
-}
-
-
+//   return {
+//     db,
+//   };
+// }
