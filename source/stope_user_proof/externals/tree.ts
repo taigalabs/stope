@@ -1,4 +1,4 @@
-import { MerkleWitness } from "o1js";
+import { MerkleWitness } from 'o1js';
 
 export const HEIGHT = 20;
 

@@ -6,7 +6,10 @@ import {
   PublicKey,
   fetchAccount,
 } from "o1js";
-import { MerkleWitness20, type MerklePos } from "@taigalabs/stope-user-proof/src/merkle_pos";
+import {
+  MerkleWitness20,
+  type MerklePos,
+} from "@taigalabs/stope-user-proof/src/merkle_pos";
 // import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
 
 type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
@@ -56,14 +59,14 @@ const functions = {
   }) => {
     const { witness, leaf, root, isin, balance, secret } = args;
     console.log("witness", witness);
-    console.log('leaf', leaf)
-    console.log('root', root)
-    console.log('secret', secret)
-    console.log('isin', isin)
-    console.log('balance', balance)
+    console.log("leaf", leaf);
+    console.log("root", root);
+    console.log("secret", secret);
+    console.log("isin", isin);
+    console.log("balance", balance);
 
     const _witness = MerkleWitness20.fromJSON(witness);
-    console.log('_witness', _witness);
+    console.log("_witness", _witness);
 
     const _root = Field.fromJSON(root);
     console.log("_root", _root);
@@ -75,13 +78,13 @@ const functions = {
     console.log("_root2", _root2);
 
     const _secret = Field.fromJSON(secret);
-    console.log('_secret', _secret);
+    console.log("_secret", _secret);
 
     const _isin = Field.fromJSON(isin);
-    console.log('_isin', _isin);
+    console.log("_isin", _isin);
 
     const _balance = Field.fromJSON(balance);
-    console.log('_balance', _balance);
+    console.log("_balance", _balance);
 
     const transaction = await Mina.transaction(async () => {
       await state.zkapp!.membership(

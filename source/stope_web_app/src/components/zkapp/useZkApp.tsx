@@ -3,7 +3,7 @@ import { Field, PublicKey } from "o1js";
 
 import ZkappWorkerClient from "./zkappWorkerClient";
 
-const ZKAPP_ADDRESS = "B62qodfGy4Wn4tPvvD8HGZ7UUuDm4MvB8qGhgUWFL4LLZsF1fcB3Mmg";
+const ZKAPP_ADDRESS = "B62qmrx8DaME6ECgGox5EfhC3vd529Ge778jmp56dhmxcSDE1g8Wu9p";
 
 export function useZkApp() {
   const [state, setState] = React.useState({
@@ -103,7 +103,7 @@ export function useZkApp() {
   React.useEffect(() => {
     (async () => {
       if (state.hasBeenSetup && !state.accountExists) {
-        for (; ;) {
+        for (;;) {
           setDisplayText("Checking if fee payer account exists...");
           console.log("Checking if fee payer account exists...");
           const res = await state.zkappWorkerClient!.fetchAccount({
