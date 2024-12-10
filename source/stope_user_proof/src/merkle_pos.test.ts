@@ -84,23 +84,25 @@ describe('MerklePos', () => {
     const root = Field.fromJSON(treeJson.root);
     const witness = MerkleWitness20.fromJSON(witnessesJson[0]);
     // const witness = new MerkleWitness20(tree.getWitness(0n));
-    const sto = stos[0];
+    const leaf = stos[0].leaf;
+    const isin = stos[0].isin;
+    const balance = stos[0].balance;
     const secret = Field.from(stos[0].secret);
+
     // const { secret } = mockUser;
     // const { userPublic, _secret } = makeUserPublic(secret);
-    //
 
-    console.log(11, sto.leaf, sto.isin, sto.balance, root, witness, secret);
+    // console.log(11, sto.leaf, sto.isin, sto.balance, root, witness, secret);
+
+    console.log('witness', witness.toJSON());
+    console.log('leaf', leaf);
+    console.log('root', root);
+    console.log('secret', secret);
+    console.log('isin', isin);
+    console.log('balance', balance);
 
     const txn = await Mina.transaction(senderAccount, async () => {
-      await zkApp.membership(
-        witness,
-        sto.leaf,
-        root,
-        sto.isin,
-        sto.balance,
-        secret
-      );
+      await zkApp.membership(witness, leaf, root, isin, balance, secret);
     });
 
     try {
