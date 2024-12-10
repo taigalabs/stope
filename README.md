@@ -20,6 +20,12 @@ Install dependency:
 yarn install
 ```
 
+Build zkapps
+
+```
+./ci build_zkapps
+```
+
 Run api server:
 
 ```
@@ -33,10 +39,15 @@ Run web application:
 ```
 
 Create mock data:
-In the `stope_brideg_proof` package,
 
 ```
-yarn test -t 'create_data'
+./ci create_data
+```
+
+Test bridge zk application,
+
+```
+./ci test_bridge
 ```
 
 ## Testing:
