@@ -10,8 +10,8 @@ import {
   Poseidon,
 } from "o1js";
 
-import { Assets } from "../externals/sto";
-import { MerkleWitness20 } from "../externals/tree";
+import { Assets } from "../externals/sto.js";
+import { MerkleWitness20 } from "../externals/tree.js";
 
 export class Bridge extends SmartContract {
   @state(Field) root = State<Field>();

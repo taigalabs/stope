@@ -13,8 +13,9 @@ import { useZkApp } from "@/components/zkapp/useZkApp";
 import { ZkAppAccount } from "./zk_app_account";
 import { useUserStore } from "@/store";
 
-import { makeLeaf } from "../../../externals/make_leaf";
+import { makeLeaf, makeUserPublic } from "../../../externals/make_leaf";
 import { API_ENDPOINT } from "@/requests";
+import { mockUser } from "@taigalabs/stope-mock-data";
 
 const transactionFee = 0.1;
 
@@ -23,7 +24,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
   const [createProofMsg, setCreateProofMsg] = React.useState("");
   const { username, password } = useUserStore();
 
-  const { data, isFetching } = useQuery({
+  const { data: stoData, isFetching } = useQuery({
     queryKey: ["get_sto"],
     queryFn: async () => {
       try {
@@ -42,40 +43,103 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     },
   });
 
+  const { data: treeData } = useQuery({
+    queryKey: ["get_tree"],
+    queryFn: async () => {
+      try {
+        const resp = await fetch(`${API_ENDPOINT}/get_tree`, {
+          method: "post",
+          body: JSON.stringify({ sto_id: idx }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await resp.json();
+        return data;
+      } catch (err) {
+        console.log(err);
+        return null;
+      }
+    },
+  });
+
+  const { data: witnessData } = useQuery({
+    queryKey: ["get_witness"],
+    queryFn: async () => {
+      try {
+        const resp = await fetch(`${API_ENDPOINT}/get_witness`, {
+          method: "post",
+          body: JSON.stringify({ sto_id: idx }),
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await resp.json();
+        return data;
+      } catch (err) {
+        console.log(err);
+        return null;
+      }
+    },
+  });
+
   const asset = React.useMemo(() => {
-    if (data && data.sto) {
-      return data.sto;
+    if (stoData && stoData.sto) {
+      return stoData.sto;
     }
-  }, [data]);
+  }, [stoData]);
+
+  const tree = React.useMemo(() => {
+    if (treeData && treeData.tree) {
+      return treeData.tree;
+    }
+  }, [treeData]);
+
+  const witness = React.useMemo(() => {
+    if (witnessData && witnessData.witness) {
+      return witnessData.witness;
+    }
+  }, [witnessData]);
+
+  console.log(33, tree, witness, asset, state.zkappWorkerClient);
 
   const handleClickCreateProof = React.useCallback(async () => {
     const zkappWorkerClient = state.zkappWorkerClient!;
 
-    console.log("Creating a transaction...");
+    if (!zkappWorkerClient) {
+      return;
+    }
 
-    const { isin, balance } = asset;
+    console.log("Creating a transaction...", zkappWorkerClient);
 
-    const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(
-      password,
-      isin,
-      balance
-    );
+    const { leaf: _leaf, _isin, _balance, _secret } = asset;
+    console.log(55, _isin, _balance, _secret, tree, witness);
 
-    const tree = new MerkleTree(HEIGHT);
-    const root = tree.getRoot();
-    const witness = new MerkleWitness20(tree.getWitness(BigInt(0)));
+    // const { userPublic, _secret: secret } = makeUserPublic("mirae");
 
-    console.log("proof gen view, root", root);
-    await zkappWorkerClient!.membership(
-      witness,
-      leaf,
-      root,
-      _isin,
-      _balance,
-      _secret
-    );
+    const isin = Field.fromJSON(_isin);
+    const balance = Field.fromJSON(_balance);
+    const secret = Field.fromJSON(_secret);
+    const leaf = Field.fromJSON(_leaf);
+
+    const root = Field.fromJSON(tree.root);
+    const wit = MerkleWitness20.fromJSON(witness);
+
+    const _userPublic = Poseidon.hash([secret]);
+    const madeLeaf = Poseidon.hash([_userPublic, isin, balance]);
+
+    console.log("_userPublic", _userPublic);
+    console.log("madeLeaf", madeLeaf);
+
+    console.log("witness", wit.toJSON());
+    console.log("leaf", leaf);
+    console.log("root", root);
+    console.log("secret", secret);
+    console.log("isin", isin);
+    console.log("balance", balance);
 
     console.log("Creating proof...");
+    await zkappWorkerClient!.membership(wit, leaf, root, isin, balance, secret);
+
+    console.log("Creating transaction...");
     await zkappWorkerClient!.proveUpdateTransaction();
 
     console.log("Requesting send transaction...");
@@ -94,7 +158,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     console.log(`View transaction at ${txLink}`);
 
     setCreateProofMsg(`Proof has been created, hash: ${hash}, link: ${txLink}`);
-  }, [state, setCreateProofMsg, asset, password]);
+  }, [state, setCreateProofMsg, asset, password, tree, witness]);
 
   return (
     asset && (

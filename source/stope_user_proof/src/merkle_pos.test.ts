@@ -21,6 +21,7 @@ let proofsEnabled = false;
 const DATA_PATH = path.resolve('../../source/stope_mock_data/data');
 const stosPath = path.resolve(DATA_PATH, 'stos.json');
 const treePath = path.resolve(DATA_PATH, 'tree.json');
+const witnessesPath = path.resolve(DATA_PATH, 'witnesses.json');
 
 describe('MerklePos', () => {
   let deployerAccount: Mina.TestPublicKey,
@@ -57,11 +58,12 @@ describe('MerklePos', () => {
     await txn.sign([deployerKey, zkAppPrivateKey]).send();
   }
 
-  it('generate_1', async () => {
+  it('user_proof_1', async () => {
     await localDeploy();
 
     const stosJson = JSON.parse(fs.readFileSync(stosPath).toString());
     const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
+    const witnessesJson = JSON.parse(fs.readFileSync(witnessesPath).toString());
 
     const tree = new MerkleTree(HEIGHT);
 
@@ -71,6 +73,7 @@ describe('MerklePos', () => {
         userPublic: Field.fromJSON(_sto.userPublic),
         isin: Field.fromJSON(_sto._isin),
         balance: Field.fromJSON(_sto._balance),
+        secret: Field.fromJSON(_sto._secret),
       };
 
       tree.setLeaf(BigInt(idx), sto.leaf);
@@ -79,22 +82,30 @@ describe('MerklePos', () => {
     });
 
     const root = Field.fromJSON(treeJson.root);
-    const witness = new MerkleWitness20(tree.getWitness(0n));
-    const sto = stos[0];
-    const { secret } = mockUser;
-    const { userPublic, _secret } = makeUserPublic(secret);
+    const witness = MerkleWitness20.fromJSON(witnessesJson[0]);
+    // const witness = new MerkleWitness20(tree.getWitness(0n));
+    const leaf = stos[0].leaf;
+    const isin = stos[0].isin;
+    const balance = stos[0].balance;
+    const secret = Field.from(stos[0].secret);
 
-    console.log('made leaf, userPublic: %s, secret: %s', userPublic, _secret);
+    // const { secret } = mockUser;
+    // const { userPublic, _secret } = makeUserPublic(secret);
+
+    // console.log(11, sto.leaf, sto.isin, sto.balance, root, witness, secret);
+    const _userPublic = Poseidon.hash([secret]);
+    const _leaf = Poseidon.hash([_userPublic, isin, balance]);
+    console.log('_userPublic', _userPublic, _leaf);
+
+    console.log('witness', witness.toJSON());
+    console.log('leaf', leaf);
+    console.log('root', root);
+    console.log('secret', secret);
+    console.log('isin', isin);
+    console.log('balance', balance);
 
     const txn = await Mina.transaction(senderAccount, async () => {
-      await zkApp.membership(
-        witness,
-        sto.leaf,
-        root,
-        sto.isin,
-        sto.balance,
-        _secret
-      );
+      await zkApp.membership(witness, leaf, root, isin, balance, secret);
     });
 
     try {

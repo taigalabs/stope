@@ -21,11 +21,14 @@ export class MerklePos extends SmartContract {
     balance: Field,
     secret: Field
   ) {
-    console.log('membership()');
+    console.log('zkapp - membership()');
 
     const userPublic = Poseidon.hash([secret]);
+    console.log('zkapp - userPublic:', userPublic);
 
     const _leaf = Poseidon.hash([userPublic, isin, balance]);
+    console.log('zkapp - _leaf:', _leaf);
+    console.log('zkapp - leaf:', leaf);
     leaf.assertEquals(_leaf);
 
     const _root = witness.calculateRoot(leaf);
