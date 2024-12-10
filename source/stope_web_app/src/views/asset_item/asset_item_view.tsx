@@ -109,36 +109,23 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
 
     console.log("Creating a transaction...", zkappWorkerClient);
 
-    // const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(
-    //   password,
-    //   isin,
-    //   balance
-    // );
-
-    // const { isin, balance } = asset;
     const { leaf: _leaf, _isin, _balance, _secret } = asset;
-    console.log(55, _isin, _balance, _secret);
+    console.log(55, _isin, _balance, _secret, tree, witness);
 
     const isin = Field.fromJSON(_isin);
     const balance = Field.fromJSON(_balance);
     const secret = Field.fromJSON(_secret);
     const leaf = Field.fromJSON(_leaf);
 
-    console.log(66, tree, witness);
-
     const root = Field.fromJSON(tree.root);
     const wit = MerkleWitness20.fromJSON(witness);
 
     console.log(11, isin, balance, secret, root, wit);
 
-    // const tree = new MerkleTree(HEIGHT);
-    // const root = tree.getRoot();
-    // const witness = new MerkleWitness20(tree.getWitness(BigInt(0)));
-
-    // console.log("proof gen view, root", root);
+    console.log("Creating proof...");
     await zkappWorkerClient!.membership(wit, leaf, root, isin, balance, secret);
 
-    console.log("Creating proof...");
+    console.log("Creating transaction...");
     await zkappWorkerClient!.proveUpdateTransaction();
 
     console.log("Requesting send transaction...");
