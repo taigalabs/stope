@@ -25,6 +25,22 @@ function main() {
     });
   });
 
+  program.command("create_data").action((str, options) => {
+    spawn("yarn test -t 'create_data'", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_bridge_proof,
+    });
+  });
+
+  program.command("test_bridge").action((str, options) => {
+    spawn("yarn test -t 'bridge_1'", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_bridge_proof,
+    });
+  });
+
   program.command("dev_stope_web_app").action((str, options) => {
     spawn("yarn run dev", {
       stdio: "inherit",
@@ -33,7 +49,7 @@ function main() {
     });
   });
 
-  program.command("build_contracts").action((str, options) => {
+  program.command("build_zkapps").action((str, options) => {
     spawn("yarn run build", {
       stdio: "inherit",
       shell: true,
