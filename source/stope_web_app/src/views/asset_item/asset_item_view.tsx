@@ -123,7 +123,18 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     const root = Field.fromJSON(tree.root);
     const wit = MerkleWitness20.fromJSON(witness);
 
-    console.log(11, isin, balance, secret, root, wit);
+    const _userPublic = Poseidon.hash([secret]);
+    const madeLeaf = Poseidon.hash([_userPublic, isin, balance]);
+
+    console.log("_userPublic", _userPublic);
+    console.log("madeLeaf", madeLeaf);
+
+    console.log("witness", wit.toJSON());
+    console.log("leaf", leaf);
+    console.log("root", root);
+    console.log("secret", secret);
+    console.log("isin", isin);
+    console.log("balance", balance);
 
     console.log("Creating proof...");
     await zkappWorkerClient!.membership(wit, leaf, root, isin, balance, secret);

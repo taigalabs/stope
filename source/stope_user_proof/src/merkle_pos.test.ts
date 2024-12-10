@@ -93,6 +93,9 @@ describe('MerklePos', () => {
     // const { userPublic, _secret } = makeUserPublic(secret);
 
     // console.log(11, sto.leaf, sto.isin, sto.balance, root, witness, secret);
+    const _userPublic = Poseidon.hash([secret]);
+    const _leaf = Poseidon.hash([_userPublic, isin, balance]);
+    console.log('_userPublic', _userPublic, _leaf);
 
     console.log('witness', witness.toJSON());
     console.log('leaf', leaf);
