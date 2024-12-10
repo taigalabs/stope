@@ -13,8 +13,9 @@ import { useZkApp } from "@/components/zkapp/useZkApp";
 import { ZkAppAccount } from "./zk_app_account";
 import { useUserStore } from "@/store";
 
-import { makeLeaf } from "../../../externals/make_leaf";
+import { makeLeaf, makeUserPublic } from "../../../externals/make_leaf";
 import { API_ENDPOINT } from "@/requests";
+import { mockUser } from "@taigalabs/stope-mock-data";
 
 const transactionFee = 0.1;
 
@@ -98,7 +99,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     }
   }, [witnessData]);
 
-  console.log(33, tree, witness, state.zkappWorkerClient);
+  console.log(33, tree, witness, asset, state.zkappWorkerClient);
 
   const handleClickCreateProof = React.useCallback(async () => {
     const zkappWorkerClient = state.zkappWorkerClient!;
@@ -111,6 +112,8 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
 
     const { leaf: _leaf, _isin, _balance, _secret } = asset;
     console.log(55, _isin, _balance, _secret, tree, witness);
+
+    // const { userPublic, _secret: secret } = makeUserPublic("mirae");
 
     const isin = Field.fromJSON(_isin);
     const balance = Field.fromJSON(_balance);
