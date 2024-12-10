@@ -21,6 +21,7 @@ let proofsEnabled = false;
 const DATA_PATH = path.resolve('../../source/stope_mock_data/data');
 const stosPath = path.resolve(DATA_PATH, 'stos.json');
 const treePath = path.resolve(DATA_PATH, 'tree.json');
+const witnessesPath = path.resolve(DATA_PATH, 'witnesses.json');
 
 describe('MerklePos', () => {
   let deployerAccount: Mina.TestPublicKey,
@@ -62,6 +63,7 @@ describe('MerklePos', () => {
 
     const stosJson = JSON.parse(fs.readFileSync(stosPath).toString());
     const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
+    const witnessesJson = JSON.parse(fs.readFileSync(witnessesPath).toString());
 
     const tree = new MerkleTree(HEIGHT);
 
@@ -79,7 +81,8 @@ describe('MerklePos', () => {
     });
 
     const root = Field.fromJSON(treeJson.root);
-    const witness = new MerkleWitness20(tree.getWitness(0n));
+    const witness = MerkleWitness20.fromJSON(witnessesJson[0]);
+    // const witness = new MerkleWitness20(tree.getWitness(0n));
     const sto = stos[0];
     const { secret } = mockUser;
     const { userPublic, _secret } = makeUserPublic(secret);
