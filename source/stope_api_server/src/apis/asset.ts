@@ -30,3 +30,17 @@ export async function get_sto(req: Request, res: Response) {
     sto: data.stosJson[sto_id],
   });
 }
+
+export async function get_witness(req: Request, res: Response) {
+  const { sto_id } = req.body;
+
+  res.send({
+    sto: data.witnessesJson[sto_id],
+  });
+}
+
+export async function get_tree(req: Request, res: Response) {
+  res.send({
+    sto: data.treeJson,
+  });
+}
