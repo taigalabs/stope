@@ -98,12 +98,16 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     }
   }, [witnessData]);
 
-  console.log(33, tree, witness);
+  console.log(33, tree, witness, state.zkappWorkerClient);
 
   const handleClickCreateProof = React.useCallback(async () => {
     const zkappWorkerClient = state.zkappWorkerClient!;
 
-    console.log("Creating a transaction...");
+    if (!zkappWorkerClient) {
+      return;
+    }
+
+    console.log("Creating a transaction...", zkappWorkerClient);
 
     // const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(
     //   password,
@@ -132,14 +136,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     // const witness = new MerkleWitness20(tree.getWitness(BigInt(0)));
 
     // console.log("proof gen view, root", root);
-    await zkappWorkerClient!.membership(
-      wit,
-      leaf,
-      root,
-      _isin,
-      _balance,
-      _secret
-    );
+    await zkappWorkerClient!.membership(wit, leaf, root, isin, balance, secret);
 
     console.log("Creating proof...");
     await zkappWorkerClient!.proveUpdateTransaction();
