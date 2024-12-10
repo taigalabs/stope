@@ -14,6 +14,8 @@ const data = (function () {
   const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
   const witnessesJson = JSON.parse(fs.readFileSync(witnessesPath).toString());
 
+  console.log(11, treeJson);
+
   return { stosJson, treeJson, witnessesJson };
 })();
 
@@ -35,12 +37,12 @@ export async function get_witness(req: Request, res: Response) {
   const { sto_id } = req.body;
 
   res.send({
-    sto: data.witnessesJson[sto_id],
+    witness: data.witnessesJson[sto_id],
   });
 }
 
 export async function get_tree(req: Request, res: Response) {
   res.send({
-    sto: data.treeJson,
+    tree: data.treeJson,
   });
 }
