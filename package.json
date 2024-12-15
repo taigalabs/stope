@@ -9,7 +9,6 @@
   "workspaces": {
     "packages": [
       "source/stope_api_server",
-      "source/stope_batch_processor",
       "source/stope_bridge_proof",
       "source/stope_web_app",
       "source/stope_user_proof",
