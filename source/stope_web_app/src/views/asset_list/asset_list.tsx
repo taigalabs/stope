@@ -35,6 +35,10 @@ const Assets = () => {
 
   const list = React.useMemo(() => {
     if (data && data.stos) {
+      if (data.stos.length === 0) {
+        return <li><div>no asset to show</div></li>
+      }
+
       const elems = data.stos.map((asset: any, idx: any) => {
         return (
           <li
