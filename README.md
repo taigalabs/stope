@@ -53,15 +53,7 @@ Test bridge zk application,
 Test user proof zk application,
 
 ```
-./ci test_bridge
-```
-
-## Testing:
-
-In the `stope_user_proof` package,
-
-```
-yarn test -t 'TEST_NAME'
+./ci test_user_proof
 ```
 
 ## Acknowledgement
