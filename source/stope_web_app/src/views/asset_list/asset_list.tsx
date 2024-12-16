@@ -10,12 +10,15 @@ import { API_ENDPOINT } from "@/requests";
 const Assets = () => {
   const router = useRouter();
 
+  const { username } = useUserStore();
+
   const { data, isFetching } = useQuery({
     queryKey: ["get_sto_list"],
     queryFn: async () => {
       try {
         const resp = await fetch(`${API_ENDPOINT}/get_sto_list`, {
           method: "post",
+          body: JSON.stringify({ username }),
           headers: { "Content-Type": "application/json" },
         });
 
@@ -29,8 +32,6 @@ const Assets = () => {
   });
 
   console.log(22, data);
-
-  const { username } = useUserStore();
 
   const list = React.useMemo(() => {
     if (data && data.stos) {
