@@ -224,7 +224,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
           </div>
           <div className={styles.btnArea}>
             <button type="button" onClick={handleClickCreateProof}>
-              Create proof
+              Create proof (Auro wallet)
             </button>
             <div>{createProofMsg}</div>
           </div>
