@@ -50,6 +50,12 @@ Test bridge zk application,
 ./ci test_bridge
 ```
 
+Test user proof zk application,
+
+```
+./ci test_bridge
+```
+
 ## Testing:
 
 In the `stope_user_proof` package,

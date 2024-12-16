@@ -41,6 +41,14 @@ function main() {
     });
   });
 
+  program.command("test_user_proof").action((str, options) => {
+    spawn("yarn test -t 'user_proof_1'", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_user_proof,
+    });
+  });
+
   program.command("dev_stope_web_app").action((str, options) => {
     spawn("yarn run dev", {
       stdio: "inherit",
