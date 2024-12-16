@@ -74,6 +74,10 @@ const Assets = () => {
 export const AssetList: React.FC<ProofGenViewProps> = () => {
   return (
     <div className={styles.wrapper}>
+      <button>
+        asset attestation generator
+        Refresh asset data
+      </button>
       <Assets />
     </div>
   );
