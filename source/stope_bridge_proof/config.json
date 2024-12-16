@@ -18,6 +18,33 @@
       "feepayerAlias": "acc-1",
       "fee": "0.1",
       "smartContract": "Bridge"
+    },
+    "test-3": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/devnet/v1/graphql",
+      "keyPath": "keys/test-3.json",
+      "feepayerKeyPath": "/home/ubuntu/.cache/zkapp-cli/keys/acc-1.json",
+      "feepayerAlias": "acc-1",
+      "fee": "0.1",
+      "smartContract": "Bridge"
+    },
+    "test-4": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/devnet/v1/graphql",
+      "keyPath": "keys/test-4.json",
+      "feepayerKeyPath": "/home/ubuntu/.cache/zkapp-cli/keys/acc-1.json",
+      "feepayerAlias": "acc-1",
+      "fee": "0.1",
+      "smartContract": "Bridge"
+    },
+    "test-5": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/devnet/v1/graphql",
+      "keyPath": "keys/test-5.json",
+      "feepayerKeyPath": "/home/ubuntu/.cache/zkapp-cli/keys/acc-1.json",
+      "feepayerAlias": "acc-1",
+      "fee": "0.1",
+      "smartContract": "Bridge"
     }
   }
 }

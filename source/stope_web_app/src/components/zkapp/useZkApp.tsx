@@ -3,7 +3,7 @@ import { Field, PublicKey } from "o1js";
 
 import ZkappWorkerClient from "./zkappWorkerClient";
 
-const ZKAPP_ADDRESS = "B62qmrx8DaME6ECgGox5EfhC3vd529Ge778jmp56dhmxcSDE1g8Wu9p";
+const ZKAPP_ADDRESS = "B62qipERmCgNuHZGgnyRb97291RCuWS4Xq8gZY4Xh3EUcRjK1zSBKzr";
 
 export function useZkApp() {
   const [state, setState] = React.useState({

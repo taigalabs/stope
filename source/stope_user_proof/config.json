@@ -54,6 +54,15 @@
       "feepayerAlias": "acc-1",
       "fee": "0.1",
       "smartContract": "MerklePos"
+    },
+    "test-7": {
+      "networkId": "testnet",
+      "url": "https://api.minascan.io/node/devnet/v1/graphql",
+      "keyPath": "keys/test-7.json",
+      "feepayerKeyPath": "/home/ubuntu/.cache/zkapp-cli/keys/acc-1.json",
+      "feepayerAlias": "acc-1",
+      "fee": "0.1",
+      "smartContract": "MerklePos"
     }
   }
 }
