@@ -99,7 +99,7 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
     }
   }, [witnessData]);
 
-  console.log(33, tree, witness, asset, state.zkappWorkerClient);
+  // console.log(33, tree, witness, asset, state.zkappWorkerClient);
 
   const handleClickCreateProof = React.useCallback(async () => {
     const zkappWorkerClient = state.zkappWorkerClient!;
