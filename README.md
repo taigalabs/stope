@@ -8,7 +8,7 @@ privacy-enhanced claims. Zero Knowledge Proofs (ZK Proofs), in this case zk-SNAR
 integrity and privacy.
 
 This monorepo repository also contains a set of components that allow asset owners to make
-privacy-enhanced claims on their assets. These privacy-enhanced claims are proofs of ownership for
+privacy-enhanced claims of their assets. These privacy-enhanced claims are proofs of ownership for
 their STO holdings and can be generated securely on their own devices. The purpose is to provide
 additional utility to STO owners without the need to reveal any additional information.
 
@@ -58,6 +58,6 @@ In the `stope_user_proof` package,
 yarn test -t 'TEST_NAME'
 ```
 
-## Core algorithm
+## Acknowledgement
 
-TBD
+Mina Foundation grant 2024
