@@ -1,42 +1,10 @@
-// import {
-//   Field,
-//   Mina,
-//   PrivateKey,
-//   AccountUpdate,
-//   MerkleTree,
-//   CircuitString,
-//   Poseidon,
-// } from "o1js";
 import fs from "fs/promises";
 import { Mina, NetworkId, PrivateKey } from "o1js";
-import { Bridge } from "../build/src/index.js";
-// import { Add } from "./Add.js";
+
+import { Bridge } from "./bridge.js";
 
 export const SECRET = "secret";
 
-// async function deployContractLocal() {
-//   const useProof = false;
-//   const Local = await Mina.LocalBlockchain({ proofsEnabled: useProof });
-//   Mina.setActiveInstance(Local);
-
-//   const deployerAccount = Local.testAccounts[0];
-//   const deployerKey = deployerAccount.key;
-
-//   // Create a public/private key pair. The public key is your address and where you deploy the zkApp to
-//   const zkAppPrivateKey = PrivateKey.random();
-//   const zkAppAddress = zkAppPrivateKey.toPublicKey();
-
-//   // create an instance of Square - and deploy it to zkAppAddress
-//   const zkAppInstance = new Bridge(zkAppAddress);
-//   const deployTxn = await Mina.transaction(deployerAccount, async () => {
-//     AccountUpdate.fundNewAccount(deployerAccount);
-//     await zkAppInstance.deploy();
-//   });
-//   await deployTxn.sign([deployerKey, zkAppPrivateKey]).send();
-
-//   return { Local, zkApp: zkAppInstance };
-// }
-//
 async function execBridgeProcess() {
   /**
    * This script can be used to interact with the Add contract, after deploying it.
@@ -114,7 +82,7 @@ node build/src/interact.js <deployAlias>
     let tx = await Mina.transaction(
       { sender: feepayerAddress, fee },
       async () => {
-        zkApp.aggregate();
+        // zkApp.aggregate();
       }
     );
     await tx.prove();
@@ -134,12 +102,6 @@ node build/src/interact.js <deployAlias>
   }
 }
 
-export async function exportSTO() {
-  console.log("exporting STO");
-
-  await execBridgeProcess();
-}
-
 function getTxnUrl(graphQlUrl: string, txnHash: string | undefined) {
   const txnBroadcastServiceName = new URL(graphQlUrl).hostname
     .split(".")
@@ -152,3 +114,11 @@ function getTxnUrl(graphQlUrl: string, txnHash: string | undefined) {
   }
   return `Transaction hash: ${txnHash}`;
 }
+
+export async function exportSTO() {
+  console.log("exporting STO");
+
+  await execBridgeProcess();
+}
+
+exportSTO();
