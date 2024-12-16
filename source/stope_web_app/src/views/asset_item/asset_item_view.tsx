@@ -13,9 +13,7 @@ import { useZkApp } from "@/components/zkapp/useZkApp";
 import { ZkAppAccount } from "./zk_app_account";
 import { useUserStore } from "@/store";
 
-import { makeLeaf, makeUserPublic } from "../../../externals/make_leaf";
 import { API_ENDPOINT } from "@/requests";
-import { mockUser } from "@taigalabs/stope-mock-data";
 
 const transactionFee = 0.1;
 
