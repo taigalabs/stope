@@ -33,6 +33,14 @@ function main() {
     });
   });
 
+  program.command("create_data2").action((str, options) => {
+    spawn("yarn test -t 'create_data2'", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_bridge_proof,
+    });
+  });
+
   program.command("batch_bridge").action((str, options) => {
     spawn("yarn run batch", {
       stdio: "inherit",

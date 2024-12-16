@@ -10,7 +10,12 @@ import path from "path";
 import fs from "fs";
 
 import { Bridge } from "./bridge";
-import { mockAssets, mockUser } from "../externals/mock_data";
+import {
+  mockAssets,
+  mockAssets2,
+  mockUser,
+  mockUser2,
+} from "../externals/mock_data";
 import { makeLeaf } from "../externals/make_leaf";
 import { HEIGHT } from "../externals/tree";
 import { Assets } from "../externals/sto";
@@ -29,6 +34,10 @@ const DATA_PATH = path.resolve("../../source/stope_mock_data/data");
 const stosPath = path.resolve(DATA_PATH, "stos.json");
 const treePath = path.resolve(DATA_PATH, "tree.json");
 const witnessesPath = path.resolve(DATA_PATH, "witnesses.json");
+
+const stosPath2 = path.resolve(DATA_PATH, "stos2.json");
+const treePath2 = path.resolve(DATA_PATH, "tree2.json");
+const witnessesPath2 = path.resolve(DATA_PATH, "witnesses2.json");
 
 console.log("data_path", DATA_PATH);
 console.log("stosPath", stosPath);
@@ -117,6 +126,56 @@ describe("Add", () => {
 
     fs.writeFileSync(witnessesPath, JSON.stringify(witnesses));
     console.log("Wrote witness to file, path: %s", witnessesPath);
+  });
+
+  it("create_data2", async () => {
+    const tree = new MerkleTree(HEIGHT);
+
+    const stosJson = [];
+    let totalBalance = Field.fromValue(0);
+    for (let idx = 0; idx < mockAssets2.length; idx += 1) {
+      const asset = mockAssets2[idx];
+      const { leaf, userPublic, _isin, _balance, _secret } = makeLeaf(
+        mockUser2.secret,
+        asset.isin,
+        asset.balance
+      );
+
+      const d = {
+        ...asset,
+        leaf: leaf.toJSON(),
+        userPublic: userPublic.toJSON(),
+        _isin: _isin.toJSON(),
+        _balance: _balance.toJSON(),
+        _secret: _secret.toJSON(),
+      };
+
+      const bal = Field.fromValue(asset.balance);
+      totalBalance = totalBalance.add(bal);
+      tree.setLeaf(BigInt(idx), leaf);
+      stosJson.push(d);
+    }
+
+    console.log("totalBalance", totalBalance);
+
+    const root = tree.getRoot();
+    const treeJson = {
+      root: root.toJSON(),
+      totalBalance: totalBalance.toJSON(),
+    };
+
+    fs.writeFileSync(stosPath2, JSON.stringify(stosJson));
+    fs.writeFileSync(treePath2, JSON.stringify(treeJson));
+
+    const witnesses = [];
+    for (let idx = 0; idx < stosJson.length; idx += 1) {
+      const witness = new MerkleWitness20(tree.getWitness(BigInt(idx)));
+      // console.log(22, witness.toJSON());
+      witnesses.push(witness.toJSON());
+    }
+
+    fs.writeFileSync(witnessesPath2, JSON.stringify(witnesses));
+    console.log("Wrote witness to file, path: %s", witnessesPath2);
   });
 
   it("bridge_1", async () => {

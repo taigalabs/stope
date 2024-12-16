@@ -3,7 +3,7 @@ export const mockUser = {
   secret: "elden",
 };
 
-export const mockWrongUser = {
+export const mockUser2 = {
   username: "elden2",
   secret: "elden2",
 };
