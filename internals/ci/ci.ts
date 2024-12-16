@@ -33,6 +33,14 @@ function main() {
     });
   });
 
+  program.command("batch_bridge").action((str, options) => {
+    spawn("yarn run batch", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_bridge_proof,
+    });
+  });
+
   program.command("test_bridge").action((str, options) => {
     spawn("yarn test -t 'bridge_1'", {
       stdio: "inherit",
