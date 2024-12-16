@@ -9,22 +9,39 @@ const stosPath = path.resolve(DATA_PATH, "stos.json");
 const treePath = path.resolve(DATA_PATH, "tree.json");
 const witnessesPath = path.resolve(DATA_PATH, "witnesses.json");
 
+const stosPath2 = path.resolve(DATA_PATH, "stos2.json");
+const treePath2 = path.resolve(DATA_PATH, "tree2.json");
+const witnessesPath2 = path.resolve(DATA_PATH, "witnesses2.json");
+
 const data = (function () {
   const stosJson = JSON.parse(fs.readFileSync(stosPath).toString());
   const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
   const witnessesJson = JSON.parse(fs.readFileSync(witnessesPath).toString());
 
-  console.log(11, treeJson);
+  const stosJson2 = JSON.parse(fs.readFileSync(stosPath).toString());
+  const treeJson2 = JSON.parse(fs.readFileSync(treePath).toString());
+  const witnessesJson2 = JSON.parse(fs.readFileSync(witnessesPath).toString());
 
-  return { stosJson, treeJson, witnessesJson };
+  return {
+    stosJson,
+    treeJson,
+    witnessesJson,
+    stosJson2,
+    treeJson2,
+    witnessesJson2,
+  };
 })();
 
 export async function get_sto_list(req: Request, res: Response) {
   const { username } = req.body;
 
-  if (username === "mirae") {
+  if (username === "elden") {
     res.send({
       stos: data.stosJson,
+    });
+  } else if (username === "elden2") {
+    res.send({
+      stos: data.stosJson2,
     });
   } else {
     res.send({
@@ -34,7 +51,7 @@ export async function get_sto_list(req: Request, res: Response) {
 }
 
 export async function get_sto(req: Request, res: Response) {
-  const { sto_id } = req.body;
+  const { sto_id, username } = req.body;
 
   res.send({
     sto: data.stosJson[sto_id],
@@ -42,7 +59,7 @@ export async function get_sto(req: Request, res: Response) {
 }
 
 export async function get_witness(req: Request, res: Response) {
-  const { sto_id } = req.body;
+  const { sto_id, username } = req.body;
 
   res.send({
     witness: data.witnessesJson[sto_id],
@@ -50,6 +67,8 @@ export async function get_witness(req: Request, res: Response) {
 }
 
 export async function get_tree(req: Request, res: Response) {
+  const { username } = req.body;
+
   res.send({
     tree: data.treeJson,
   });
