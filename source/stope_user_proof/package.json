@@ -24,7 +24,7 @@
   "main": "build/src/index.js",
   "types": "build/src/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rimraf ./build && tsc",
     "buildw": "tsc --watch",
     "coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
     "format": "prettier --write --ignore-unknown **/*",
@@ -42,6 +42,7 @@
     "eslint-plugin-o1js": "^0.4.0",
     "jest": "^28.1.3",
     "prettier": "^2.3.2",
+    "rimraf": "^6.0.1",
     "ts-jest": "^28.0.8",
     "typescript": "^5.1"
   },

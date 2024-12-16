@@ -19,10 +19,18 @@ const data = (function () {
   return { stosJson, treeJson, witnessesJson };
 })();
 
-export async function get_sto_list(_req: Request, res: Response) {
-  res.send({
-    stos: data.stosJson,
-  });
+export async function get_sto_list(req: Request, res: Response) {
+  const { username } = req.body;
+
+  if (username === "mirae") {
+    res.send({
+      stos: data.stosJson,
+    });
+  } else {
+    res.send({
+      stos: [],
+    });
+  }
 }
 
 export async function get_sto(req: Request, res: Response) {
