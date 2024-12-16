@@ -1,9 +1,22 @@
-import fs from "fs/promises";
-import { Mina, NetworkId, PrivateKey } from "o1js";
+import { Field, MerkleTree, Mina, NetworkId, PrivateKey } from "o1js";
+import fs from "fs";
+import path from "path";
+// import { HEIGHT, MerkleWitness20 } from "@taigalabs/stope-entities";
 
 import { Bridge } from "./bridge.js";
+import { Assets } from "../externals/sto.js";
+import { MerkleWitness20, HEIGHT } from "../externals/tree.js";
 
 export const SECRET = "secret";
+
+const DATA_PATH = path.resolve("../../source/stope_mock_data/data");
+const stosPath = path.resolve(DATA_PATH, "stos.json");
+const treePath = path.resolve(DATA_PATH, "tree.json");
+const witnessesPath = path.resolve(DATA_PATH, "witnesses.json");
+
+const stosJson = JSON.parse(fs.readFileSync(stosPath).toString());
+const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
+const witnessesJson = JSON.parse(fs.readFileSync(witnessesPath).toString());
 
 async function execBridgeProcess() {
   /**
@@ -22,7 +35,8 @@ async function execBridgeProcess() {
    */
 
   // check command line arg
-  let deployAlias = process.argv[2];
+  let deployAlias = "test-2";
+  // let deployAlias = process.argv[2];
   if (!deployAlias)
     throw Error(`Missing <deployAlias> argument.
 
@@ -46,13 +60,13 @@ node build/src/interact.js <deployAlias>
       }
     >;
   };
-  let configJson: Config = JSON.parse(await fs.readFile("config.json", "utf8"));
+  let configJson: Config = JSON.parse(fs.readFileSync("config.json", "utf8"));
   let config = configJson.deployAliases[deployAlias];
   let feepayerKeysBase58: { privateKey: string; publicKey: string } =
-    JSON.parse(await fs.readFile(config.feepayerKeyPath, "utf8"));
+    JSON.parse(fs.readFileSync(config.feepayerKeyPath, "utf8"));
 
   let zkAppKeysBase58: { privateKey: string; publicKey: string } = JSON.parse(
-    await fs.readFile(config.keyPath, "utf8")
+    fs.readFileSync(config.keyPath, "utf8")
   );
 
   let feepayerKey = PrivateKey.fromBase58(feepayerKeysBase58.privateKey);
@@ -82,7 +96,33 @@ node build/src/interact.js <deployAlias>
     let tx = await Mina.transaction(
       { sender: feepayerAddress, fee },
       async () => {
-        // zkApp.aggregate();
+        const tree = new MerkleTree(HEIGHT);
+
+        const stos = stosJson.map((_sto: any, idx: number) => {
+          const sto = {
+            leaf: Field.fromJSON(_sto.leaf),
+            userPublic: Field.fromJSON(_sto.userPublic),
+            isin: Field.fromJSON(_sto._isin),
+            balance: Field.fromJSON(_sto._balance),
+          };
+
+          tree.setLeaf(BigInt(idx), sto.leaf);
+
+          return sto;
+        });
+        const assets = new Assets({ stos });
+
+        const root = Field.fromJSON(treeJson.root);
+        const totalBalance = Field.fromJSON(treeJson.totalBalance);
+
+        const witnesses = witnessesJson.map((wt: any) => {
+          return MerkleWitness20.fromJSON(wt);
+        });
+
+        const firstLeaf = stos[0].leaf;
+        const firstLeafWitness = witnesses[0];
+
+        zkApp.aggregate(assets, root, totalBalance, firstLeafWitness);
       }
     );
     await tx.prove();
