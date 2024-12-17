@@ -48,6 +48,11 @@ export default class ZkappWorkerClient {
     return Field.fromJSON(JSON.parse(result as string));
   }
 
+  async getBal(): Promise<Field> {
+    const result = await this.remoteApi.getBal();
+    return Field.fromJSON(JSON.parse(result as string));
+  }
+
   async membership(
     _witness: MerkleWitness20,
     _leaf: Field,

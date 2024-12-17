@@ -46,6 +46,10 @@ export const api = {
     const currentNum = await state.zkappInstance!.root.get();
     return JSON.stringify(currentNum.toJSON());
   },
+  async getBal() {
+    const currentNum = await state.zkappInstance!.bal.get();
+    return JSON.stringify(currentNum.toJSON());
+  },
   membership: async (args: {
     witness: string;
     leaf: string;

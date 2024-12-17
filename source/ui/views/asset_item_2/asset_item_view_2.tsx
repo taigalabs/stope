@@ -22,7 +22,8 @@ export const AssetItemView2: React.FC<AssetItemViewProps> = ({ idx }) => {
   const [hasWallet, setHasWallet] = useState<null | boolean>(null);
   const [hasBeenSetup, setHasBeenSetup] = useState(false);
   const [accountExists, setAccountExists] = useState(false);
-  const [currentNum, setCurrentNum] = useState<null | Field>(null);
+  const [currentRoot, setCurrentRoot] = useState<null | Field>(null);
+  const [currentBal, setCurrentBal] = useState<null | Field>(null);
   const [publicKeyBase58, setPublicKeyBase58] = useState("");
   const [creatingTransaction, setCreatingTransaction] = useState(false);
   const [displayText, setDisplayText] = useState("");
@@ -76,9 +77,11 @@ export const AssetItemView2: React.FC<AssetItemViewProps> = ({ idx }) => {
           const acc = await zkappWorkerClient.fetchAccount(ZKAPP_ADDRESS);
           console.log(22, acc);
 
-          const currentNum = await zkappWorkerClient.getRoot();
-          setCurrentNum(currentNum);
-          console.log(`Current state in zkApp: ${currentNum}`);
+          const currentRoot = await zkappWorkerClient.getRoot();
+          const currentBal = await zkappWorkerClient.getBal();
+          setCurrentRoot(currentRoot);
+          setCurrentBal(currentBal);
+          console.log(`Current root in zkApp: ${currentRoot}`);
 
           setHasBeenSetup(true);
           setHasWallet(true);
@@ -290,7 +293,7 @@ export const AssetItemView2: React.FC<AssetItemViewProps> = ({ idx }) => {
 
   let setup = (
     <div
-      className={styles.start}
+      className={styles.zkapp}
       style={{ fontWeight: "bold", fontSize: "1.5rem", paddingBottom: "5rem" }}
     >
       {stepDisplay}
@@ -314,51 +317,45 @@ export const AssetItemView2: React.FC<AssetItemViewProps> = ({ idx }) => {
   let mainContent;
   if (hasBeenSetup && accountExists) {
     mainContent = (
-      <div style={{ justifyContent: "center", alignItems: "center" }}>
-        <div className={styles.center} style={{ padding: 0 }}>
-          Current state in zkApp: {currentNum?.toString()}{" "}
-        </div>
+      <div className={styles.main}>
+        <div className={styles.center} style={{ padding: 0 }}></div>
         <div className={styles.main}>
           <div className={styles.content}>
-            <div className={styles.item}>
-              <span>Symbol</span>
-              <span>{asset.symbol}</span>
+            <div className={styles.ctrState}>
+              <div className={styles.infoEntry}>
+                <p className={styles.label}>Latest root</p>
+                <p>{currentRoot?.toString()}</p>
+              </div>
+              <div className={styles.infoEntry}>
+                <p className={styles.label}>
+                  Latest balance (of an anonymous proof)
+                </p>
+                <p>{currentBal?.toString()}</p>
+              </div>
             </div>
-            <div className={styles.item}>
-              <span>symbol: </span>
-              <span>{asset.symbol}</span>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>ISIN</p>
+              <p>{asset.isin}</p>
             </div>
-            <div className={styles.item}>
-              <span>ISIN: </span>
-              <span>{asset.isin}</span>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>Symbol</p>
+              <p>{asset.symbol}</p>
             </div>
-            <div className={styles.item}>
-              <span>total supply: </span>
-              <span>{asset.totalSupply}</span>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>Name</p>
+              <p>{asset.name}</p>
             </div>
-            <div className={styles.item}>
-              <span>issuer name: </span>
-              <span>{asset.issuerName}</span>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>Balance</p>
+              <p>{asset.balance}</p>
             </div>
-            <div className={styles.item}>
-              <span>name: </span>
-              <span>{asset.name}</span>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>User public</p>
+              <p>{asset.userPublic}</p>
             </div>
-            <div className={styles.item}>
-              <span>is trust: </span>
-              <span>{asset.isTrust === true ? "true" : "false"}</span>
-            </div>
-            <div className={styles.item}>
-              <span>trust name: </span>
-              <span>{asset.trustName}</span>
-            </div>
-            <div className={styles.item}>
-              <span>decimals: </span>
-              <span>{asset.decimals}</span>
-            </div>
-            <div className={styles.item}>
-              <span>balance: </span>
-              <span>{asset.balance}</span>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>Issuer</p>
+              <p>{asset.issuerName}</p>
             </div>
           </div>
           <div className={styles.btnArea}>
@@ -387,8 +384,8 @@ export const AssetItemView2: React.FC<AssetItemViewProps> = ({ idx }) => {
   }
 
   return (
-    <div className={styles.main} style={{ padding: 0 }}>
-      <div className={styles.center} style={{ padding: 0 }}>
+    <div className={styles.main}>
+      <div className={styles.inner}>
         {setup}
         {accountDoesNotExist}
         {mainContent}
