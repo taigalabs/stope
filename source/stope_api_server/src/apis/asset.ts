@@ -18,9 +18,9 @@ const data = (function () {
   const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
   const witnessesJson = JSON.parse(fs.readFileSync(witnessesPath).toString());
 
-  const stosJson2 = JSON.parse(fs.readFileSync(stosPath).toString());
-  const treeJson2 = JSON.parse(fs.readFileSync(treePath).toString());
-  const witnessesJson2 = JSON.parse(fs.readFileSync(witnessesPath).toString());
+  const stosJson2 = JSON.parse(fs.readFileSync(stosPath2).toString());
+  const treeJson2 = JSON.parse(fs.readFileSync(treePath2).toString());
+  const witnessesJson2 = JSON.parse(fs.readFileSync(witnessesPath2).toString());
 
   return {
     stosJson,
@@ -53,23 +53,41 @@ export async function get_sto_list(req: Request, res: Response) {
 export async function get_sto(req: Request, res: Response) {
   const { sto_id, username } = req.body;
 
-  res.send({
-    sto: data.stosJson[sto_id],
-  });
+  if (username === "elden") {
+    res.send({
+      sto: data.stosJson[sto_id],
+    });
+  } else {
+    res.send({
+      sto: data.stosJson2[sto_id],
+    });
+  }
 }
 
 export async function get_witness(req: Request, res: Response) {
   const { sto_id, username } = req.body;
 
-  res.send({
-    witness: data.witnessesJson[sto_id],
-  });
+  if (username === "elden") {
+    res.send({
+      witness: data.witnessesJson[sto_id],
+    });
+  } else {
+    res.send({
+      witness: data.witnessesJson2[sto_id],
+    });
+  }
 }
 
 export async function get_tree(req: Request, res: Response) {
   const { username } = req.body;
 
-  res.send({
-    tree: data.treeJson,
-  });
+  if (username === "elden") {
+    res.send({
+      tree: data.treeJson,
+    });
+  } else {
+    res.send({
+      tree: data.treeJson2,
+    });
+  }
 }
