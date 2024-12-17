@@ -83,7 +83,7 @@ export const api = {
     const _balance = Field.fromJSON(balance);
     console.log("_balance", _balance);
 
-    const transaction = await Mina.transaction(async () => {
+    state.transaction = await Mina.transaction(async () => {
       await state.zkappInstance!.membership(
         _witness,
         _leaf,
@@ -93,7 +93,6 @@ export const api = {
         _secret
       );
     });
-    state.transaction = transaction;
   },
   async createUpdateTransaction() {
     state.transaction = await Mina.transaction(async () => {

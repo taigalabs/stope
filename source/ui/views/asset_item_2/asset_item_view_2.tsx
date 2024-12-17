@@ -123,10 +123,15 @@ export const AssetItemView2: React.FC<AssetItemViewProps> = ({ idx }) => {
   // Send a transaction
   //
   const onSendTransaction = async () => {
+    //
+
     setCreatingTransaction(true);
     displayStep("Creating a transaction...");
 
-    //
+    console.log("publicKeyBase58 sending to worker", publicKeyBase58);
+    await zkappWorkerClient!.fetchAccount(publicKeyBase58);
+
+    // await zkappWorkerClient!.createUpdateTransaction();
     const { leaf: _leaf, _isin, _balance, _secret } = asset;
     console.log(55, _isin, _balance, _secret, tree, witness);
 
@@ -152,13 +157,8 @@ export const AssetItemView2: React.FC<AssetItemViewProps> = ({ idx }) => {
     console.log("balance", balance);
 
     console.log("Creating proof...");
+    zkappWorkerClient?.getNum();
     await zkappWorkerClient!.membership(wit, leaf, root, isin, balance, secret);
-    //
-
-    console.log("publicKeyBase58 sending to worker", publicKeyBase58);
-    await zkappWorkerClient!.fetchAccount(publicKeyBase58);
-
-    await zkappWorkerClient!.createUpdateTransaction();
 
     displayStep("Creating proof...");
     await zkappWorkerClient!.proveUpdateTransaction();
@@ -174,6 +174,8 @@ export const AssetItemView2: React.FC<AssetItemViewProps> = ({ idx }) => {
         memo: "",
       },
     });
+
+    console.log("hash", hash);
 
     const transactionLink = `https://minascan.io/devnet/tx/${hash}`;
     setTransactionLink(transactionLink);
@@ -316,13 +318,67 @@ export const AssetItemView2: React.FC<AssetItemViewProps> = ({ idx }) => {
         <div className={styles.center} style={{ padding: 0 }}>
           Current state in zkApp: {currentNum?.toString()}{" "}
         </div>
-        <button
-          className={styles.card}
-          onClick={onSendTransaction}
-          disabled={creatingTransaction}
-        >
-          Send Transaction
-        </button>
+        <div className={styles.main}>
+          <div className={styles.content}>
+            <div className={styles.item}>
+              <span>Symbol</span>
+              <span>{asset.symbol}</span>
+            </div>
+            <div className={styles.item}>
+              <span>symbol: </span>
+              <span>{asset.symbol}</span>
+            </div>
+            <div className={styles.item}>
+              <span>ISIN: </span>
+              <span>{asset.isin}</span>
+            </div>
+            <div className={styles.item}>
+              <span>total supply: </span>
+              <span>{asset.totalSupply}</span>
+            </div>
+            <div className={styles.item}>
+              <span>issuer name: </span>
+              <span>{asset.issuerName}</span>
+            </div>
+            <div className={styles.item}>
+              <span>name: </span>
+              <span>{asset.name}</span>
+            </div>
+            <div className={styles.item}>
+              <span>is trust: </span>
+              <span>{asset.isTrust === true ? "true" : "false"}</span>
+            </div>
+            <div className={styles.item}>
+              <span>trust name: </span>
+              <span>{asset.trustName}</span>
+            </div>
+            <div className={styles.item}>
+              <span>decimals: </span>
+              <span>{asset.decimals}</span>
+            </div>
+            <div className={styles.item}>
+              <span>balance: </span>
+              <span>{asset.balance}</span>
+            </div>
+          </div>
+          <div className={styles.btnArea}>
+            <button
+              className={styles.card}
+              onClick={onSendTransaction}
+              disabled={creatingTransaction}
+            >
+              Create proof (Auro wallet)
+            </button>
+            {/* <div>{createProofMsg}</div> */}
+          </div>
+        </div>
+        {/* <button */}
+        {/*   className={styles.card} */}
+        {/*   onClick={onSendTransaction} */}
+        {/*   disabled={creatingTransaction} */}
+        {/* > */}
+        {/*   Send Transaction */}
+        {/* </button> */}
         {/* <button className={styles.card} onClick={onRefreshCurrentNum}> */}
         {/*   Get Latest State */}
         {/* </button> */}
