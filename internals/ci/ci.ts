@@ -69,7 +69,7 @@ function main() {
     spawn("yarn run dev", {
       stdio: "inherit",
       shell: true,
-      cwd: paths.stope_web_app,
+      cwd: paths.ui,
     });
   });
 
