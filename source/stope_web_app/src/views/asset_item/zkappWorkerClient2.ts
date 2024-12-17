@@ -48,6 +48,11 @@ export default class ZkappWorkerClient {
     return Field.fromJSON(JSON.parse(result as string));
   }
 
+  async getRoot(): Promise<Field> {
+    const result = await this.remoteApi.getRoot();
+    return Field.fromJSON(JSON.parse(result as string));
+  }
+
   async createUpdateTransaction() {
     return this.remoteApi.createUpdateTransaction();
   }

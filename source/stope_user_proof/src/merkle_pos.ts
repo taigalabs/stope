@@ -11,8 +11,8 @@ export class MerklePos extends SmartContract {
 
   init() {
     super.init();
-    this.root.set(Field(0));
-    this.bal.set(Field(0));
+    this.root.set(Field(1));
+    this.bal.set(Field(1));
   }
 
   @method async membership(

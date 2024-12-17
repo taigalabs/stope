@@ -2,11 +2,17 @@
 
 import React from "react";
 import { useEffect, useState } from "react";
-import { CircuitString, Field, MerkleTree, Poseidon } from "o1js";
 import {
-  HEIGHT,
-  MerkleWitness20,
-} from "@taigalabs/stope-user-proof/src/merkle_pos";
+  CircuitString,
+  Field,
+  MerkleTree,
+  MerkleWitness,
+  Poseidon,
+} from "o1js";
+// import {
+//   HEIGHT,
+//   MerkleWitness20,
+// } from "@taigalabs/stope-user-proof/src/merkle_pos";
 import { useQuery } from "@tanstack/react-query";
 
 import styles from "./asset_item_view.module.scss";
@@ -15,10 +21,13 @@ import styles from "./asset_item_view.module.scss";
 import { useUserStore } from "@/store";
 import ZkappWorkerClient from "./zkappWorkerClient2";
 
+import "./reactCOIServiceWorker";
+
 import { API_ENDPOINT } from "@/requests";
+import { MerkleWitness20 } from "./types";
 
 const transactionFee = 0.1;
-const ZKAPP_ADDRESS = "B62qipERmCgNuHZGgnyRb97291RCuWS4Xq8gZY4Xh3EUcRjK1zSBKzr";
+const ZKAPP_ADDRESS = "B62qqb8h5WxP59SdawDr4fVgKhXFunaM9HNa2Yi2aCkspDLKQQGZnw5";
 
 export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
   // const { state, displayText, hasWallet } = useZkApp();
@@ -71,7 +80,6 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
           const res = await zkappWorkerClient.fetchAccount(publicKeyBase58);
           const accountExists = res.error === null;
           setAccountExists(accountExists);
-          console.log("account", res.account?.zkapp);
 
           await zkappWorkerClient.loadContract();
 
@@ -84,15 +92,18 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
 
           displayStep("Getting zkApp state...");
           const acc = await zkappWorkerClient.fetchAccount(ZKAPP_ADDRESS);
-          console.log("acc", acc.account?.zkapp);
+          const acc2 = await zkappWorkerClient.fetchAccount(ZKAPP_ADDRESS);
+          console.log("acc", acc.account);
+          console.log("acc", acc2);
+          console.log("acc zkapp", acc.account?.zkapp);
 
           // const currentNum = await zkappWorkerClient.getNum();
           // setCurrentNum(currentNum);
 
-          const currentBal = await zkappWorkerClient.getBal();
-          setCurrentNum(currentBal);
+          const currentRoot = await zkappWorkerClient.getRoot();
+          setCurrentNum(currentRoot);
 
-          console.log(`Current state in zkApp: ${currentBal}`);
+          console.log(`Current state in zkApp: ${currentRoot}`);
 
           setHasBeenSetup(true);
           setHasWallet(true);

@@ -1,12 +1,8 @@
 import { Field, Mina, PublicKey, fetchAccount } from "o1js";
 import * as Comlink from "comlink";
-
 import type { MerklePos } from "../../../../stope_user_proof/build/src/merkle_pos";
-import {
-  HEIGHT,
-  MerkleWitness20,
-} from "../../../../stope_user_proof/build/src/merkle_pos";
-HEIGHT;
+
+import { HEIGHT, MerkleWitness20 } from "./types";
 
 type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 
@@ -21,8 +17,10 @@ export const api = {
     const Network = Mina.Network(
       "https://api.minascan.io/node/devnet/v1/graphql"
     );
+
     console.log("Devnet network instance configured");
     Mina.setActiveInstance(Network);
+    console.log("network", Network);
   },
   async loadContract() {
     const { MerklePos } = await import(
@@ -41,12 +39,17 @@ export const api = {
     const publicKey = PublicKey.fromBase58(publicKey58);
     state.zkappInstance = new state.AddInstance!(publicKey as any);
   },
-  async getNum() {
-    // const currentNum = await state.zkappInstance!.num.get();
-    // return JSON.stringify(currentNum.toJSON());
-  },
+  // async getNum() {
+  //   const currentNum = await (state.zkappInstance! as any).num.get();
+  //   return JSON.stringify(currentNum.toJSON());
+  // },
   async getBal() {
     const currentNum = await state.zkappInstance!.bal.get();
+    return JSON.stringify(currentNum.toJSON());
+  },
+
+  async getRoot() {
+    const currentNum = await state.zkappInstance!.root.get();
     return JSON.stringify(currentNum.toJSON());
   },
   // async createUpdateTransaction() {

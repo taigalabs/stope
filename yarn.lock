@@ -4812,7 +4812,7 @@ npm-run-path@^4.0.1:
   dependencies:
     path-key "^3.0.0"
 
-o1js@^1.*, o1js@^1.6.0:
+o1js@^1.6.0:
   version "1.7.0"
   resolved "https://registry.npmjs.org/o1js/-/o1js-1.7.0.tgz"
   integrity sha512-/gQKJLRuqDrArdU/QkaU0F1lQl/K6/170U01JeU2xIpryN6vBwENfEHWpHt1FXOmGwyTsQHmrJLWfyFLjQOkeA==
