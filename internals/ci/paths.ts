@@ -17,6 +17,7 @@ export const paths = (() => {
       "source/stope_batch_processor"
     ),
     stope_web_app: path.join(projectRootPath, "source/stope_web_app"),
+    ui: path.join(projectRootPath, "source/ui"),
     stope_user_proof: path.join(projectRootPath, "source/stope_user_proof"),
     stope_bridge_proof: path.join(projectRootPath, "source/stope_bridge_proof"),
   };

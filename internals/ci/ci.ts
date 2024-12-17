@@ -33,6 +33,22 @@ function main() {
     });
   });
 
+  program.command("create_data2").action((str, options) => {
+    spawn("yarn test -t 'create_data2'", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_bridge_proof,
+    });
+  });
+
+  program.command("batch_bridge").action((str, options) => {
+    spawn("yarn run batch", {
+      stdio: "inherit",
+      shell: true,
+      cwd: paths.stope_bridge_proof,
+    });
+  });
+
   program.command("test_bridge").action((str, options) => {
     spawn("yarn test -t 'bridge_1'", {
       stdio: "inherit",
@@ -53,7 +69,7 @@ function main() {
     spawn("yarn run dev", {
       stdio: "inherit",
       shell: true,
-      cwd: paths.stope_web_app,
+      cwd: paths.ui,
     });
   });
 
