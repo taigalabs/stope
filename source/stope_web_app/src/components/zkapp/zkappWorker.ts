@@ -31,7 +31,7 @@ const functions = {
   },
   loadContract: async (args: {}) => {
     const { MerklePos } = await import(
-      "@taigalabs/stope-user-proof/build/src/merkle_pos.js"
+      "../../../../stope_user_proof/build/src/merkle_pos.js"
     );
     state.MerklePos = MerklePos;
   },
@@ -48,6 +48,12 @@ const functions = {
 
     state.zkapp = new state.MerklePos!(publicKey);
   },
+  // createUpdateTransaction: async (args: any) => {
+  //   const transaction = await Mina.transaction(async () => {
+  //     state.zkapp!.update();
+  //   });
+  //   state.transaction = transaction;
+  // },
   membership: async (args: {
     witness: string;
     leaf: string;

@@ -1,7 +1,6 @@
 import { Field, MerkleTree, Mina, NetworkId, PrivateKey } from "o1js";
 import fs from "fs";
 import path from "path";
-// import { HEIGHT, MerkleWitness20 } from "@taigalabs/stope-entities";
 
 import { Bridge } from "./bridge.js";
 import { Assets } from "../externals/sto.js";

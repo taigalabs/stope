@@ -33,7 +33,7 @@ export function useZkApp() {
         setDisplayText("Loading web worker...");
         console.log("Loading web worker...");
 
-        console.log("zk app address", ZKAPP_ADDRESS);
+        console.log("zk app address", state.zkAppAddress);
         const zkappWorkerClient = new ZkappWorkerClient();
         await timeout(5);
 
