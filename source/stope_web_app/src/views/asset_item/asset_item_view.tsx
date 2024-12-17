@@ -176,12 +176,8 @@ export const AssetItemView: React.FC<AssetItemViewProps> = ({ idx }) => {
         <div className={styles.main}>
           <div className={styles.content}>
             <div className={styles.item}>
-              <span>asset id: </span>
-              <span>{asset.assetId}</span>
-            </div>
-            <div className={styles.item}>
-              <span>user public: </span>
-              <span>{asset.userPublic}</span>
+              <span>Symbol</span>
+              <span>{asset.symbol}</span>
             </div>
             <div className={styles.item}>
               <span>symbol: </span>

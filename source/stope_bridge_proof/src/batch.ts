@@ -19,8 +19,10 @@ const treeJson = JSON.parse(fs.readFileSync(treePath).toString());
 const witnessesJson = JSON.parse(fs.readFileSync(witnessesPath).toString());
 
 async function execBridgeProcess() {
-  let deployAlias = "test-2";
+  let deployAlias = "test-7";
   Error.stackTraceLimit = 1000;
+
+  console.log("deployAlias: %s", deployAlias);
 
   type Config = {
     deployAliases: Record<
@@ -38,6 +40,8 @@ async function execBridgeProcess() {
 
   let configJson: Config = JSON.parse(fs.readFileSync("config.json", "utf8"));
   let config = configJson.deployAliases[deployAlias];
+
+  console.log("feepayer: %s", config.feepayerKeyPath);
   let feepayerKeysBase58: { privateKey: string; publicKey: string } =
     JSON.parse(fs.readFileSync(config.feepayerKeyPath, "utf8"));
 
@@ -48,24 +52,19 @@ async function execBridgeProcess() {
   let feepayerKey = PrivateKey.fromBase58(feepayerKeysBase58.privateKey);
   let zkAppKey = PrivateKey.fromBase58(zkAppKeysBase58.privateKey);
 
-  // set up Mina instance and contract we interact with
-  // const Network = Mina.Network({
-  //   // We need to default to the testnet networkId if none is specified for this deploy alias in config.json
-  //   // This is to ensure the backward compatibility.
-  //   networkId: (config.networkId ?? DEFAULT_NETWORK_ID) as NetworkId,
-  //   mina: config.url,
-  // });
-
   const Network = Mina.Network(
     "https://api.minascan.io/node/devnet/v1/graphql"
   );
 
   // const Network = Mina.Network(config.url);
-  // const fee = Number(config.fee) * 1e9; // in nanomina (1 billion = 1.0 mina)
-  const fee = 0.1;
+  const fee = Number(config.fee) * 1e9; // in nanomina (1 billion = 1.0 mina)
+  // const fee = 0.1;
   Mina.setActiveInstance(Network);
   let feepayerAddress = feepayerKey.toPublicKey();
   let zkAppAddress = zkAppKey.toPublicKey();
+  console.log("zkAppAddress", zkAppAddress);
+  // let zkAppAddress = "B62qncWnKNqoK9aJiz1sAk1VDu2ULoADCJkVuSpTYUkymCxs1qwhvrC";
+
   let zkApp = new Bridge(zkAppAddress);
 
   // compile the contract to create prover keys

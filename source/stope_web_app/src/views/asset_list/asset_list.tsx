@@ -36,7 +36,11 @@ const Assets = () => {
   const list = React.useMemo(() => {
     if (data && data.stos) {
       if (data.stos.length === 0) {
-        return <li><div>no asset to show</div></li>
+        return (
+          <li>
+            <div>no asset to show</div>
+          </li>
+        );
       }
 
       const elems = data.stos.map((asset: any, idx: any) => {
@@ -48,17 +52,29 @@ const Assets = () => {
               router.push(`/asset_list/${idx}`);
             }}
           >
-            <div>
-              <p>ISIN: {asset.isin}</p>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>ISIN</p>
+              <p>{asset.isin}</p>
             </div>
-            <div>
-              <p>balance: {asset.balance}</p>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>Symbol</p>
+              <p>{asset.symbol}</p>
             </div>
-            <div>
-              <p>user public: {asset.userPublic}</p>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>Name</p>
+              <p>{asset.name}</p>
             </div>
-            <div>
-              <p>issuer: {asset.issuerName}</p>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>Balance</p>
+              <p>{asset.balance}</p>
+            </div>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>User public</p>
+              <p>{asset.userPublic}</p>
+            </div>
+            <div className={styles.infoEntry}>
+              <p className={styles.label}>Issuer</p>
+              <p>{asset.issuerName}</p>
             </div>
           </li>
         );
@@ -74,10 +90,10 @@ const Assets = () => {
 export const AssetList: React.FC<ProofGenViewProps> = () => {
   return (
     <div className={styles.wrapper}>
-      <button>
-        asset attestation generator
-        Refresh asset data
-      </button>
+      <div className={styles.header}>
+        <p className={styles.title}>Asset attestation generator</p>
+        <button className={styles.refreshBtn}>Refresh asset data</button>
+      </div>
       <Assets />
     </div>
   );
