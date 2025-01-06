@@ -31,18 +31,7 @@ export async function runServer() {
   app.post("/get_witness", get_witness);
   app.post("/get_tree", get_tree);
 
-  // const state = await makeState();
-  // app.locals = state;
-
   app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
   });
 }
-
-// async function makeState() {
-//   const db = await connectDB();
-
-//   return {
-//     db,
-//   };
-// }
