@@ -1,9 +1,9 @@
 export const mockUser = {
-  username: "mirae",
-  secret: "mirae",
+  username: "elden",
+  secret: "elden",
 };
 
-export const mockWrongUser = {
-  username: "wrong",
-  secret: "wrong",
+export const mockUser2 = {
+  username: "elden2",
+  secret: "elden2",
 };

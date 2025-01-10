@@ -7,10 +7,12 @@ export class MerkleWitness20 extends MerkleWitness(HEIGHT) {}
 
 export class MerklePos extends SmartContract {
   @state(Field) root = State<Field>();
+  @state(Field) bal = State<Field>();
 
   init() {
     super.init();
-    this.root.set(Field(0));
+    this.root.set(Field(1));
+    this.bal.set(Field(1));
   }
 
   @method async membership(
@@ -35,5 +37,6 @@ export class MerklePos extends SmartContract {
     root.assertEquals(_root);
 
     this.root.set(_root);
+    this.bal.set(balance);
   }
 }

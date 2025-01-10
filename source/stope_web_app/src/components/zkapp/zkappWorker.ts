@@ -10,7 +10,6 @@ import {
   MerkleWitness20,
   type MerklePos,
 } from "@taigalabs/stope-user-proof/src/merkle_pos";
-// import { MerkleWitness20 } from "@taigalabs/stope-user-proof/src/merkle_tree_20";
 
 type Transaction = Awaited<ReturnType<typeof Mina.transaction>>;
 
@@ -32,7 +31,7 @@ const functions = {
   },
   loadContract: async (args: {}) => {
     const { MerklePos } = await import(
-      "@taigalabs/stope-user-proof/build/merkle_pos.js"
+      "../../../../stope_user_proof/build/src/merkle_pos.js"
     );
     state.MerklePos = MerklePos;
   },
@@ -49,6 +48,12 @@ const functions = {
 
     state.zkapp = new state.MerklePos!(publicKey);
   },
+  // createUpdateTransaction: async (args: any) => {
+  //   const transaction = await Mina.transaction(async () => {
+  //     state.zkapp!.update();
+  //   });
+  //   state.transaction = transaction;
+  // },
   membership: async (args: {
     witness: string;
     leaf: string;
