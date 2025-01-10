@@ -12,6 +12,10 @@ privacy-enhanced claims of their assets. These privacy-enhanced claims are proof
 their STO holdings and can be generated securely on their own devices. The purpose is to provide
 additional utility to STO owners without the need to reveal any additional information.
 
+## Demo
+
+https://github.com/user-attachments/assets/ffe2255b-7ffd-4184-ae36-2026c5d3ee6c
+
 ## Instructions
 
 Install dependency:
